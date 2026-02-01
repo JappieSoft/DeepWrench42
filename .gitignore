@@ -1,5 +1,8 @@
-HELP.md
+### SRC Files ###
+Help.md
 target/
+### check if folder below will be used: ###
+uploads/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -32,8 +35,10 @@ build/
 ### VS Code ###
 .vscode/
 
+### Mac OS ###
+.DS_Store
 
-# misc
+### Environment Variables ###
 .env
 .env.local
 .env.development.local
