@@ -1,6 +1,6 @@
 package nl.novi.deepwrench42.entities;
 
-public enum ToolStatus {
+public enum EquipmentStatus {
     UNKNOWN,
     CHECKED_IN,
     CHECKED_OUT,

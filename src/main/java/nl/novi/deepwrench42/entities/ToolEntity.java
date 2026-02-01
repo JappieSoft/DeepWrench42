@@ -9,10 +9,6 @@ import java.util.Set;
 @Table(name = "tools")
 public class ToolEntity extends EquipmentEntity{
 
-    @Column(name = "status", nullable = false, length = 20)
-    @Enumerated(EnumType.STRING)
-    private ToolStatus status = ToolStatus.UNKNOWN;
-
     @Column(name = "type")
     private String type;
 
@@ -30,7 +26,7 @@ public class ToolEntity extends EquipmentEntity{
 
     @ManyToMany
     @JoinTable(
-            name = "applicable_aircraft_type",
+            name = "aircraft_type_tool_compatibility",
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "aircraft_type_id")
     )
@@ -38,21 +34,17 @@ public class ToolEntity extends EquipmentEntity{
 
     @ManyToMany
     @JoinTable(
-            name = "applicable_engine_type",
+            name = "engine_type_tool_compatibility",
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "engine_type_id")
     )
-    private Set<AircraftTypeEntity> applicableEngineType  = new HashSet<>();
+    private Set<EngineTypeEntity> applicableEngineType  = new HashSet<>();
 
     @Column(name = "calibrated")
     private boolean isCalibrated;
 
-    @OneToOne(mappedBy = "tool", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    @Column(name = "calibration")
-    private CalibrationEntity calibration;
-
-    @ManyToMany(mappedBy = "tools")
-    @Column(name = "part_of_kit")
-    private Set<ToolkitEntity> partOfKit = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "toolkit_id")
+    private ToolKitEntity tool_kit;
 
 }
