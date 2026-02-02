@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "tool_kits")
 public class ToolKitEntity  extends EquipmentEntity{
 
-    @OneToMany(mappedBy = "tool_kit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "toolKit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ToolEntity> kitContents = new HashSet<>();
 
     @Column(name = "type")

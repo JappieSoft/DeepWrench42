@@ -6,21 +6,22 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-    @Column(name = "employee_id", unique = true)
+    @Column(name = "employee_id", nullable = false, unique = true, length = 7)
     private String employeeId;
 
-    @Column(name = "first_name")
+    @Column(name = "schiphol_id", unique = true, length = 20)
+    private String schipholId;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(name = "email", unique = true)
-    private String email;
 
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.USER;
 
-    @Column(name = "schiphol_id", unique = true)
-    private String schipholId;
 }

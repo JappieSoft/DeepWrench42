@@ -26,6 +26,10 @@ public abstract class EquipmentEntity{
         editDate = LocalDateTime.now();
     }
 
+    @Column(name = "equipment_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EquipmentType equipmentType = EquipmentType.TOOL;
+
     @Column(name = "itemId")
     private String itemId;
 
@@ -39,12 +43,13 @@ public abstract class EquipmentEntity{
     @JoinColumn(name = "storage_location_id")
     private StorageLocationEntity storageLocation;
 
-    @Column(name = "status", nullable = false, length = 20)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private EquipmentStatus status = EquipmentStatus.UNKNOWN;
 
-    @Column(name = "checkedOutBy")
-    private String checkedOutBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checked_out_by_user_id")
+    private UserEntity checkedOutBy;
 
     @Column(name = "checkedOutDate")
     private LocalDateTime checkedOutDate;
@@ -52,7 +57,8 @@ public abstract class EquipmentEntity{
     @Column(name = "inspection")
     private boolean hasInspection;
 
-    @OneToOne(mappedBy = "tool", cascade = CascadeType.ALL, optional = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inspection_id")
     private InspectionEntity inspection;
 
     @Column(name = "comments")

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table(name = "tool_log")
 public class ToolLogEntity extends BaseEntity {
@@ -12,17 +13,25 @@ public class ToolLogEntity extends BaseEntity {
     private LocalDateTime timeStamp;
 
     @Column(name = "action_type")
-    private String actionType;
+    @Enumerated(EnumType.STRING)
+    private ToolLogActionType actionType;
 
-    @Column(name = "action_by")
-    private String actionBy;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity actionBy;
 
-    @Column(name = "tool")
-    private String tool;
+    @Column(name = "equipment_id", nullable = false)
+    private Long equipmentId;
 
-    @Column(name = "aircraft")
-    private String aircraft;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "equipment_type", nullable = false)
+    private EquipmentType equipmentType;
 
-    @Column(name = "comments")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "aircraft_id")
+    private AircraftEntity aircraft;
+
+    @Column(name = "comments", length = 255)
     private String comments;
+
 }

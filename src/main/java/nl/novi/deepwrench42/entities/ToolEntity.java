@@ -45,6 +45,6 @@ public class ToolEntity extends EquipmentEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "toolkit_id")
-    private ToolKitEntity tool_kit;
+    private ToolKitEntity toolKit;
 
 }

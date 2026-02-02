@@ -21,7 +21,7 @@ public class InspectionEntity extends BaseEntity{
     @Column(name = "inspection_interval")
     private int inspectionInterval;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tool_id", nullable = false)
+    @OneToOne(mappedBy = "inspection", cascade = CascadeType.ALL)
     private ToolEntity tool;
+
 }
