@@ -6,18 +6,18 @@ import jakarta.persistence.*;
 @Table(name = "aircraft")
 public class AircraftEntity extends BaseEntity {
 
-    @Column(name = "shipNumber")
+    @Column(name = "ship_number")
     private String shipNumber;
 
     @Column(name = "registration")
     private String registration;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "aircraft_type_id", unique = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "aircraft_type_id", nullable = false)
     private AircraftTypeEntity aircraftType;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "engine_type_id", unique = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "engine_type_id", nullable = false)
     private EngineTypeEntity engineType;
 
 }

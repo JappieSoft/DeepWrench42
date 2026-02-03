@@ -9,9 +9,9 @@ public class EngineTypeEntity extends BaseEntity{
     @Column(name = "manufacturer")
     private String manufacturer;
 
-    @Column(name = "mainType")
+    @Column(name = "main_type")
     private String mainType;
 
-    @Column(name = "subType")
+    @Column(name = "sub_type")
     private String subType;
 }

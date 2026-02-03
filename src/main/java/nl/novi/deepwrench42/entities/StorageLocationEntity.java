@@ -17,4 +17,6 @@ public class StorageLocationEntity extends BaseEntity{
     @Column(name = "shelf")
     private String shelf;
 
+    @Column(name = "comments")
+    private String comments;
 }

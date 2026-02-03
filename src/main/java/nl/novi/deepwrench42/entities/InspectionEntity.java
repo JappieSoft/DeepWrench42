@@ -21,7 +21,7 @@ public class InspectionEntity extends BaseEntity{
     @Column(name = "inspection_interval")
     private int inspectionInterval;
 
-    @OneToOne(mappedBy = "inspection", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "inspection")
     private ToolEntity tool;
 
 }

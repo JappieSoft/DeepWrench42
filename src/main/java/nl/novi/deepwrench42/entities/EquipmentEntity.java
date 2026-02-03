@@ -51,13 +51,13 @@ public abstract class EquipmentEntity{
     @JoinColumn(name = "checked_out_by_user_id")
     private UserEntity checkedOutBy;
 
-    @Column(name = "checkedOutDate")
+    @Column(name = "checked_out_date")
     private LocalDateTime checkedOutDate;
 
     @Column(name = "inspection")
     private boolean hasInspection;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "inspection_id")
     private InspectionEntity inspection;
 
