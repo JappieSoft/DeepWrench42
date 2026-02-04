@@ -9,5 +9,6 @@ public enum EquipmentStatus {
     MAINTENANCE_DUE,
     IN_MAINTENANCE,
     UNSERVICEABLE,
+    MISSING,
     SCRAPPED
 }

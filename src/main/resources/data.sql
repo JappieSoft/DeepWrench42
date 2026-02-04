@@ -24,7 +24,11 @@ INSERT INTO storage_locations(created_date, edited_date, location, rack, shelf, 
 VALUES (now(), now(), 'G4', 'A' ,'1', NULL),
        (now(), now(), 'G4', 'CHM' ,'3', 'Oil-Racking'),
        (now(), now(), 'D49', 'B12' ,'D01-A01', NULL),
-       (now(), now(), 'G4', 'B' ,'2', NULL);
+       (now(), now(), 'G4', 'B' ,'2', NULL),
+       (now(), now(), 'G4', 'B' ,'3', NULL),
+       (now(), now(), 'G4', 'C' ,'1', NULL),
+       (now(), now(), 'G4', 'D' ,'4', NULL),
+       (now(), now(), 'G4', 'D' ,'3', NULL);
 
 
 
@@ -46,3 +50,12 @@ VALUES  (now(), now(), '2025-12-15 09:00:00', 'CALIBRATION', '2026-12-15 09:00:0
         UPDATE tools SET inspection_id = 1 WHERE id = 1;
         UPDATE tools SET inspection_id = 2 WHERE id = 3;
 
+INSERT INTO tool_kits (created_date, edited_date, equipment_type, item_id, name, picture ,storage_location_id, status, checked_out_by_user_id, checked_out_date, inspection, inspection_id, comments, type, ata_code, part_number, serial_number, manufacturer, calibrated)
+VALUES  (now(), now(), 'TOOLKIT', 'K03562141', 'A330 NLG Gland Nut kit',        NULL,5,'MISSING',       3,    now(), FALSE, NULL,   'ToolKit Missing','C-Spanner Kit',      2000, 'MAG003451',      'DL00158',          'Magema',           FALSE),
+        (now(), now(), 'TOOLKIT', 'K06892146', 'Fluke 1587 Kit',                NULL,6,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,   NULL,             'MultiMeter Kit',     2400, 'FK1587-kit',     'fk38FSD-345G',     'Fluke',            TRUE),
+        (now(), now(), 'TOOLKIT', 'Boro001',   'GE IQ Mentor 3D Boroscope',     NULL,7,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,   NULL,             'Boroscope Kit',      7200, 'MIQ-3D',         '52-98-88745',      'General Electric', TRUE),
+        (now(), now(), 'TOOLKIT', 'RR57698',   'XWB HMU AGB STUD Extractor Kit',NULL,8,'UNSERVICEABLE', NULL, NULL,  FALSE, NULL,   NULL,             'HeliCoil Repair Kit',7328, 'RR689-95-17-14', '00018684001477',   'Rolls Royce',      FALSE);
+
+INSERT INTO aircraft_type_kit_compatibility (toolkit_id, aircraft_type_id) VALUES (1, 1),(2, 2),(3, 3);
+INSERT INTO engine_type_kit_compatibility (toolkit_id, engine_type_id)     VALUES (1, 1),(2, 2),(3, 3);
+UPDATE tools SET toolkit_id = 4 WHERE id = 3;
