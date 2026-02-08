@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class InspectionEntity extends BaseEntity{
 
     @Column(name = "inspection_date")
-    private LocalDateTime calibrationDate;
+    private LocalDateTime inspectionDate;
 
     @Column(name = "inspection_type", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)

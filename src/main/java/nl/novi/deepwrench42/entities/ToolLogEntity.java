@@ -16,11 +16,6 @@ public class ToolLogEntity {
     @Column(name = "time_Stamp")
     private LocalDateTime timeStamp;
 
-    @PrePersist
-    protected void onCreate() {
-        timeStamp = LocalDateTime.now();
-    }
-
     @Column(name = "action_type")
     @Enumerated(EnumType.STRING)
     private ToolLogActionType actionType;
@@ -29,12 +24,13 @@ public class ToolLogEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity actionBy;
 
-    @Column(name = "equipment_id", nullable = false)
-    private Long equipmentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tool_id")
+    private ToolEntity tool;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "equipment_type", nullable = false)
-    private EquipmentType equipmentType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "toolkit_id")
+    private ToolKitEntity toolKit;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "aircraft_id")
@@ -43,4 +39,8 @@ public class ToolLogEntity {
     @Column(name = "comments", length = 255)
     private String comments;
 
+    @PrePersist
+    protected void onCreate() {
+        timeStamp = LocalDateTime.now();
+    }
 }
