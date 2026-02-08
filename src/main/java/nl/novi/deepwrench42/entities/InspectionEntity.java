@@ -24,4 +24,19 @@ public class InspectionEntity extends BaseEntity{
     @OneToOne(mappedBy = "inspection")
     private ToolEntity tool;
 
+    // Getters en Setters
+    public LocalDateTime getInspectionDate() {  return inspectionDate;  }
+    public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
+
+    public InspectionType getInspectionType() { return inspectionType;  }
+    public void setInspectionType(InspectionType inspectionType) {  this.inspectionType = inspectionType;   }
+
+    public LocalDateTime getNextDueDate() { return nextDueDate; }
+    public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }
+
+    public int getInspectionInterval() {    return inspectionInterval;  }
+    public void setInspectionInterval(int inspectionInterval) { this.inspectionInterval = inspectionInterval;   }
+
+    public ToolEntity getTool() {   return tool;    }
+    public void setTool(ToolEntity tool) {  this.tool = tool;   }
 }

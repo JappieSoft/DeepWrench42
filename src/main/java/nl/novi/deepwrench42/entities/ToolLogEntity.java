@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "tool_log")
 public class ToolLogEntity {
@@ -43,4 +42,29 @@ public class ToolLogEntity {
     protected void onCreate() {
         timeStamp = LocalDateTime.now();
     }
+
+    // Getters en Setters
+    public Long getId() {   return id;  }
+    public void setId(Long id) {    this.id = id;   }
+
+    public LocalDateTime getTimeStamp() {   return timeStamp;   }
+    public void setTimeStamp(LocalDateTime timeStamp) { this.timeStamp = timeStamp; }
+
+    public ToolLogActionType getActionType() {  return actionType;  }
+    public void setActionType(ToolLogActionType actionType) {   this.actionType = actionType;   }
+
+    public UserEntity getActionBy() {   return actionBy;    }
+    public void setActionBy(UserEntity actionBy) {  this.actionBy = actionBy;   }
+
+    public ToolEntity getTool() {   return tool;    }
+    public void setTool(ToolEntity tool) {  this.tool = tool;   }
+
+    public ToolKitEntity getToolKit() { return toolKit; }
+    public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }
+
+    public AircraftEntity getAircraft() {   return aircraft;    }
+    public void setAircraft(AircraftEntity aircraft) {  this.aircraft = aircraft;   }
+
+    public String getComments() {   return comments;    }
+    public void setComments(String comments) {  this.comments = comments;   }
 }

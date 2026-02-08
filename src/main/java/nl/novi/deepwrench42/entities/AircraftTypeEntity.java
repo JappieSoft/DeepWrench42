@@ -15,6 +15,7 @@ public class AircraftTypeEntity extends BaseEntity{
     @Column(name = "sub_type")
     private String subType;
 
+    // Getters en Setters
     public String getManufacturer() {   return manufacturer;    }
     public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
 

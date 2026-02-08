@@ -47,4 +47,31 @@ public class ToolEntity extends EquipmentEntity{
     @JoinColumn(name = "toolkit_id")
     private ToolKitEntity toolKit;
 
+    // Getters en Setters
+    public String getType() {   return type;    }
+    public void setType(String type) {  this.type = type;   }
+
+    public int getAtaCode() {   return ataCode; }
+    public void setAtaCode(int ataCode) {   this.ataCode = ataCode; }
+
+    public String getPartNumber() { return partNumber;  }
+    public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
+
+    public String getSerialNumber() {   return serialNumber;    }
+    public void setSerialNumber(String serialNumber) {  this.serialNumber = serialNumber;   }
+
+    public String getManufacturer() {   return manufacturer;    }
+    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+
+    public Set<AircraftTypeEntity> getApplicableAircraftType() {    return applicableAircraftType;  }
+    public void setApplicableAircraftType(Set<AircraftTypeEntity> applicableAircraftType) { this.applicableAircraftType = applicableAircraftType;   }
+
+    public Set<EngineTypeEntity> getApplicableEngineType() {    return applicableEngineType;    }
+    public void setApplicableEngineType(Set<EngineTypeEntity> applicableEngineType) {   this.applicableEngineType = applicableEngineType;   }
+
+    public boolean isCalibrated() { return isCalibrated;    }
+    public void setCalibrated(boolean calibrated) { isCalibrated = calibrated;  }
+
+    public ToolKitEntity getToolKit() { return toolKit; }
+    public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }
 }
