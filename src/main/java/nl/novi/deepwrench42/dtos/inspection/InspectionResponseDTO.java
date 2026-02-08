@@ -1,6 +1,8 @@
 package nl.novi.deepwrench42.dtos.inspection;
 
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
+import nl.novi.deepwrench42.entities.InspectionType;
+
 import java.time.LocalDateTime;
 
 public class InspectionResponseDTO {

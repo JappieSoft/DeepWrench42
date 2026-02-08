@@ -40,7 +40,7 @@ public class ToolEntity extends EquipmentEntity{
     )
     private Set<EngineTypeEntity> applicableEngineType  = new HashSet<>();
 
-    @Column(name = "calibrated")
+    @Column(name = "is_calibrated")
     private boolean isCalibrated;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -70,7 +70,7 @@ public class ToolEntity extends EquipmentEntity{
     public void setApplicableEngineType(Set<EngineTypeEntity> applicableEngineType) {   this.applicableEngineType = applicableEngineType;   }
 
     public boolean isCalibrated() { return isCalibrated;    }
-    public void setCalibrated(boolean calibrated) { isCalibrated = calibrated;  }
+    public void setIsCalibrated(boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 
     public ToolKitEntity getToolKit() { return toolKit; }
     public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }

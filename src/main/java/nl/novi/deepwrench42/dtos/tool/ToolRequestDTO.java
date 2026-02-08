@@ -53,8 +53,8 @@ public class ToolRequestDTO {
     public Set<Long> getApplicableEngineTypeIds() { return applicableEngineTypeIds; }
     public void setApplicableEngineTypeIds(Set<Long> applicableEngineTypeIds) { this.applicableEngineTypeIds = applicableEngineTypeIds; }
 
-    public Boolean getCalibrated() {    return isCalibrated;    }
-    public void setCalibrated(Boolean calibrated) { isCalibrated = calibrated;  }
+    public Boolean getIsCalibrated() {    return isCalibrated;    }
+    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 
     public Long getToolKitId() {    return toolKitId;   }
     public void setToolKitId(Long toolKitId) {  this.toolKitId = toolKitId; }

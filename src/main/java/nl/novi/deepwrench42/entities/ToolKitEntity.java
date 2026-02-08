@@ -43,7 +43,7 @@ public class ToolKitEntity  extends EquipmentEntity{
     )
     private Set<AircraftTypeEntity> applicableEngineType  = new HashSet<>();
 
-    @Column(name = "calibrated")
+    @Column(name = "is_calibrated")
     private boolean isCalibrated;
 
     // Getters en Setters
@@ -72,5 +72,5 @@ public class ToolKitEntity  extends EquipmentEntity{
     public void setApplicableEngineType(Set<AircraftTypeEntity> applicableEngineType) { this.applicableEngineType = applicableEngineType;   }
 
     public boolean isCalibrated() { return isCalibrated;   }
-    public void setCalibrated(boolean calibrated) { isCalibrated = calibrated;  }
+    public void setIsCalibrated(boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 }

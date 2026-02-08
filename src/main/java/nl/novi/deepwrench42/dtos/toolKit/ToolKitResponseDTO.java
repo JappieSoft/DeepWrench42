@@ -45,6 +45,6 @@ public class ToolKitResponseDTO {
     public Set<EngineTypeResponseDTO> getApplicableEngineType() {   return applicableEngineType;    }
     public void setApplicableEngineType(Set<EngineTypeResponseDTO> applicableEngineType) {  this.applicableEngineType = applicableEngineType;   }
 
-    public Boolean getCalibrated() {    return isCalibrated;    }
-    public void setCalibrated(Boolean calibrated) { isCalibrated = calibrated;  }
+    public Boolean getIsCalibrated() {    return isCalibrated;    }
+    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 }

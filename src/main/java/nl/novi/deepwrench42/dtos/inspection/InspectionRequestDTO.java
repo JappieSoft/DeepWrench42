@@ -9,7 +9,7 @@ public class InspectionRequestDTO {
     @NotNull(message = "Inspection date is required")
     private LocalDateTime inspectionDate;
     @NotNull(message = "Inspection type is required")
-    private InspectionType inspectionType;
+    private String inspectionType;
     @NotNull(message = "Next due date is required")
     @Future(message = "Next due date must be in the future")
     private LocalDateTime nextDueDate;
@@ -24,8 +24,8 @@ public class InspectionRequestDTO {
     public LocalDateTime getInspectionDate() {  return inspectionDate;  }
     public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
 
-    public InspectionType getInspectionType() {   return inspectionType;  }
-    public void setInspectionType(InspectionType inspectionType) {    this.inspectionType = inspectionType;   }
+    public String getInspectionType() {   return inspectionType;  }
+    public void setInspectionType(String inspectionType) {    this.inspectionType = inspectionType;   }
 
     public LocalDateTime getNextDueDate() { return nextDueDate; }
     public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }
