@@ -59,3 +59,9 @@ VALUES  (now(), now(), 'TOOLKIT', 'K03562141', 'A330 NLG Gland Nut kit',        
 INSERT INTO aircraft_type_kit_compatibility (toolkit_id, aircraft_type_id) VALUES (1, 1),(2, 2),(3, 3);
 INSERT INTO engine_type_kit_compatibility (toolkit_id, engine_type_id)     VALUES (1, 1),(2, 2),(3, 3);
 UPDATE tools SET toolkit_id = 4 WHERE id = 3;
+
+INSERT INTO tool_log(time_Stamp, action_type, user_id, equipment_id, equipment_type, aircraft_id, comments)
+VALUES (now(), 'CHECK_OUT', 3, 1, 'TOOLKIT', 1, NULL),
+       (now(), 'CHECK_IN', 1, 2, 'TOOLKIT', 2, NULL),
+       (now(), 'CHECK_OUT', 2, 4, 'TOOL', 3, NULL),
+       (now(), 'CHECK_OUT', 4, 1, 'TOOL', NULL, 'calibration');

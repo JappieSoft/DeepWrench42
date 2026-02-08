@@ -7,10 +7,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tool_log")
-public class ToolLogEntity extends BaseEntity {
+public class ToolLogEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "time_Stamp")
     private LocalDateTime timeStamp;
+
+    @PrePersist
+    protected void onCreate() {
+        timeStamp = LocalDateTime.now();
+    }
 
     @Column(name = "action_type")
     @Enumerated(EnumType.STRING)
