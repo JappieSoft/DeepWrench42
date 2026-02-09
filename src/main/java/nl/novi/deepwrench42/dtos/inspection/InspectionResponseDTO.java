@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class InspectionResponseDTO {
     private Long id;
     private LocalDateTime inspectionDate;
-    private String inspectionType;
+    private InspectionType inspectionType;
     private LocalDateTime nextDueDate;
     private Integer inspectionInterval;
     private ToolResponseDTO tool;
@@ -20,8 +20,8 @@ public class InspectionResponseDTO {
     public LocalDateTime getInspectionDate() {  return inspectionDate;  }
     public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
 
-    public String getInspectionType() { return inspectionType;  }
-    public void setInspectionType(String inspectionType) {  this.inspectionType = inspectionType;   }
+    public InspectionType getInspectionType() { return inspectionType;  }
+    public void setInspectionType(InspectionType inspectionType) {  this.inspectionType = inspectionType;   }
 
     public LocalDateTime getNextDueDate() { return nextDueDate; }
     public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }

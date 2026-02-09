@@ -26,7 +26,7 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
         var result = new InspectionResponseDTO();
         result.setId(model.getId());
         result.setInspectionDate(model.getInspectionDate());
-        result.setInspectionType(model.getInspectionType().name());
+        result.setInspectionType(model.getInspectionType());
         result.setNextDueDate(model.getNextDueDate());
         result.setInspectionInterval(model.getInspectionInterval());
         result.setTool(toolDTOMapper.mapToDto(model.getTool()));
@@ -49,7 +49,7 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
 
         var model = new InspectionEntity();
         model.setInspectionDate(requestDTO.getInspectionDate());
-        model.setInspectionType(InspectionType.valueOf(requestDTO.getInspectionType()));
+        model.setInspectionType(requestDTO.getInspectionType());
         model.setNextDueDate(requestDTO.getNextDueDate());
         model.setInspectionInterval(requestDTO.getInspectionInterval());
         return model;

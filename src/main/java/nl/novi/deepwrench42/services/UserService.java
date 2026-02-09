@@ -33,18 +33,18 @@ public class UserService {
         return userDtoMapper.mapToDto(userEntity);
     }
 
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userModel)  {
-        UserEntity existingUserEntity = getUserEntity(id);
+    public UserResponseDTO updateUser(Long id, UserRequestDTO requestDto)  {
+        UserEntity existingEntity = getUserEntity(id);
 
-        existingUserEntity.setEmployeeId(userModel.getEmployeeId());
-        existingUserEntity.setSchipholId(userModel.getSchipholId());
-        existingUserEntity.setEmail(userModel.getEmail());
-        existingUserEntity.setFirstName(userModel.getFirstName());
-        existingUserEntity.setLastName(userModel.getLastName());
-        existingUserEntity.setRole(userModel.getRole());
+        existingEntity.setEmployeeId(requestDto.getEmployeeId());
+        existingEntity.setSchipholId(requestDto.getSchipholId());
+        existingEntity.setEmail(requestDto.getEmail());
+        existingEntity.setFirstName(requestDto.getFirstName());
+        existingEntity.setLastName(requestDto.getLastName());
+        existingEntity.setRole(requestDto.getRole());
 
-        existingUserEntity = userRepository.save(existingUserEntity);
-        return userDtoMapper.mapToDto(existingUserEntity);
+        existingEntity = userRepository.save(existingEntity);
+        return userDtoMapper.mapToDto(existingEntity);
     }
 
     public void deleteUser(Long id) {

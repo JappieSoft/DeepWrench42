@@ -28,32 +28,32 @@ public class AircraftTypeService {
     }
 
 
-    public AircraftTypeResponseDTO createUser(AircraftTypeRequestDTO aircraftTypeModel) {
-        AircraftTypeEntity aircraftTypeEntity = aircraftTypeDTOMapper.mapToEntity(aircraftTypeModel);
+    public AircraftTypeResponseDTO createUser(AircraftTypeRequestDTO model) {
+        AircraftTypeEntity aircraftTypeEntity = aircraftTypeDTOMapper.mapToEntity(model);
         aircraftTypeEntity = aircraftTypeRepository.save(aircraftTypeEntity);
         return aircraftTypeDTOMapper.mapToDto(aircraftTypeEntity);
     }
 
-    public AircraftTypeResponseDTO updateUser(Long id, AircraftTypeRequestDTO aircraftTypeModel)  {
-        AircraftTypeEntity existingAircraftTypeEntity = getAircraftTypeEntity(id);
+    public AircraftTypeResponseDTO updateUser(Long id, AircraftTypeRequestDTO requestDto)  {
+        AircraftTypeEntity existingEntity = getAircraftTypeEntity(id);
 
-        existingAircraftTypeEntity.setManufacturer(aircraftTypeModel.getManufacturer());
-        existingAircraftTypeEntity.setMainType(aircraftTypeModel.getMainType());
-        existingAircraftTypeEntity.setSubType(aircraftTypeModel.getSubType());
+        existingEntity.setManufacturer(requestDto.getManufacturer());
+        existingEntity.setMainType(requestDto.getMainType());
+        existingEntity.setSubType(requestDto.getSubType());
 
-        existingAircraftTypeEntity = aircraftTypeRepository.save(existingAircraftTypeEntity);
-        return aircraftTypeDTOMapper.mapToDto(existingAircraftTypeEntity);
+        existingEntity = aircraftTypeRepository.save(existingEntity);
+        return aircraftTypeDTOMapper.mapToDto(existingEntity);
     }
 
     public void deleteUser(Long id) {
-        AircraftTypeEntity user = getAircraftTypeEntity(id);
+        AircraftTypeEntity aircraftType = getAircraftTypeEntity(id);
         aircraftTypeRepository.deleteById(id);
     }
 
     // Generic ID getter
     private AircraftTypeEntity getAircraftTypeEntity(Long id) {
         AircraftTypeEntity aircraftTypeEntity = aircraftTypeRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("User " + id +" not found"));
+                .orElseThrow(() -> new RecordNotFoundException("Aircraft type " + id +" not found"));
         return aircraftTypeEntity;
     }
 }
