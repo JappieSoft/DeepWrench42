@@ -64,4 +64,47 @@ public abstract class EquipmentEntity{
     @Column(name = "comments")
     private String comments;
 
+    // Getters en Setters
+
+    public Long getId() {   return id;  }
+    public void setId(Long id) {    this.id = id;   }
+
+    public LocalDateTime getCreateDate() {  return createDate;  }
+    public void setCreateDate(LocalDateTime createDate) {   this.createDate = createDate;   }
+
+    public LocalDateTime getEditDate() {    return editDate;    }
+    public void setEditDate(LocalDateTime editDate) {   this.editDate = editDate;   }
+
+    public EquipmentType getEquipmentType() {   return equipmentType;   }
+    public void setEquipmentType(EquipmentType equipmentType) { this.equipmentType = equipmentType; }
+
+    public String getItemId() { return itemId;  }
+    public void setItemId(String itemId) {  this.itemId = itemId;   }
+
+    public String getName() {   return name;    }
+    public void setName(String name) {  this.name = name;   }
+
+    public String getPicture() {    return picture; }
+    public void setPicture(String picture) {    this.picture = picture; }
+
+    public StorageLocationEntity getStorageLocation() { return storageLocation; }
+    public void setStorageLocation(StorageLocationEntity storageLocation) { this.storageLocation = storageLocation; }
+
+    public EquipmentStatus getStatus() {    return status;  }
+    public void setStatus(EquipmentStatus status) { this.status = status;   }
+
+    public UserEntity getCheckedOutBy() {   return checkedOutBy;    }
+    public void setCheckedOutBy(UserEntity checkedOutBy) {  this.checkedOutBy = checkedOutBy;   }
+
+    public LocalDateTime getCheckedOutDate() {  return checkedOutDate;  }
+    public void setCheckedOutDate(LocalDateTime checkedOutDate) {   this.checkedOutDate = checkedOutDate;   }
+
+    public boolean isHasInspection() {  return hasInspection;   }
+    public void setHasInspection(boolean hasInspection) {   this.hasInspection = hasInspection; }
+
+    public InspectionEntity getInspection() {   return inspection;  }
+    public void setInspection(InspectionEntity inspection) {    this.inspection = inspection;   }
+
+    public String getComments() {   return comments;    }
+    public void setComments(String comments) {  this.comments = comments;   }
 }

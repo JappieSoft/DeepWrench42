@@ -1,5 +1,7 @@
 package nl.novi.deepwrench42.dtos.user;
 
+import nl.novi.deepwrench42.entities.UserRole;
+
 public class UserResponseDTO {
     private Long id;
     private String employeeId;
@@ -7,7 +9,7 @@ public class UserResponseDTO {
     private String email;
     private String firstName;
     private String lastName;
-    private String role;
+    private UserRole role;
 
     // Getters en Setters
     public Long getId() {   return id;  }
@@ -28,6 +30,6 @@ public class UserResponseDTO {
     public String getLastName() {   return lastName;    }
     public void setLastName(String lastName) {  this.lastName = lastName;   }
 
-    public String getRole() {   return role;    }
-    public void setRole(String role) {  this.role = role;   }
+    public UserRole getRole() {   return role;    }
+    public void setRole(UserRole role) {  this.role = role;   }
 }

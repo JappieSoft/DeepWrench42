@@ -71,6 +71,6 @@ public class ToolKitEntity  extends EquipmentEntity{
     public Set<AircraftTypeEntity> getApplicableEngineType() {  return applicableEngineType;    }
     public void setApplicableEngineType(Set<AircraftTypeEntity> applicableEngineType) { this.applicableEngineType = applicableEngineType;   }
 
-    public boolean isCalibrated() { return isCalibrated;   }
+    public boolean getIsCalibrated() { return isCalibrated;   }
     public void setIsCalibrated(boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 }
