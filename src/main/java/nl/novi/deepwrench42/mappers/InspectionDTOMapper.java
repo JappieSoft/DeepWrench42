@@ -3,7 +3,6 @@ package nl.novi.deepwrench42.mappers;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionEntity;
-import nl.novi.deepwrench42.entities.InspectionType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

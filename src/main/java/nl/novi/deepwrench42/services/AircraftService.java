@@ -10,9 +10,11 @@ import nl.novi.deepwrench42.mappers.AircraftDTOMapper;
 import nl.novi.deepwrench42.repository.AircraftRepository;
 import nl.novi.deepwrench42.repository.AircraftTypeRepository;
 import nl.novi.deepwrench42.repository.EngineTypeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AircraftService{
 
     private final AircraftRepository aircraftRepository;
@@ -28,7 +30,7 @@ public class AircraftService{
         this.aircraftDTOMapper = aircraftDTOMapper;
     }
 
-    public List<AircraftResponseDTO> findAllAircrafts() {
+    public List<AircraftResponseDTO> findAllAircraft() {
         return aircraftDTOMapper.mapToDto(aircraftRepository.findAll());
     }
 

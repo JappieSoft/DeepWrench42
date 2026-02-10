@@ -35,7 +35,7 @@ public class ToolLogEntity {
     @JoinColumn(name = "aircraft_id")
     private AircraftEntity aircraft;
 
-    @Column(name = "comments", length = 255)
+    @Column(name = "comments")
     private String comments;
 
     @PrePersist

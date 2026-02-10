@@ -7,9 +7,11 @@ import nl.novi.deepwrench42.entities.EngineTypeEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.EngineTypeDTOMapper;
 import nl.novi.deepwrench42.repository.EngineTypeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EngineTypeService {
     private final EngineTypeRepository engineTypeRepository;
     private final EngineTypeDTOMapper engineTypeDTOMapper;
@@ -19,23 +21,23 @@ public class EngineTypeService {
         this.engineTypeDTOMapper = engineTypeDTOMapper;
     }
 
-    public List<EngineTypeResponseDTO> findAllUsers() {
+    public List<EngineTypeResponseDTO> findAllEngineTypes() {
         return engineTypeDTOMapper.mapToDto(engineTypeRepository.findAll());
     }
 
-    public EngineTypeResponseDTO findUserById(Long id)  {
+    public EngineTypeResponseDTO findEngineTypeById(Long id)  {
         EngineTypeEntity engineTypeEntity = getEngineTypeEntity(id);
         return engineTypeDTOMapper.mapToDto(engineTypeEntity);
     }
 
 
-    public EngineTypeResponseDTO createUser(EngineTypeRequestDTO model) {
+    public EngineTypeResponseDTO createEngineType(EngineTypeRequestDTO model) {
         EngineTypeEntity engineTypeEntity = engineTypeDTOMapper.mapToEntity(model);
         engineTypeEntity = engineTypeRepository.save(engineTypeEntity);
         return engineTypeDTOMapper.mapToDto(engineTypeEntity);
     }
 
-    public EngineTypeResponseDTO updateUser(Long id, EngineTypeRequestDTO requestDto)  {
+    public EngineTypeResponseDTO updateEngineType(Long id, EngineTypeRequestDTO requestDto)  {
         EngineTypeEntity existingEntity = getEngineTypeEntity(id);
 
         existingEntity.setManufacturer(requestDto.getManufacturer());
@@ -46,8 +48,8 @@ public class EngineTypeService {
         return engineTypeDTOMapper.mapToDto(existingEntity);
     }
 
-    public void deleteUser(Long id) {
-        EngineTypeEntity user = getEngineTypeEntity(id);
+    public void deleteEngineType(Long id) {
+        EngineTypeEntity engineType = getEngineTypeEntity(id);
         engineTypeRepository.deleteById(id);
     }
 

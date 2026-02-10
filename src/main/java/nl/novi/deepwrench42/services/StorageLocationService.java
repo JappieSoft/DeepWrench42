@@ -6,9 +6,11 @@ import nl.novi.deepwrench42.entities.StorageLocationEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.StorageLocationDTOMapper;
 import nl.novi.deepwrench42.repository.StorageLocationRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StorageLocationService {
     private final StorageLocationRepository storageLocationRepository;
     private final StorageLocationDTOMapper storageLocationDTOMapper;

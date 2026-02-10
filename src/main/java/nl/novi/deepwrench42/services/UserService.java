@@ -6,9 +6,11 @@ import nl.novi.deepwrench42.entities.UserEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.UserDTOMapper;
 import nl.novi.deepwrench42.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
     private final UserDTOMapper userDtoMapper;

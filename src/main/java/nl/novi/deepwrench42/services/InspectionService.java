@@ -8,9 +8,11 @@ import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.InspectionDTOMapper;
 import nl.novi.deepwrench42.repository.InspectionRepository;
 import nl.novi.deepwrench42.repository.ToolRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class InspectionService {
 
     private final InspectionRepository inspectionRepository;

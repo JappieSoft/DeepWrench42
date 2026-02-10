@@ -7,9 +7,11 @@ import nl.novi.deepwrench42.entities.AircraftTypeEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.AircraftTypeDTOMapper;
 import nl.novi.deepwrench42.repository.AircraftTypeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AircraftTypeService {
     private final AircraftTypeRepository aircraftTypeRepository;
     private final AircraftTypeDTOMapper aircraftTypeDTOMapper;
@@ -19,23 +21,23 @@ public class AircraftTypeService {
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
     }
 
-    public List<AircraftTypeResponseDTO> findAllUsers() {
+    public List<AircraftTypeResponseDTO> findAllAircraftTypes() {
         return aircraftTypeDTOMapper.mapToDto(aircraftTypeRepository.findAll());
     }
 
-    public AircraftTypeResponseDTO findUserById(Long id)  {
+    public AircraftTypeResponseDTO findAircraftTypeById(Long id)  {
         AircraftTypeEntity aircraftTypeEntity = getAircraftTypeEntity(id);
         return aircraftTypeDTOMapper.mapToDto(aircraftTypeEntity);
     }
 
 
-    public AircraftTypeResponseDTO createUser(AircraftTypeRequestDTO model) {
+    public AircraftTypeResponseDTO createAircraftType(AircraftTypeRequestDTO model) {
         AircraftTypeEntity aircraftTypeEntity = aircraftTypeDTOMapper.mapToEntity(model);
         aircraftTypeEntity = aircraftTypeRepository.save(aircraftTypeEntity);
         return aircraftTypeDTOMapper.mapToDto(aircraftTypeEntity);
     }
 
-    public AircraftTypeResponseDTO updateUser(Long id, AircraftTypeRequestDTO requestDto)  {
+    public AircraftTypeResponseDTO updateAircraftType(Long id, AircraftTypeRequestDTO requestDto)  {
         AircraftTypeEntity existingEntity = getAircraftTypeEntity(id);
 
         existingEntity.setManufacturer(requestDto.getManufacturer());
@@ -46,7 +48,7 @@ public class AircraftTypeService {
         return aircraftTypeDTOMapper.mapToDto(existingEntity);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteAircraftType(Long id) {
         AircraftTypeEntity aircraftType = getAircraftTypeEntity(id);
         aircraftTypeRepository.deleteById(id);
     }

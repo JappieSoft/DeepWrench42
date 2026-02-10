@@ -1,8 +1,6 @@
 package nl.novi.deepwrench42.dtos.aircraft;
 
 import jakarta.validation.constraints.*;
-import nl.novi.deepwrench42.entities.AircraftTypeEntity;
-import nl.novi.deepwrench42.entities.EngineTypeEntity;
 
 public class AircraftRequestDTO {
     @NotBlank(message = "Ship Number cannot be blank")
@@ -23,7 +21,7 @@ public class AircraftRequestDTO {
     public String getRegistration() {
         return registration;
     }
-    public void setRegistration(String title) {
+    public void setRegistration(String registration) {
         this.registration = registration;
     }
 
