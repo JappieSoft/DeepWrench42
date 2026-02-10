@@ -20,23 +20,23 @@ public class StorageLocationService {
         this.storageLocationDTOMapper = storageLocationDTOMapper;
     }
 
-    public List<StorageLocationResponseDTO> findAllUsers() {
+    public List<StorageLocationResponseDTO> findAllStorageLocations() {
         return storageLocationDTOMapper.mapToDto(storageLocationRepository.findAll());
     }
 
-    public StorageLocationResponseDTO findUserById(Long id)  {
+    public StorageLocationResponseDTO findStorageLocationById(Long id)  {
         StorageLocationEntity storageLocationEntity = getStorageLocationEntity(id);
         return storageLocationDTOMapper.mapToDto(storageLocationEntity);
     }
 
 
-    public StorageLocationResponseDTO createUser(StorageLocationRequestDTO model) {
+    public StorageLocationResponseDTO createStorageLocation(StorageLocationRequestDTO model) {
         StorageLocationEntity storageLocationEntity = storageLocationDTOMapper.mapToEntity(model);
         storageLocationEntity = storageLocationRepository.save(storageLocationEntity);
         return storageLocationDTOMapper.mapToDto(storageLocationEntity);
     }
 
-    public StorageLocationResponseDTO updateUser(Long id, StorageLocationRequestDTO requestDto)  {
+    public StorageLocationResponseDTO updateStorageLocation(Long id, StorageLocationRequestDTO requestDto)  {
         StorageLocationEntity existingEntity = getStorageLocationEntity(id);
 
         existingEntity.setLocation(requestDto.getLocation());
@@ -48,8 +48,8 @@ public class StorageLocationService {
         return storageLocationDTOMapper.mapToDto(existingEntity);
     }
 
-    public void deleteUser(Long id) {
-        StorageLocationEntity user = getStorageLocationEntity(id);
+    public void deleteStorageLocation(Long id) {
+        StorageLocationEntity storageLocation = getStorageLocationEntity(id);
         storageLocationRepository.deleteById(id);
     }
 
