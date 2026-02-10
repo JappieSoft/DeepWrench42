@@ -3,6 +3,7 @@ package nl.novi.deepwrench42.services;
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationRequestDTO;
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
 import nl.novi.deepwrench42.entities.StorageLocationEntity;
+import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.StorageLocationDTOMapper;
 import nl.novi.deepwrench42.repository.StorageLocationRepository;
 

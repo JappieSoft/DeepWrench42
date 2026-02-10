@@ -3,6 +3,7 @@ package nl.novi.deepwrench42.services;
 import nl.novi.deepwrench42.dtos.user.UserRequestDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.entities.UserEntity;
+import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.UserDTOMapper;
 import nl.novi.deepwrench42.repository.UserRepository;
 

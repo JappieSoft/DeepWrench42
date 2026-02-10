@@ -5,6 +5,7 @@ import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.entities.AircraftEntity;
 import nl.novi.deepwrench42.entities.AircraftTypeEntity;
 import nl.novi.deepwrench42.entities.EngineTypeEntity;
+import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.AircraftDTOMapper;
 import nl.novi.deepwrench42.repository.AircraftRepository;
 import nl.novi.deepwrench42.repository.AircraftTypeRepository;

@@ -4,6 +4,7 @@ import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionEntity;
 import nl.novi.deepwrench42.entities.ToolEntity;
+import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.InspectionDTOMapper;
 import nl.novi.deepwrench42.repository.InspectionRepository;
 import nl.novi.deepwrench42.repository.ToolRepository;

@@ -4,6 +4,7 @@ package nl.novi.deepwrench42.services;
 import nl.novi.deepwrench42.dtos.engineType.EngineTypeRequestDTO;
 import nl.novi.deepwrench42.dtos.engineType.EngineTypeResponseDTO;
 import nl.novi.deepwrench42.entities.EngineTypeEntity;
+import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.EngineTypeDTOMapper;
 import nl.novi.deepwrench42.repository.EngineTypeRepository;
 
