@@ -9,11 +9,11 @@ import java.util.Set;
 @Table(name = "tools")
 public class ToolEntity extends EquipmentEntity{
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "tool_type")
+    private String toolType;
 
     @Column(name = "ata_code")
-    private int ataCode;
+    private Integer ataCode;
 
     @Column(name = "part_number")
     private String partNumber;
@@ -30,7 +30,7 @@ public class ToolEntity extends EquipmentEntity{
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "aircraft_type_id")
     )
-    private Set<AircraftTypeEntity> applicableAircraftType  = new HashSet<>();
+    private Set<AircraftTypeEntity> applicableAircraftTypes  = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -38,21 +38,24 @@ public class ToolEntity extends EquipmentEntity{
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "engine_type_id")
     )
-    private Set<EngineTypeEntity> applicableEngineType  = new HashSet<>();
+    private Set<EngineTypeEntity> applicableEngineTypes  = new HashSet<>();
 
     @Column(name = "is_calibrated")
-    private boolean isCalibrated;
+    private Boolean isCalibrated;
+
+    @OneToOne(mappedBy = "tool", optional = true, cascade = CascadeType.ALL)
+    private InspectionEntity inspection;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "toolkit_id")
+    @JoinColumn(name = "tool_kit_id")
     private ToolKitEntity toolKit;
 
     // Getters en Setters
-    public String getType() {   return type;    }
-    public void setType(String type) {  this.type = type;   }
+    public String getToolType() {   return toolType;    }
+    public void setToolType(String toolType) {  this.toolType = toolType;   }
 
-    public int getAtaCode() {   return ataCode; }
-    public void setAtaCode(int ataCode) {   this.ataCode = ataCode; }
+    public Integer getAtaCode() {   return ataCode; }
+    public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
 
     public String getPartNumber() { return partNumber;  }
     public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
@@ -63,14 +66,19 @@ public class ToolEntity extends EquipmentEntity{
     public String getManufacturer() {   return manufacturer;    }
     public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
 
-    public Set<AircraftTypeEntity> getApplicableAircraftType() {    return applicableAircraftType;  }
-    public void setApplicableAircraftType(Set<AircraftTypeEntity> applicableAircraftType) { this.applicableAircraftType = applicableAircraftType;   }
+    public Set<AircraftTypeEntity> getApplicableAircraftTypes() {    return applicableAircraftTypes;  }
+    public void setApplicableAircraftTypes(Set<AircraftTypeEntity> applicableAircraftTypes) { this.applicableAircraftTypes = applicableAircraftTypes;   }
 
-    public Set<EngineTypeEntity> getApplicableEngineType() {    return applicableEngineType;    }
-    public void setApplicableEngineType(Set<EngineTypeEntity> applicableEngineType) {   this.applicableEngineType = applicableEngineType;   }
+    public Set<EngineTypeEntity> getApplicableEngineTypes() {    return applicableEngineTypes;    }
+    public void setApplicableEngineTypes(Set<EngineTypeEntity> applicableEngineTypes) {   this.applicableEngineTypes = applicableEngineTypes;   }
 
-    public boolean getIsCalibrated() { return isCalibrated;    }
-    public void setIsCalibrated(boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+    public Boolean getIsCalibrated() { return isCalibrated;    }
+    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+
+    public void setInspection(InspectionEntity inspection) {
+        this.inspection = inspection;
+        if (inspection != null) {   inspection.setTool(this);   }}
+    public InspectionEntity getInspection() { return inspection; }
 
     public ToolKitEntity getToolKit() { return toolKit; }
     public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }

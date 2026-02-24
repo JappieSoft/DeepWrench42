@@ -1,16 +1,22 @@
 package nl.novi.deepwrench42.dtos.toolKit;
 
 import jakarta.validation.constraints.*;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentRequestDTO;
+import nl.novi.deepwrench42.entities.EquipmentStatus;
+import nl.novi.deepwrench42.entities.EquipmentType;
+
+import java.time.LocalDateTime;
 import java.util.Set;
 
-public class ToolKitRequestDTO {
+public class ToolKitRequestDTO extends EquipmentRequestDTO {
+
     @NotNull(message = "Tool kit must have content")
     @Size(min = 1, message = "At least one tool required")
-    private Set<Long> kitContents;
+    private Set<Long> kitContentsIds;
 
     @NotBlank(message = "Type cannot be blank")
     @Size(min = 3, max = 20, message = "Type must be between 2 & 20 characters long")
-    private String type;
+    private String toolKitType;
 
     @NotNull(message = "ATA code required")
     @Size(min = 4, max = 4, message = "ATA code must be entered with 4 numbers")
@@ -33,12 +39,14 @@ public class ToolKitRequestDTO {
     @NotNull(message = "Calibration status required")
     private Boolean isCalibrated;
 
-    // Getters en Setters
-    public Set<Long> getKitContents() { return kitContents; }
-    public void setKitContents(Set<Long> kitContents) { this.kitContents = kitContents; }
+    private Long inspectionId;
 
-    public String getType() {   return type;    }
-    public void setType(String type) {  this.type = type;   }
+    // Getters en Setters
+    public Set<Long> getKitContentsIds() { return kitContentsIds; }
+    public void setKitContentsIds(Set<Long> kitContentsIds) { this.kitContentsIds = kitContentsIds; }
+
+    public String getToolKitType() {   return toolKitType;    }
+    public void setToolKitType(String toolKitType) {  this.toolKitType = toolKitType;   }
 
     public Integer getAtaCode() {   return ataCode; }
     public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
@@ -60,6 +68,9 @@ public class ToolKitRequestDTO {
 
     public Boolean getIsCalibrated() {    return isCalibrated;    }
     public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+
+    public Long getInspectionId() {   return inspectionId;  }
+    public void setInspectionId(Long inspectionId) {    this.inspectionId = inspectionId;   }
 }
 
 

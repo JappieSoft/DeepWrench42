@@ -31,6 +31,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String handleException(Exception ex){
-        return "Something went wrong";
+        return "There was an error on the server side";
     }
 }

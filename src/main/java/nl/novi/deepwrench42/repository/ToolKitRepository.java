@@ -4,6 +4,10 @@ import nl.novi.deepwrench42.entities.ToolKitEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ToolKitRepository extends JpaRepository<ToolKitEntity, Long> {
+
+    Optional<ToolKitEntity> findByItemId(String itemId);
 }

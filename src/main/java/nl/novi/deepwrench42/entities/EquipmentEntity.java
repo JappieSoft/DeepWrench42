@@ -4,33 +4,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class EquipmentEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "created_date", updatable = false)
-    private LocalDateTime createDate;
-
-    @Column(name = "edited_date")
-    private LocalDateTime editDate;
-
-    @PrePersist
-    protected void onCreate() {
-        createDate = LocalDateTime.now();
-        editDate = createDate;
-    }
-    @PreUpdate
-    protected void onUpdate() {
-        editDate = LocalDateTime.now();
-    }
+public abstract class EquipmentEntity extends BaseEntity{
 
     @Column(name = "equipment_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType = EquipmentType.TOOL;
 
-    @Column(name = "itemId")
+    @Column(name = "item_id")
     private String itemId;
 
     @Column(name = "name")
@@ -55,25 +35,12 @@ public abstract class EquipmentEntity{
     private LocalDateTime checkedOutDate;
 
     @Column(name = "inspection")
-    private boolean hasInspection;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "inspection_id")
-    private InspectionEntity inspection;
+    private Boolean hasInspection;
 
     @Column(name = "comments")
     private String comments;
 
     // Getters en Setters
-
-    public Long getId() {   return id;  }
-    public void setId(Long id) {    this.id = id;   }
-
-    public LocalDateTime getCreateDate() {  return createDate;  }
-    public void setCreateDate(LocalDateTime createDate) {   this.createDate = createDate;   }
-
-    public LocalDateTime getEditDate() {    return editDate;    }
-    public void setEditDate(LocalDateTime editDate) {   this.editDate = editDate;   }
 
     public EquipmentType getEquipmentType() {   return equipmentType;   }
     public void setEquipmentType(EquipmentType equipmentType) { this.equipmentType = equipmentType; }
@@ -99,11 +66,8 @@ public abstract class EquipmentEntity{
     public LocalDateTime getCheckedOutDate() {  return checkedOutDate;  }
     public void setCheckedOutDate(LocalDateTime checkedOutDate) {   this.checkedOutDate = checkedOutDate;   }
 
-    public boolean isHasInspection() {  return hasInspection;   }
-    public void setHasInspection(boolean hasInspection) {   this.hasInspection = hasInspection; }
-
-    public InspectionEntity getInspection() {   return inspection;  }
-    public void setInspection(InspectionEntity inspection) {    this.inspection = inspection;   }
+    public Boolean getHasInspection() {  return hasInspection;   }
+    public void setHasInspection(Boolean hasInspection) {   this.hasInspection = hasInspection; }
 
     public String getComments() {   return comments;    }
     public void setComments(String comments) {  this.comments = comments;   }

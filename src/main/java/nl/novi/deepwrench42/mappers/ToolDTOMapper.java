@@ -2,9 +2,14 @@ package nl.novi.deepwrench42.mappers;
 
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
 import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
+import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
 import nl.novi.deepwrench42.entities.ToolEntity;
+import nl.novi.deepwrench42.repository.ToolKitRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,12 +20,18 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
 
     private final AircraftTypeDTOMapper aircraftTypeDTOMapper;
     private final EngineTypeDTOMapper engineTypeDTOMapper;
-    private final ToolKitDTOMapper toolKitDTOMapper;
+    private final StorageLocationDTOMapper storageLocationDTOMapper;
+    private final InspectionDTOMapper inspectionDTOMapper;
+    private final UserDTOMapper userDTOMapper;
+    private final ToolKitRepository toolKitRepository;
 
-    public ToolDTOMapper(AircraftTypeDTOMapper aircraftTypeDTOMapper, EngineTypeDTOMapper engineTypeDTOMapper, ToolKitDTOMapper toolKitDTOMapper) {
+    public ToolDTOMapper(@Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper, @Lazy EngineTypeDTOMapper engineTypeDTOMapper, @Lazy StorageLocationDTOMapper storageLocationDTOMapper, @Lazy InspectionDTOMapper inspectionDTOMapper, @Lazy UserDTOMapper userDTOMapper, @Lazy ToolKitRepository toolKitRepository) {
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
-        this.toolKitDTOMapper = toolKitDTOMapper;
+        this.storageLocationDTOMapper = storageLocationDTOMapper;
+        this.inspectionDTOMapper = inspectionDTOMapper;
+        this.userDTOMapper = userDTOMapper;
+        this.toolKitRepository = toolKitRepository;
     }
 
     @Override
@@ -29,15 +40,41 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
 
         ToolResponseDTO result = new ToolResponseDTO();
         result.setId(model.getId());
-        result.setType(model.getType());
+        result.setEquipmentType(model.getEquipmentType());
+        result.setItemId(model.getItemId());
+        result.setName(model.getName());
+        result.setPicture(model.getPicture());
+        result.setStorageLocation(storageLocationDTOMapper.mapToDto(model.getStorageLocation()));
+        result.setStatus(model.getStatus());
+        result.setCheckedOutDate(model.getCheckedOutDate());
+        result.setHasInspection(model.getHasInspection());
+        result.setComments(model.getComments());
+        result.setToolType(model.getToolType());
         result.setAtaCode(model.getAtaCode());
         result.setPartNumber(model.getPartNumber());
         result.setSerialNumber(model.getSerialNumber());
         result.setManufacturer(model.getManufacturer());
-        result.setApplicableAircraftType(aircraftTypeDTOMapper.mapToDto(model.getApplicableAircraftType()));
-        result.setApplicableEngineType(engineTypeDTOMapper.mapToDto(model.getApplicableEngineType()));
+        result.setApplicableAircraftTypes(
+                new HashSet<>(
+                        aircraftTypeDTOMapper.mapToDto(
+                                model.getApplicableAircraftTypes() != null
+                                        ? new ArrayList<>(model.getApplicableAircraftTypes())
+                                        : List.of())));
+        result.setApplicableEngineTypes(
+                new HashSet<>(
+                        engineTypeDTOMapper.mapToDto(
+                                model.getApplicableEngineTypes() != null
+                                        ? new ArrayList<>(model.getApplicableEngineTypes())
+                                        : List.of())));
         result.setIsCalibrated(model.getIsCalibrated());
-        result.setToolKit(toolKitDTOMapper.mapToDto(model.getToolKit()));
+        result.setInspection(inspectionDTOMapper.mapToDto(model.getInspection()));
+        result.setToolKit(model.getToolKit() != null ? model.getToolKit().getId() : null);
+        if (model.getToolKit() != null) {
+            result.setToolKitItemId(model.getToolKit().getItemId());
+        } else {
+            result.setToolKitItemId(null);
+        }
+
         return result;
     }
 
@@ -52,16 +89,25 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
     }
 
     @Override
-    public ToolEntity mapToEntity(ToolRequestDTO dto) {
-        if (dto == null) return null;
+    public ToolEntity mapToEntity(ToolRequestDTO requestDTO) {
+        if (requestDTO == null) return null;
 
         ToolEntity result = new ToolEntity();
-        result.setType(dto.getType());
-        result.setAtaCode(dto.getAtaCode());
-        result.setPartNumber(dto.getPartNumber());
-        result.setSerialNumber(dto.getSerialNumber());
-        result.setManufacturer(dto.getManufacturer());
-        result.setIsCalibrated(dto.getIsCalibrated());
+        result.setEquipmentType(requestDTO.getEquipmentType());
+        result.setItemId(requestDTO.getItemId());
+        result.setName(requestDTO.getName());
+        result.setPicture(requestDTO.getPicture());
+        result.setStatus(requestDTO.getStatus());
+        result.setCheckedOutDate(requestDTO.getCheckedOutDate());
+        result.setHasInspection(requestDTO.getHasInspection());
+        result.setComments(requestDTO.getComments());
+        result.setToolType(requestDTO.getToolType());
+        result.setAtaCode(requestDTO.getAtaCode());
+        result.setPartNumber(requestDTO.getPartNumber());
+        result.setSerialNumber(requestDTO.getSerialNumber());
+        result.setManufacturer(requestDTO.getManufacturer());
+        result.setIsCalibrated(requestDTO.getIsCalibrated());
+
         return result;
     }
 }

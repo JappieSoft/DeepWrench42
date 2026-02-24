@@ -1,5 +1,6 @@
 package nl.novi.deepwrench42.services;
 
+import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.entities.AircraftEntity;
@@ -30,21 +31,25 @@ public class AircraftService{
         this.aircraftDTOMapper = aircraftDTOMapper;
     }
 
+    @Transactional
     public List<AircraftResponseDTO> findAllAircraft() {
         return aircraftDTOMapper.mapToDto(aircraftRepository.findAll());
     }
 
+    @Transactional
     public AircraftResponseDTO findAircraftById(Long id) {
         AircraftEntity aircraftEntity = getAircraftEntity(id);
         return aircraftDTOMapper.mapToDto(aircraftEntity);
     }
 
+    @Transactional
     public AircraftResponseDTO createAircraft(AircraftRequestDTO model) {
         AircraftEntity aircraftEntity = aircraftDTOMapper.mapToEntity(model);
         aircraftEntity = aircraftRepository.save(aircraftEntity);
         return aircraftDTOMapper.mapToDto(aircraftEntity);
     }
 
+    @Transactional
     public AircraftResponseDTO updateAircraft(Long id, AircraftRequestDTO requestDto) {
         AircraftEntity existingEntity = getAircraftEntity(id);
         AircraftTypeEntity aircraftType = aircraftTypeRepository.getReferenceById(requestDto.getAircraftTypeId());
@@ -66,6 +71,7 @@ public class AircraftService{
         return existingAircraftEntity;
     }
 
+    @Transactional
     public void deleteAircraft(Long id) {
         AircraftEntity aircraft = getAircraftEntity(id);
         aircraftRepository.deleteById(id);

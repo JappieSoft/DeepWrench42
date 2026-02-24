@@ -1,6 +1,7 @@
 package nl.novi.deepwrench42.controllers;
 
 import jakarta.validation.Valid;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentResponseDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.helpers.UrlHelper;
@@ -25,7 +26,7 @@ public class InspectionController {
 
     @GetMapping
     public ResponseEntity<List<InspectionResponseDTO>> getAllInspections() {
-        List<InspectionResponseDTO> inspections = inspectionService.findAllInspections();
+        List<InspectionResponseDTO> inspections = inspectionService.getAllInspections();
         return ResponseEntity.ok(inspections);
     }
 
@@ -55,4 +56,22 @@ public class InspectionController {
         inspectionService.deleteInspection(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+/*    //test2
+    @PostMapping("/{inspectionId}/performed")
+    public ResponseEntity<InspectionResponseDTO> performedInspection(
+            @PathVariable Long inspectionId,
+            @RequestBody @Valid CompletedInspectionDTO completedInspection) {
+        InspectionResponseDTO result = inspectionService.completeInspection(inspectionId, completedInspection);
+        return ResponseEntity.ok(result);
+    }*/
+
+    //test1
+    @GetMapping("/{inspectionId}/equipment")
+    public ResponseEntity<EquipmentResponseDTO> getEquipment(@PathVariable Long inspectionId) {
+        EquipmentResponseDTO equipment = inspectionService.getEquipmentForInspection(inspectionId);
+        return ResponseEntity.ok(equipment);
+    }
+
 }
+
+

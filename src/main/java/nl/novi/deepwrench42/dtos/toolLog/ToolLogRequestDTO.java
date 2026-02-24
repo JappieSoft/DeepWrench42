@@ -9,22 +9,15 @@ public class ToolLogRequestDTO {
 
     @NotNull
     private ToolLogActionType actionType;
-
     private LocalDateTime timeStamp;
-
     @NotNull
     private UserEntity actionBy;
-
     @NotNull
     private Long equipmentId;
-
     private ToolEntity tool;
-
     private ToolKitEntity toolKit;
-
     @NotNull
     private AircraftEntity aircraft;
-
     private String comments;
 
     // Getters en Setters

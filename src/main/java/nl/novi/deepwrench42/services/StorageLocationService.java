@@ -53,7 +53,6 @@ public class StorageLocationService {
         storageLocationRepository.deleteById(id);
     }
 
-    // Generic ID getter
     private StorageLocationEntity getStorageLocationEntity(Long id) {
         StorageLocationEntity storageLocationEntity = storageLocationRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Storage location " + id +" not found"));

@@ -3,6 +3,7 @@ package nl.novi.deepwrench42.mappers;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionEntity;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,11 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, InspectionRequestDTO, InspectionEntity>{
 
-    private final ToolDTOMapper toolDTOMapper;
-
-    public InspectionDTOMapper(ToolDTOMapper toolDTOMapper) {
-        this.toolDTOMapper = toolDTOMapper;
-    }
+   public InspectionDTOMapper() { }
 
     @Override
     public InspectionResponseDTO mapToDto(InspectionEntity model) {
@@ -26,9 +23,20 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
         result.setId(model.getId());
         result.setInspectionDate(model.getInspectionDate());
         result.setInspectionType(model.getInspectionType());
+        result.setInspectionPassed(model.getInspectionPassed());
+        result.setComments(model.getComments());
         result.setNextDueDate(model.getNextDueDate());
         result.setInspectionInterval(model.getInspectionInterval());
-        result.setTool(toolDTOMapper.mapToDto(model.getTool()));
+        result.setToolId(model.getTool() != null ? model.getTool().getId() : null);
+        result.setToolKitId(model.getToolKit() != null ? model.getToolKit().getId() : null);
+
+        if (model.getTool() != null) {
+            result.setInspectionItemId(model.getTool().getItemId());
+        } else if (model.getToolKit() != null) {
+            result.setInspectionItemId(model.getToolKit().getItemId());
+        } else {
+            result.setInspectionItemId(null);
+        }
         return result;
     }
 
