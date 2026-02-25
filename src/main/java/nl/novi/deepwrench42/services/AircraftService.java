@@ -1,5 +1,6 @@
 package nl.novi.deepwrench42.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
@@ -44,7 +45,19 @@ public class AircraftService{
 
     @Transactional
     public AircraftResponseDTO createAircraft(AircraftRequestDTO model) {
-        AircraftEntity aircraftEntity = aircraftDTOMapper.mapToEntity(model);
+        AircraftEntity aircraftEntity = new AircraftEntity();
+        aircraftEntity.setRegistration(model.getRegistration());
+        aircraftEntity.setShipNumber(model.getShipNumber());
+
+        AircraftTypeEntity type = aircraftTypeRepository.findById(model.getAircraftTypeId())
+                .orElseThrow(() -> new RecordNotFoundException("Aircraft Type " + model.getAircraftTypeId() + " not found"));
+        aircraftEntity.setAircraftType(type);
+
+        EngineTypeEntity engine = engineTypeRepository.findById(model.getEngineTypeId())
+                .orElseThrow(() -> new RecordNotFoundException("Engine Type " + model.getEngineTypeId() + " not found"));
+        aircraftEntity.setEngineType(engine);
+
+
         aircraftEntity = aircraftRepository.save(aircraftEntity);
         return aircraftDTOMapper.mapToDto(aircraftEntity);
     }

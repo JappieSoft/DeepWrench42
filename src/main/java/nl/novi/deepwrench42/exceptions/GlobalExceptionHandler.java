@@ -33,4 +33,12 @@ public class GlobalExceptionHandler {
     public String handleException(Exception ex){
         return "There was an error on the server side";
     }
+
+    @ExceptionHandler(ForeignKeyViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public String handleForeignKeyViolation(ForeignKeyViolationException ex) {
+        return ex.getMessage();
+    }
+
 }

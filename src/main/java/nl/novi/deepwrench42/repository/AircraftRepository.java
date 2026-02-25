@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AircraftRepository extends JpaRepository<AircraftEntity, Long> {
+    boolean existsByAircraftTypeId(Long aircraftTypeId);
 }

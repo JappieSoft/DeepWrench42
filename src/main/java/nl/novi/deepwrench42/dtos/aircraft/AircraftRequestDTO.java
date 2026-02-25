@@ -9,9 +9,9 @@ public class AircraftRequestDTO {
     @NotBlank(message = "Registration cannot be blank")
     @Size(min = 3, max = 20, message = "Registration must be between 3 & 20 characters long")
     private String registration;
-    @NotNull
+    @NotNull(message = "Aircraft Type cannot be blank")
     private Long aircraftTypeId ;
-    @NotNull
+    @NotNull(message = "Engine Type cannot be blank")
     private Long engineTypeId;
 
     // Getters en Setters

@@ -3,7 +3,9 @@ package nl.novi.deepwrench42.controllers;
 import jakarta.validation.Valid;
 import nl.novi.deepwrench42.dtos.aircraftType.AircraftTypeRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraftType.AircraftTypeResponseDTO;
+import nl.novi.deepwrench42.exceptions.ForeignKeyViolationException;
 import nl.novi.deepwrench42.helpers.UrlHelper;
+import nl.novi.deepwrench42.repository.AircraftRepository;
 import nl.novi.deepwrench42.services.AircraftTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,12 @@ import java.util.List;
 public class AircraftTypeController {
 
     private final AircraftTypeService aircraftTypeService;
+    private final AircraftRepository aircraftRepository;
     private final UrlHelper urlHelper;
     
-    public AircraftTypeController(AircraftTypeService aircraftTypeService, UrlHelper urlHelper) {
+    public AircraftTypeController(AircraftTypeService aircraftTypeService, AircraftRepository aircraftRepository, UrlHelper urlHelper) {
         this.aircraftTypeService = aircraftTypeService;
+        this.aircraftRepository = aircraftRepository;
         this.urlHelper = urlHelper;
     }
 
@@ -52,6 +56,9 @@ public class AircraftTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAircraftType(@PathVariable Long id) {
+        if (aircraftRepository.existsByAircraftTypeId(id)) {
+            throw new ForeignKeyViolationException("Aircraft type is referenced by existing Aircraft.");
+        }
         aircraftTypeService.deleteAircraftType(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
