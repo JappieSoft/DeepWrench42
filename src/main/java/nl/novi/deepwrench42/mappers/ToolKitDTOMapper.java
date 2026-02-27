@@ -2,6 +2,7 @@ package nl.novi.deepwrench42.mappers;
 
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
+import nl.novi.deepwrench42.entities.EquipmentStatus;
 import nl.novi.deepwrench42.entities.ToolKitEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -93,7 +94,7 @@ public class ToolKitDTOMapper implements DTOMapper<ToolKitResponseDTO, ToolKitRe
         result.setItemId(requestDTO.getItemId());
         result.setName(requestDTO.getName());
         result.setPicture(requestDTO.getPicture());
-        result.setStatus(requestDTO.getStatus());
+        result.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus()));
         result.setCheckedOutDate(requestDTO.getCheckedOutDate());
         result.setHasInspection(requestDTO.getHasInspection());
         result.setComments(requestDTO.getComments());

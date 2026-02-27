@@ -3,6 +3,7 @@ package nl.novi.deepwrench42.mappers;
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
 import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
+import nl.novi.deepwrench42.entities.EquipmentStatus;
 import nl.novi.deepwrench42.entities.ToolEntity;
 import nl.novi.deepwrench42.repository.ToolKitRepository;
 import org.springframework.context.annotation.Lazy;
@@ -22,16 +23,12 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
     private final EngineTypeDTOMapper engineTypeDTOMapper;
     private final StorageLocationDTOMapper storageLocationDTOMapper;
     private final InspectionDTOMapper inspectionDTOMapper;
-    private final UserDTOMapper userDTOMapper;
-    private final ToolKitRepository toolKitRepository;
 
-    public ToolDTOMapper(@Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper, @Lazy EngineTypeDTOMapper engineTypeDTOMapper, @Lazy StorageLocationDTOMapper storageLocationDTOMapper, @Lazy InspectionDTOMapper inspectionDTOMapper, @Lazy UserDTOMapper userDTOMapper, @Lazy ToolKitRepository toolKitRepository) {
+    public ToolDTOMapper(@Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper, @Lazy EngineTypeDTOMapper engineTypeDTOMapper, @Lazy StorageLocationDTOMapper storageLocationDTOMapper, @Lazy InspectionDTOMapper inspectionDTOMapper) {
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
         this.storageLocationDTOMapper = storageLocationDTOMapper;
         this.inspectionDTOMapper = inspectionDTOMapper;
-        this.userDTOMapper = userDTOMapper;
-        this.toolKitRepository = toolKitRepository;
     }
 
     @Override
@@ -97,7 +94,7 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
         result.setItemId(requestDTO.getItemId());
         result.setName(requestDTO.getName());
         result.setPicture(requestDTO.getPicture());
-        result.setStatus(requestDTO.getStatus());
+        result.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus()));
         result.setCheckedOutDate(requestDTO.getCheckedOutDate());
         result.setHasInspection(requestDTO.getHasInspection());
         result.setComments(requestDTO.getComments());

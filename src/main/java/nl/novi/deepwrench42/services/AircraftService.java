@@ -1,6 +1,5 @@
 package nl.novi.deepwrench42.services;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;

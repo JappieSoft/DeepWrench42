@@ -18,11 +18,11 @@ public class EquipmentRequestDTO {
     @NotNull(message = "Name is required")
     private String name;
     private String picture;
-    private StorageLocationResponseDTO storageLocation;
+    private Long storageLocation;
 
     @NotNull(message = "Equipment status is required")
-    private EquipmentStatus status;
-    private UserResponseDTO checkedOutBy;
+    private String status;
+    private Long checkedOutBy;
     private LocalDateTime checkedOutDate;
     private Boolean hasInspection;
     private String comments;
@@ -40,14 +40,14 @@ public class EquipmentRequestDTO {
     public String getPicture() {    return picture; }
     public void setPicture(String picture) {    this.picture = picture; }
 
-    public StorageLocationResponseDTO getStorageLocation() { return storageLocation; }
-    public void setStorageLocation(StorageLocationResponseDTO storageLocation) { this.storageLocation = storageLocation; }
+    public Long getStorageLocation() { return storageLocation; }
+    public void setStorageLocation(Long storageLocation) { this.storageLocation = storageLocation; }
 
-    public EquipmentStatus getStatus() {    return status;  }
-    public void setStatus(EquipmentStatus status) { this.status = status;   }
+    public String getStatus() {    return status;  }
+    public void setStatus(String status) { this.status = status;   }
 
-    public UserResponseDTO getCheckedOutBy() {   return checkedOutBy;    }
-    public void setCheckedOutBy(UserResponseDTO checkedOutBy) {  this.checkedOutBy = checkedOutBy;   }
+    public Long getCheckedOutBy() {   return checkedOutBy;    }
+    public void setCheckedOutBy(Long checkedOutBy) {  this.checkedOutBy = checkedOutBy;   }
 
     public LocalDateTime getCheckedOutDate() {return checkedOutDate;  }
     public void setCheckedOutDate(LocalDateTime checkedOutDate) {   this.checkedOutDate = checkedOutDate;   }

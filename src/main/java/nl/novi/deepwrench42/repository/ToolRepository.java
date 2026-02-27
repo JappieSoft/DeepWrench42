@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ToolRepository extends JpaRepository<ToolEntity, Long> {
-
     Optional<ToolEntity> findByItemId(String itemId);
+    boolean existsByStorageLocationId(Long storageLocationId);
 }

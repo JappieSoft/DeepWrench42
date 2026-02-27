@@ -3,14 +3,15 @@ package nl.novi.deepwrench42.services;
 import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
-import nl.novi.deepwrench42.entities.ToolKitEntity;
+import nl.novi.deepwrench42.entities.*;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.ToolKitDTOMapper;
 import nl.novi.deepwrench42.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class ToolKitService {
@@ -19,14 +20,18 @@ public class ToolKitService {
     private final AircraftTypeRepository aircraftTypeRepository;
     private final EngineTypeRepository engineTypeRepository;
     private final InspectionRepository inspectionRepository;
+    private final StorageLocationRepository storageLocationRepository;
+    private final UserRepository userRepository;
     private final ToolKitDTOMapper toolKitDTOMapper;
 
-    public ToolKitService(ToolRepository toolRepository, ToolKitRepository toolKitRepository, AircraftTypeRepository aircraftTypeRepository, EngineTypeRepository engineTypeRepository, InspectionRepository inspectionRepository, ToolKitDTOMapper toolKitDTOMapper) {
+    public ToolKitService(ToolRepository toolRepository, ToolKitRepository toolKitRepository, AircraftTypeRepository aircraftTypeRepository, EngineTypeRepository engineTypeRepository, InspectionRepository inspectionRepository, StorageLocationRepository storageLocationRepository, UserRepository userRepository, ToolKitDTOMapper toolKitDTOMapper) {
         this.toolRepository = toolRepository;
         this.toolKitRepository = toolKitRepository;
         this.aircraftTypeRepository = aircraftTypeRepository;
         this.engineTypeRepository = engineTypeRepository;
         this.inspectionRepository = inspectionRepository;
+        this.storageLocationRepository = storageLocationRepository;
+        this.userRepository = userRepository;
         this.toolKitDTOMapper = toolKitDTOMapper;
     }
 
@@ -44,21 +49,153 @@ public class ToolKitService {
     @Transactional
     public ToolKitResponseDTO createToolKit(ToolKitRequestDTO model) {
         ToolKitEntity toolKitEntity = toolKitDTOMapper.mapToEntity(model);
-        mapIdsToEntities(toolKitEntity, model);
+
+        toolKitEntity.setEquipmentType(model.getEquipmentType());
+        toolKitEntity.setItemId(model.getItemId());
+        toolKitEntity.setName(model.getName());
+        toolKitEntity.setPicture(model.getPicture());
+        if (model.getStorageLocation() != null) {
+            Long storageLocationId = model.getStorageLocation();
+
+            if (toolRepository.existsByStorageLocationId(storageLocationId)) {
+                throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool");
+            }
+            if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
+                throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
+            }
+
+            StorageLocationEntity storageLocation = storageLocationRepository
+                    .findById(storageLocationId)
+                    .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
+            toolKitEntity.setStorageLocation(storageLocation);
+        }
+        if (model.getStatus() != null) {
+            toolKitEntity.setStatus(EquipmentStatus.valueOf(model.getStatus().toUpperCase()));
+        }
+        if (model.getCheckedOutBy() != null) {
+            UserEntity checkedOutBy = userRepository
+                    .findById(model.getCheckedOutBy())
+                    .orElseThrow(() -> new RecordNotFoundException("User not found"));
+            toolKitEntity.setCheckedOutBy(checkedOutBy);
+        }
+        toolKitEntity.setCheckedOutDate(model.getCheckedOutDate());
+        toolKitEntity.setHasInspection(model.getHasInspection());
+        toolKitEntity.setComments(model.getComments());
+
+        //Toolkit-specific
+        Set<Long> toolIds = model.getKitContentsIds();
+        List<ToolEntity> toolList = toolRepository.findAllById(toolIds);
+        if (toolList.isEmpty()) {
+            throw new RecordNotFoundException("No Tool found: " + toolIds);
+        }
+        toolKitEntity.setKitContents(new HashSet<>(toolList));
+
+        toolKitEntity.setToolKitType(model.getToolKitType());
+        toolKitEntity.setAtaCode(model.getAtaCode());
+        toolKitEntity.setPartNumber(model.getPartNumber());
+        toolKitEntity.setSerialNumber(model.getSerialNumber());
+        toolKitEntity.setManufacturer(model.getManufacturer());
+        Set<Long> aircraftTypeIds = model.getApplicableAircraftTypeIds();
+        List<AircraftTypeEntity> aircraftTypesList = aircraftTypeRepository.findAllById(aircraftTypeIds);
+        if (aircraftTypesList.isEmpty()) {
+            throw new RecordNotFoundException("No Aircraft Types found: " + aircraftTypeIds);
+        }
+        toolKitEntity.setApplicableAircraftTypes(new HashSet<>(aircraftTypesList));
+        Set<Long> engineTypeIds = model.getApplicableEngineTypeIds();
+        List<EngineTypeEntity> engineTypesList = engineTypeRepository.findAllById(engineTypeIds);
+        if (engineTypesList.isEmpty()) {
+            throw new RecordNotFoundException("No Engine Types found: " + engineTypeIds);
+        }
+        toolKitEntity.setApplicableEngineTypes(new HashSet<>(engineTypesList));
+        toolKitEntity.setIsCalibrated(model.getIsCalibrated());
+        if (model.getInspectionId() != null) {
+            InspectionEntity inspection = inspectionRepository
+                    .findById(model.getInspectionId())
+                    .orElseThrow(() -> new RecordNotFoundException("Inspection not found"));
+            toolKitEntity.setInspection(inspection);
+        }
+
         toolKitEntity = toolKitRepository.save(toolKitEntity);
         return toolKitDTOMapper.mapToDto(toolKitEntity);
     }
 
     @Transactional
     public ToolKitResponseDTO updateToolKit(Long id, ToolKitRequestDTO requestDto) {
-        ToolKitEntity existingEntity = getToolKitEntity(id);
-        mapIdsToEntities(existingEntity, requestDto);
+        ToolKitEntity existingEntity = toolKitRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Tool " + id + " not found"));
+
+        existingEntity.setEquipmentType(requestDto.getEquipmentType());
+        existingEntity.setItemId(requestDto.getItemId());
+        existingEntity.setName(requestDto.getName());
+        existingEntity.setPicture(requestDto.getPicture());
+        if (requestDto.getStorageLocation() != null) {
+            Long storageLocationId = requestDto.getStorageLocation();
+            if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
+                if (toolRepository.existsByStorageLocationId(storageLocationId)) {
+                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " is already assigned to another tool");
+                }
+                if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
+                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
+                }
+            }
+
+            StorageLocationEntity storageLocation = storageLocationRepository
+                    .findById(storageLocationId)
+                    .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
+            existingEntity.setStorageLocation(storageLocation);
+        }
+        if (requestDto.getStatus() != null) {
+            existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
+        }
+        if (requestDto.getCheckedOutBy() != null) {
+            UserEntity checkedOutBy = userRepository
+                    .findById(requestDto.getCheckedOutBy())
+                    .orElseThrow(() -> new RecordNotFoundException("User not found"));
+            existingEntity.setCheckedOutBy(checkedOutBy);
+        }
+        existingEntity.setCheckedOutDate(requestDto.getCheckedOutDate());
+        existingEntity.setHasInspection(requestDto.getHasInspection());
+        existingEntity.setComments(requestDto.getComments());
+
+        //Toolkit-specific
+        if (requestDto.getKitContentsIds() != null) {
+            Set<Long> toolIds = requestDto.getKitContentsIds();
+            List<ToolEntity> tools = toolRepository.findAllById(toolIds);
+            if (tools.isEmpty() && !toolIds.isEmpty()) {
+                throw new RecordNotFoundException("No Tools found: " + toolIds);
+            }
+
+            existingEntity.getKitContents().clear();
+            ToolKitEntity updatedExistingEntity = existingEntity;
+            tools.forEach(tool -> {
+                tool.setToolKit(updatedExistingEntity);
+                updatedExistingEntity.getKitContents().add(tool);
+            });
+        }
         existingEntity.setToolKitType(requestDto.getToolKitType());
         existingEntity.setAtaCode(requestDto.getAtaCode());
         existingEntity.setPartNumber(requestDto.getPartNumber());
         existingEntity.setSerialNumber(requestDto.getSerialNumber());
         existingEntity.setManufacturer(requestDto.getManufacturer());
+        Set<Long> aircraftTypeIds = requestDto.getApplicableAircraftTypeIds();
+        List<AircraftTypeEntity> aircraftTypesList = aircraftTypeRepository.findAllById(aircraftTypeIds);
+        if (aircraftTypesList.isEmpty()) {
+            throw new RecordNotFoundException("No Aircraft Types found: " + aircraftTypeIds);
+        }
+        existingEntity.setApplicableAircraftTypes(new HashSet<>(aircraftTypesList));
+        Set<Long> engineTypeIds = requestDto.getApplicableEngineTypeIds();
+        List<EngineTypeEntity> engineTypesList = engineTypeRepository.findAllById(engineTypeIds);
+        if (engineTypesList.isEmpty()) {
+            throw new RecordNotFoundException("No Engine Types found: " + engineTypeIds);
+        }
+        existingEntity.setApplicableEngineTypes(new HashSet<>(engineTypesList));
         existingEntity.setIsCalibrated(requestDto.getIsCalibrated());
+        if (requestDto.getInspectionId() != null) {
+            InspectionEntity inspection = inspectionRepository
+                    .findById(requestDto.getInspectionId())
+                    .orElseThrow(() -> new RecordNotFoundException("Inspection not found"));
+            existingEntity.setInspection(inspection);
+        }
 
         existingEntity = toolKitRepository.save(existingEntity);
         return toolKitDTOMapper.mapToDto(existingEntity);
@@ -71,7 +208,7 @@ public class ToolKitService {
     }
 
 
-    private void mapIdsToEntities(ToolKitEntity entity, ToolKitRequestDTO requestDto) {
+/*    private void mapIdsToEntities(ToolKitEntity entity, ToolKitRequestDTO requestDto) {
         if (requestDto.getApplicableAircraftTypeIds() != null && !requestDto.getApplicableAircraftTypeIds().isEmpty()) {
             entity.setApplicableAircraftTypes(
                     requestDto.getApplicableAircraftTypeIds().stream()
@@ -86,7 +223,7 @@ public class ToolKitService {
                             .collect(Collectors.toSet())
             );
         }
-        if (requestDto.getInspectionId() != null) {  // FIXED
+        if (requestDto.getInspectionId() != null) {
             entity.setInspection(inspectionRepository.getReferenceById(requestDto.getInspectionId()));
         }
         if (requestDto.getKitContentsIds() != null && !requestDto.getKitContentsIds().isEmpty()) {
@@ -96,7 +233,7 @@ public class ToolKitService {
                             .collect(Collectors.toSet())
             );
         }
-    }
+    }*/
 
     private ToolKitEntity getToolKitEntity(Long id) {
         return toolKitRepository.findById(id)

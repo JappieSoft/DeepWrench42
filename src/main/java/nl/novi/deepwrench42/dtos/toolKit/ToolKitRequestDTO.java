@@ -19,7 +19,8 @@ public class ToolKitRequestDTO extends EquipmentRequestDTO {
     private String toolKitType;
 
     @NotNull(message = "ATA code required")
-    @Size(min = 4, max = 4, message = "ATA code must be entered with 4 numbers")
+    @Min(value = 0, message = "ATA code must be positive")
+    @Digits(integer = 4, fraction = 0, message = "ATA code must be exactly 4 digits")
     private Integer ataCode;
 
     @NotBlank(message = "Part number cannot be blank")

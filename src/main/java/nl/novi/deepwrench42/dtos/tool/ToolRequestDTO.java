@@ -2,13 +2,7 @@ package nl.novi.deepwrench42.dtos.tool;
 
 import jakarta.validation.constraints.*;
 import nl.novi.deepwrench42.dtos.equipment.EquipmentRequestDTO;
-import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
-import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
-import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
-import nl.novi.deepwrench42.entities.EquipmentStatus;
-import nl.novi.deepwrench42.entities.EquipmentType;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +12,8 @@ public class ToolRequestDTO extends EquipmentRequestDTO {
     private String toolType;
 
     @NotNull(message = "ATA code required")
-    @Size(min = 4, max = 4, message = "ATA code must be entered with 4 numbers")
+    @Min(value = 0, message = "ATA code must be positive")
+    @Digits(integer = 4, fraction = 0, message = "ATA code must be exactly 4 digits")
     private Integer ataCode;
 
     @NotBlank(message = "Part number cannot be blank")
@@ -40,7 +35,6 @@ public class ToolRequestDTO extends EquipmentRequestDTO {
 
     private Long inspectionId;
     private Long toolKitId;
-    private String toolKitItemId;
 
     // Getters en Setters
        public String getToolType() {   return toolType;    }
@@ -72,7 +66,4 @@ public class ToolRequestDTO extends EquipmentRequestDTO {
 
     public Long getToolKitId() {    return toolKitId;   }
     public void setToolKitId(Long toolKitId) {  this.toolKitId = toolKitId; }
-
-    public String getToolKitItemId() {  return toolKitItemId;   }
-    public void setToolKitItemId(String toolKitItemId) {    this.toolKitItemId = toolKitItemId; }
 }
