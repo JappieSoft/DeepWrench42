@@ -14,17 +14,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class ToolKitDTOMapper implements DTOMapper<ToolKitResponseDTO, ToolKitRequestDTO, ToolKitEntity> {
+public class ToolKitDTOMapper extends EquipmentDTOMapper implements DTOMapper<ToolKitResponseDTO, ToolKitRequestDTO, ToolKitEntity> {
 
-    private final StorageLocationDTOMapper storageLocationDTOMapper;
     private final AircraftTypeDTOMapper aircraftTypeDTOMapper;
     private final EngineTypeDTOMapper engineTypeDTOMapper;
     private final InspectionDTOMapper inspectionDTOMapper;
     private final ToolDTOMapper toolDTOMapper;
 
-    public ToolKitDTOMapper(StorageLocationDTOMapper storageLocationDTOMapper, @Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper, @Lazy EngineTypeDTOMapper engineTypeDTOMapper, @Lazy InspectionDTOMapper inspectionDTOMapper, @Lazy ToolDTOMapper toolDTOMapper) {
+    public ToolKitDTOMapper(
+            @Lazy AircraftDTOMapper aircraftDTOMapper,
+            @Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper,
+            @Lazy EngineTypeDTOMapper engineTypeDTOMapper,
+            @Lazy StorageLocationDTOMapper storageLocationDTOMapper,
+            @Lazy UserDTOMapper userDTOMapper,
+            @Lazy InspectionDTOMapper inspectionDTOMapper,
+            @Lazy ToolDTOMapper toolDTOMapper
+    ) {
 
-        this.storageLocationDTOMapper = storageLocationDTOMapper;
+        super(storageLocationDTOMapper, userDTOMapper, aircraftDTOMapper);
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
         this.inspectionDTOMapper = inspectionDTOMapper;
@@ -36,16 +43,7 @@ public class ToolKitDTOMapper implements DTOMapper<ToolKitResponseDTO, ToolKitRe
         if (model == null) return null;
 
         ToolKitResponseDTO result = new ToolKitResponseDTO();
-        result.setId(model.getId());
-        result.setEquipmentType(model.getEquipmentType());
-        result.setItemId(model.getItemId());
-        result.setName(model.getName());
-        result.setPicture(model.getPicture());
-        result.setStorageLocation(storageLocationDTOMapper.mapToDto(model.getStorageLocation()));
-        result.setStatus(model.getStatus());
-        result.setCheckedOutDate(model.getCheckedOutDate());
-        result.setHasInspection(model.getHasInspection());
-        result.setComments(model.getComments());
+        equipmentMapToDto(model, result);
 
         result.setKitContents(
                 new HashSet<>(
@@ -90,14 +88,8 @@ public class ToolKitDTOMapper implements DTOMapper<ToolKitResponseDTO, ToolKitRe
         if (requestDTO == null) return null;
 
         ToolKitEntity result = new ToolKitEntity();
-        result.setEquipmentType(requestDTO.getEquipmentType());
-        result.setItemId(requestDTO.getItemId());
-        result.setName(requestDTO.getName());
-        result.setPicture(requestDTO.getPicture());
-        result.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus()));
-        result.setCheckedOutDate(requestDTO.getCheckedOutDate());
-        result.setHasInspection(requestDTO.getHasInspection());
-        result.setComments(requestDTO.getComments());
+        mapToEquipmentEntity(requestDTO, result);
+
         result.setToolKitType(requestDTO.getToolKitType());
         result.setAtaCode(requestDTO.getAtaCode());
         result.setPartNumber(requestDTO.getPartNumber());

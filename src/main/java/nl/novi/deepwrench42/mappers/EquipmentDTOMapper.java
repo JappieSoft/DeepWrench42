@@ -1,7 +1,12 @@
 package nl.novi.deepwrench42.mappers;
 
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckInResponseDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutResponseDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentRequestDTO;
 import nl.novi.deepwrench42.dtos.equipment.EquipmentResponseDTO;
 import nl.novi.deepwrench42.entities.EquipmentEntity;
+import nl.novi.deepwrench42.entities.EquipmentStatus;
+import nl.novi.deepwrench42.entities.ToolLogEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -13,16 +18,16 @@ import java.util.stream.Collectors;
 public class EquipmentDTOMapper{
 
     private final StorageLocationDTOMapper storageLocationDTOMapper;
-    @Lazy
-    private final InspectionDTOMapper inspectionDTOMapper;
     private final UserDTOMapper userDTOMapper;
+    private final AircraftDTOMapper aircraftDTOMapper;
 
-     public EquipmentDTOMapper(StorageLocationDTOMapper storageLocationDTOMapper, InspectionDTOMapper inspectionDTOMapper, UserDTOMapper userDTOMapper) {this.storageLocationDTOMapper = storageLocationDTOMapper; this.inspectionDTOMapper = inspectionDTOMapper; this.userDTOMapper = userDTOMapper;}
+     public EquipmentDTOMapper(StorageLocationDTOMapper storageLocationDTOMapper, UserDTOMapper userDTOMapper, AircraftDTOMapper aircraftDTOMapper) {
+         this.storageLocationDTOMapper = storageLocationDTOMapper;
+         this.userDTOMapper = userDTOMapper;
+         this.aircraftDTOMapper = aircraftDTOMapper;
+     }
 
-        public EquipmentResponseDTO mapToDto(EquipmentEntity model) {
-            if (model == null) return null;
-
-            var result = new EquipmentResponseDTO();
+        protected EquipmentResponseDTO equipmentMapToDto(EquipmentEntity model, EquipmentResponseDTO result) {
             result.setId(model.getId());
             result.setEquipmentType(model.getEquipmentType());
             result.setItemId(model.getItemId());
@@ -38,13 +43,14 @@ public class EquipmentDTOMapper{
             return result;
         }
 
-        public List<EquipmentResponseDTO> mapToDto(List<EquipmentEntity> models) {
-            if (models == null || models.isEmpty()) return List.of();
-
-            return models.stream()
-                    .map(this::mapToDto)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
+        protected void mapToEquipmentEntity(EquipmentRequestDTO requestDTO, EquipmentEntity entity) {
+            entity.setEquipmentType(requestDTO.getEquipmentType());
+            entity.setItemId(requestDTO.getItemId());
+            entity.setName(requestDTO.getName());
+            entity.setPicture(requestDTO.getPicture());
+            entity.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus().toUpperCase()));
+            entity.setCheckedOutDate(requestDTO.getCheckedOutDate());
+            entity.setHasInspection(requestDTO.getHasInspection());
+            entity.setComments(requestDTO.getComments());
         }
-
 }

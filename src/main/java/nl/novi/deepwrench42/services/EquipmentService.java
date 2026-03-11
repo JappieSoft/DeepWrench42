@@ -1,46 +1,108 @@
-/*
 package nl.novi.deepwrench42.services;
 
-import jakarta.transaction.Transactional;
-import nl.novi.deepwrench42.dtos.equipement.EquipmentResponseDTO;
-import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
-import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckInRequestDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckInResponseDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutRequestDTO;
+import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutResponseDTO;
+import nl.novi.deepwrench42.entities.AircraftEntity;
 import nl.novi.deepwrench42.entities.ToolEntity;
 import nl.novi.deepwrench42.entities.ToolKitEntity;
-import nl.novi.deepwrench42.mappers.EquipmentDTOMapper;
-import nl.novi.deepwrench42.mappers.ToolDTOMapper;
-import nl.novi.deepwrench42.mappers.ToolKitDTOMapper;
+import nl.novi.deepwrench42.entities.UserEntity;
+import nl.novi.deepwrench42.helpers.CheckInHelper;
+import nl.novi.deepwrench42.helpers.CheckOutHelper;
+import nl.novi.deepwrench42.helpers.ToolExpiryHelper;
+import nl.novi.deepwrench42.helpers.ToolStatusHelper;
+import nl.novi.deepwrench42.repository.AircraftRepository;
 import nl.novi.deepwrench42.repository.ToolKitRepository;
 import nl.novi.deepwrench42.repository.ToolRepository;
+import nl.novi.deepwrench42.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-@Transactional
 public class EquipmentService {
-    private final ToolDTOMapper toolDTOMapper;
+
     private final ToolRepository toolRepository;
-    private final EquipmentDTOMapper equipmentDTOMapper;
-    private final ToolKitDTOMapper toolKitDTOMapper;
     private final ToolKitRepository toolKitRepository;
+    private final UserRepository userRepository;
+    private final AircraftRepository aircraftRepository;
+    private final ToolStatusHelper toolStatusHelper;
+    private final ToolExpiryHelper toolExpiryHelper;
+    private final CheckOutHelper checkOutHelper;
+    private final CheckInHelper checkInHelper;
 
-    public EquipmentService(ToolDTOMapper toolDTOMapper, ToolRepository toolRepository, EquipmentDTOMapper equipmentDTOMapper, ToolKitDTOMapper toolKitDTOMapper, ToolKitRepository toolKitRepository) {
-        this.toolDTOMapper = toolDTOMapper;
+    public EquipmentService(ToolRepository toolRepository,
+                            ToolKitRepository toolKitRepository,
+                            UserRepository userRepository,
+                            AircraftRepository aircraftRepository,
+                            ToolStatusHelper toolStatusHelper,
+                            ToolExpiryHelper toolExpiryHelper,
+                            CheckOutHelper checkOutHelper,
+                            CheckInHelper checkInHelper
+    ) {
         this.toolRepository = toolRepository;
-        this.equipmentDTOMapper = equipmentDTOMapper;
-        this.toolKitDTOMapper = toolKitDTOMapper;
         this.toolKitRepository = toolKitRepository;
+        this.userRepository = userRepository;
+        this.aircraftRepository = aircraftRepository;
+        this.toolStatusHelper = toolStatusHelper;
+        this.toolExpiryHelper = toolExpiryHelper;
+        this.checkOutHelper = checkOutHelper;
+        this.checkInHelper = checkInHelper;
     }
 
-    public EquipmentResponseDTO createTool(ToolRequestDTO dto) {
-        ToolEntity tool = toolDTOMapper.mapToEntity(dto);
-        ToolEntity saved = toolRepository.save(tool);
-        return equipmentDTOMapper.mapToDto(saved);
+    public EquipmentCheckOutResponseDTO checkOut(EquipmentCheckOutRequestDTO requestDTO) {
+        UserEntity user = userRepository.findByEmployeeId(requestDTO.getEmployeeNumber())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        AircraftEntity aircraft = aircraftRepository.findByShipNumber(requestDTO.getAircraft())
+                .orElseThrow(() -> new IllegalArgumentException("Aircraft not found"));
+
+        // Tool
+        Optional<ToolEntity> selectedTool = toolRepository.findByItemId(requestDTO.getEquipmentItemId());
+        if (selectedTool.isPresent()) {
+            ToolEntity tool = selectedTool.get();
+            toolExpiryHelper.checkDueDateTool(tool);
+            toolStatusHelper.validateForCheckOut(tool);
+            return checkOutHelper.performToolCheckOut(tool, user, requestDTO);
+        }
+
+        // ToolKit
+        Optional<ToolKitEntity> selectedToolKit = toolKitRepository.findByItemId(requestDTO.getEquipmentItemId());
+        if (selectedToolKit.isPresent()) {
+            ToolKitEntity kit = selectedToolKit.get();
+            toolExpiryHelper.checkDueDateToolKit(kit);
+            toolStatusHelper.validateForCheckOut(kit);
+            return checkOutHelper.performToolKitCheckOut(kit, user, requestDTO);
+        }
+
+        throw new IllegalArgumentException("No tool or toolkit found with itemId: " + requestDTO.getEquipmentItemId());
     }
 
-    public EquipmentResponseDTO createToolKit(ToolKitRequestDTO dto) {
-        ToolKitEntity kit = toolKitDTOMapper.mapToEntity(dto);
-        ToolKitEntity saved = toolKitRepository.save(kit);
-        return equipmentDTOMapper.mapToDto(saved);
+    public EquipmentCheckInResponseDTO checkIn(EquipmentCheckInRequestDTO requestDTO) {
+        UserEntity user = userRepository.findByEmployeeId(requestDTO.getEmployeeNumber())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        AircraftEntity aircraft = aircraftRepository.findByShipNumber(requestDTO.getAircraft())
+                .orElseThrow(() -> new IllegalArgumentException("Aircraft not found"));
+
+        // Tool
+        Optional<ToolEntity> selectedTool = toolRepository.findByItemId(requestDTO.getEquipmentItemId());
+        if (selectedTool.isPresent()) {
+            ToolEntity tool = selectedTool.get();
+            toolStatusHelper.validateForCheckIn(tool);
+            return checkInHelper.performToolCheckIn(tool, user, requestDTO);
+        }
+
+        // ToolKit
+        Optional<ToolKitEntity> selectedToolKit = toolKitRepository.findByItemId(requestDTO.getEquipmentItemId());
+        if (selectedToolKit.isPresent()) {
+            ToolKitEntity kit = selectedToolKit.get();
+            toolStatusHelper.validateForCheckIn(kit);
+            return checkInHelper.performToolKitCheckIn(kit, user, requestDTO);
+        }
+
+        throw new IllegalArgumentException("No tool or toolkit found with itemId: " + requestDTO.getEquipmentItemId());
     }
 }
-*/

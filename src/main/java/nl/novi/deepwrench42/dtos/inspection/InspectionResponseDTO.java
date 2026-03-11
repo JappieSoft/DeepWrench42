@@ -17,7 +17,7 @@ public class InspectionResponseDTO {
     private Integer inspectionInterval;
     private Long toolId;
     private Long toolKitId;
-    private String inspectionItemId;
+    private String equipmentItemId;
 
     // Getters en Setters
     public Long getId() {   return id;  }
@@ -47,6 +47,6 @@ public class InspectionResponseDTO {
     public Long getToolKitId() { return toolKitId; }
     public void setToolKitId(Long toolKitId) { this.toolKitId = toolKitId; }
 
-    public String getInspectionItemId() { return inspectionItemId; }
-    public void setInspectionItemId(String inspectionItemId) { this.inspectionItemId = inspectionItemId; }
+    public String getEquipmentItemId() { return equipmentItemId; }
+    public void setEquipmentItemId(String equipmentItemId) { this.equipmentItemId = equipmentItemId; }
 }

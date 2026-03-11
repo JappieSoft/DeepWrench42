@@ -1,6 +1,9 @@
 package nl.novi.deepwrench42.dtos.equipment;
 
+import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
+import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
+import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.entities.*;
 

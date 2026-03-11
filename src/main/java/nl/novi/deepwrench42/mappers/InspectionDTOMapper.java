@@ -31,11 +31,11 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
         result.setToolKitId(model.getToolKit() != null ? model.getToolKit().getId() : null);
 
         if (model.getTool() != null) {
-            result.setInspectionItemId(model.getTool().getItemId());
+            result.setEquipmentItemId(model.getTool().getItemId());
         } else if (model.getToolKit() != null) {
-            result.setInspectionItemId(model.getToolKit().getItemId());
+            result.setEquipmentItemId(model.getToolKit().getItemId());
         } else {
-            result.setInspectionItemId(null);
+            result.setEquipmentItemId(null);
         }
         return result;
     }

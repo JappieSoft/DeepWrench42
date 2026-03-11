@@ -16,11 +16,9 @@ import java.util.List;
 public class ToolLogController {
 
     private final ToolLogService toolLogService;
-    private final UrlHelper urlHelper;
 
-    public ToolLogController(ToolLogService toolLogService, UrlHelper urlHelper) {
+    public ToolLogController(ToolLogService toolLogService) {
         this.toolLogService = toolLogService;
-        this.urlHelper = urlHelper;
     }
 
     @GetMapping
@@ -37,26 +35,4 @@ public class ToolLogController {
         }
         return new ResponseEntity<ToolLogResponseDTO>(toolLog, HttpStatus.OK);
     }
-
-    // Below will not be things to use due to the append only character! //
-/*
-
-    @PostMapping
-    public ResponseEntity<ToolLogResponseDTO> createToolLog(@Valid @RequestBody ToolLogRequestDTO toolLogInput) {
-        ToolLogResponseDTO newToolLog = toolLogService.createToolLog(toolLogInput);
-        return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newToolLog.getId())).body(newToolLog);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ToolLogResponseDTO> updateToolLog(@PathVariable Long id, @Valid @RequestBody ToolLogRequestDTO toolLogInput) {
-        ToolLogResponseDTO updatedToolLog = toolLogService.updateToolLog(id, toolLogInput);
-        return new ResponseEntity<>(updatedToolLog, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteToolLog(@PathVariable Long id) {
-        toolLogService.deleteToolLog(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*//*
-     */
 }

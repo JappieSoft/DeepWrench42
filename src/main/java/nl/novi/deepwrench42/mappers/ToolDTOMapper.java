@@ -17,17 +17,23 @@ import java.util.stream.Collectors;
 
 
 @Component
-public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO, ToolEntity> {
+public class ToolDTOMapper extends EquipmentDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO, ToolEntity> {
 
     private final AircraftTypeDTOMapper aircraftTypeDTOMapper;
     private final EngineTypeDTOMapper engineTypeDTOMapper;
-    private final StorageLocationDTOMapper storageLocationDTOMapper;
     private final InspectionDTOMapper inspectionDTOMapper;
 
-    public ToolDTOMapper(@Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper, @Lazy EngineTypeDTOMapper engineTypeDTOMapper, @Lazy StorageLocationDTOMapper storageLocationDTOMapper, @Lazy InspectionDTOMapper inspectionDTOMapper) {
+    public ToolDTOMapper(
+            @Lazy AircraftDTOMapper aircraftDTOMapper,
+            @Lazy AircraftTypeDTOMapper aircraftTypeDTOMapper,
+            @Lazy EngineTypeDTOMapper engineTypeDTOMapper,
+            @Lazy StorageLocationDTOMapper storageLocationDTOMapper,
+            @Lazy UserDTOMapper userDTOMapper,
+            @Lazy InspectionDTOMapper inspectionDTOMapper
+    ) {
+        super(storageLocationDTOMapper, userDTOMapper, aircraftDTOMapper);
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
-        this.storageLocationDTOMapper = storageLocationDTOMapper;
         this.inspectionDTOMapper = inspectionDTOMapper;
     }
 
@@ -36,16 +42,8 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
         if (model == null) return null;
 
         ToolResponseDTO result = new ToolResponseDTO();
-        result.setId(model.getId());
-        result.setEquipmentType(model.getEquipmentType());
-        result.setItemId(model.getItemId());
-        result.setName(model.getName());
-        result.setPicture(model.getPicture());
-        result.setStorageLocation(storageLocationDTOMapper.mapToDto(model.getStorageLocation()));
-        result.setStatus(model.getStatus());
-        result.setCheckedOutDate(model.getCheckedOutDate());
-        result.setHasInspection(model.getHasInspection());
-        result.setComments(model.getComments());
+        equipmentMapToDto(model, result);
+
         result.setToolType(model.getToolType());
         result.setAtaCode(model.getAtaCode());
         result.setPartNumber(model.getPartNumber());
@@ -90,14 +88,8 @@ public class ToolDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO,
         if (requestDTO == null) return null;
 
         ToolEntity result = new ToolEntity();
-        result.setEquipmentType(requestDTO.getEquipmentType());
-        result.setItemId(requestDTO.getItemId());
-        result.setName(requestDTO.getName());
-        result.setPicture(requestDTO.getPicture());
-        result.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus()));
-        result.setCheckedOutDate(requestDTO.getCheckedOutDate());
-        result.setHasInspection(requestDTO.getHasInspection());
-        result.setComments(requestDTO.getComments());
+        mapToEquipmentEntity(requestDTO, result);
+
         result.setToolType(requestDTO.getToolType());
         result.setAtaCode(requestDTO.getAtaCode());
         result.setPartNumber(requestDTO.getPartNumber());

@@ -51,11 +51,12 @@ public class ToolService {
     public ToolResponseDTO createTool(ToolRequestDTO model) {
         ToolEntity toolEntity = toolDTOMapper.mapToEntity(model);
 
+        //abstract-equipment-specific
         toolEntity.setEquipmentType(model.getEquipmentType());
         toolEntity.setItemId(model.getItemId());
         toolEntity.setName(model.getName());
         toolEntity.setPicture(model.getPicture());
-        if (model.getStorageLocation() != null) {
+       /* if (model.getStorageLocation() != null) {
             Long storageLocationId = model.getStorageLocation();
 
             if (toolRepository.existsByStorageLocationId(storageLocationId)) {
@@ -69,7 +70,7 @@ public class ToolService {
                     .findById(storageLocationId)
                     .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
             toolEntity.setStorageLocation(storageLocation);
-        }
+        }*/
 
         if (model.getStatus() != null) {
             toolEntity.setStatus(EquipmentStatus.valueOf(model.getStatus().toUpperCase()));
@@ -104,7 +105,7 @@ public class ToolService {
         }
         toolEntity.setApplicableEngineTypes(new HashSet<>(engineTypesList));
         toolEntity.setIsCalibrated(model.getIsCalibrated());
-        if (model.getInspectionId() != null) {
+/*        if (model.getInspectionId() != null) {
             InspectionEntity inspection = inspectionRepository
                     .findById(model.getInspectionId())
                     .orElseThrow(() -> new RecordNotFoundException("Inspection not found"));
@@ -115,7 +116,7 @@ public class ToolService {
                     .findById(model.getToolKitId())
                     .orElseThrow(() -> new RecordNotFoundException("Tool kit not found"));
             toolEntity.setToolKit(toolKit);
-        }
+        }*/
 
         toolEntity = toolRepository.save(toolEntity);
         return toolDTOMapper.mapToDto(toolEntity);

@@ -11,5 +11,6 @@ import java.util.List;
 public interface InspectionRepository extends JpaRepository<InspectionEntity, Long> {
 
     List<InspectionEntity> findByInspectionDateBefore(LocalDateTime now);
+    List<InspectionEntity> findByInspectionDateAfter(LocalDateTime now);
     List<InspectionEntity> findOverdueByNextDueDateBefore(LocalDateTime now);
 }

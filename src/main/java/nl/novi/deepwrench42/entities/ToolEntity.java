@@ -75,10 +75,10 @@ public class ToolEntity extends EquipmentEntity{
     public Boolean getIsCalibrated() { return isCalibrated;    }
     public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
 
+    public InspectionEntity getInspection() { return inspection; }
     public void setInspection(InspectionEntity inspection) {
         this.inspection = inspection;
         if (inspection != null) {   inspection.setTool(this);   }}
-    public InspectionEntity getInspection() { return inspection; }
 
     public ToolKitEntity getToolKit() { return toolKit; }
     public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }

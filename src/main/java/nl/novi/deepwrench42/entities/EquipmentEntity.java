@@ -10,7 +10,7 @@ public abstract class EquipmentEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType = EquipmentType.TOOL;
 
-    @Column(name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private String itemId;
 
     @Column(name = "name")

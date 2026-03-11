@@ -2,8 +2,6 @@ package nl.novi.deepwrench42.dtos.equipment;
 
 
 import jakarta.validation.constraints.*;
-import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
-import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.entities.*;
 
 import java.time.LocalDateTime;
@@ -58,3 +56,4 @@ public class EquipmentRequestDTO {
     public String getComments() {   return comments;    }
     public void setComments(String comments) {  this.comments = comments;   }
 }
+

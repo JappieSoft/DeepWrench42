@@ -1,5 +1,6 @@
 package nl.novi.deepwrench42.dtos.toolLog;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import nl.novi.deepwrench42.entities.*;
 
@@ -8,39 +9,61 @@ import java.time.LocalDateTime;
 public class ToolLogRequestDTO {
 
     @NotNull
-    private ToolLogActionType actionType;
     private LocalDateTime timeStamp;
     @NotNull
-    private UserEntity actionBy;
+    private ToolLogActionType actionType;
     @NotNull
-    private Long equipmentId;
-    private ToolEntity tool;
-    private ToolKitEntity toolKit;
+    private EquipmentStatus actionResult;
     @NotNull
-    private AircraftEntity aircraft;
+    private String actionBy;
+    @NotNull
+    private String itemNumber;
+    @NotNull
+    private String itemType;
+    private String itemName;
+    private Integer ataCode;
+    private String partNumber;
+    private String serialNumber;
+    private String manufacturer;
+    private String aircraftNumber;
     private String comments;
 
     // Getters en Setters
-    public ToolLogActionType getActionType() {  return actionType;  }
-    public void setActionType(ToolLogActionType actionType) {   this.actionType = actionType;   }
-
     public LocalDateTime getTimeStamp() {   return timeStamp;   }
     public void setTimeStamp(LocalDateTime timeStamp) { this.timeStamp = timeStamp; }
 
-    public UserEntity getActionBy() {   return actionBy;    }
-    public void setActionBy(UserEntity actionBy) {  this.actionBy = actionBy;   }
+    public ToolLogActionType getActionType() {  return actionType;  }
+    public void setActionType(ToolLogActionType actionType) {   this.actionType = actionType;   }
 
-    public Long getEquipmentId() {  return equipmentId; }
-    public void setEquipmentId(Long equipmentId) {  this.equipmentId = equipmentId; }
+    public EquipmentStatus getActionResult() {   return actionResult;    }
+    public void setActionResult(EquipmentStatus actionResult) {  this.actionResult = actionResult;   }
 
-    public ToolEntity getTool() {   return tool;    }
-    public void setTool(ToolEntity tool) {  this.tool = tool;   }
+    public String getActionBy() {   return actionBy;    }
+    public void setActionBy(String actionBy) {  this.actionBy = actionBy;   }
 
-    public ToolKitEntity getToolKit() { return toolKit; }
-    public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }
+    public String getItemNumber() { return itemNumber;  }
+    public void setItemNumber(String itemNumber) {  this.itemNumber = itemNumber;   }
 
-    public AircraftEntity getAircraft() {   return aircraft;    }
-    public void setAircraft(AircraftEntity aircraft) {  this.aircraft = aircraft;   }
+    public String getItemType() {   return itemType;    }
+    public void setItemType(String itemType) {  this.itemType = itemType;   }
+
+    public String getItemName() {   return itemName;    }
+    public void setItemName(String itemName) {  this.itemName = itemName;   }
+
+    public Integer getAtaCode() {   return ataCode; }
+    public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
+
+    public String getPartNumber() { return partNumber;  }
+    public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
+
+    public String getSerialNumber() {   return serialNumber;    }
+    public void setSerialNumber(String serialNumber) {  this.serialNumber = serialNumber;   }
+
+    public String getManufacturer() {   return manufacturer;    }
+    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+
+    public String getAircraftNumber() { return aircraftNumber;  }
+    public void setAircraftNumber(String aircraftNumber) {  this.aircraftNumber = aircraftNumber;   }
 
     public String getComments() {   return comments;    }
     public void setComments(String comments) {  this.comments = comments;   }

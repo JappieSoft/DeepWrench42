@@ -2,14 +2,17 @@ package nl.novi.deepwrench42.controllers;
 
 import jakarta.validation.Valid;
 import nl.novi.deepwrench42.dtos.equipment.EquipmentResponseDTO;
+import nl.novi.deepwrench42.dtos.inspection.CompleteInspectionDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.helpers.UrlHelper;
 import nl.novi.deepwrench42.services.InspectionService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -56,22 +59,30 @@ public class InspectionController {
         inspectionService.deleteInspection(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-/*    //test2
-    @PostMapping("/{inspectionId}/performed")
-    public ResponseEntity<InspectionResponseDTO> performedInspection(
-            @PathVariable Long inspectionId,
-            @RequestBody @Valid CompletedInspectionDTO completedInspection) {
-        InspectionResponseDTO result = inspectionService.completeInspection(inspectionId, completedInspection);
-        return ResponseEntity.ok(result);
-    }*/
 
-    //test1
-    @GetMapping("/{inspectionId}/equipment")
-    public ResponseEntity<EquipmentResponseDTO> getEquipment(@PathVariable Long inspectionId) {
-        EquipmentResponseDTO equipment = inspectionService.getEquipmentForInspection(inspectionId);
-        return ResponseEntity.ok(equipment);
+    @PostMapping("/performed")
+    public ResponseEntity<InspectionResponseDTO> performedInspection( @Valid @RequestBody CompleteInspectionDTO completedInspection) {
+        InspectionResponseDTO result = inspectionService.completeInspection(completedInspection);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    @GetMapping("/find-inspection-date-before")
+    public ResponseEntity<List<InspectionResponseDTO>> findByInspectionDateBefore(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        List<InspectionResponseDTO> inspections = inspectionService.findByInspectionDateBefore(date);
+        return ResponseEntity.ok(inspections);
+    }
+
+    @GetMapping("/find-inspection-date-after")
+    public ResponseEntity<List<InspectionResponseDTO>> findByInspectionDateAfter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        List<InspectionResponseDTO> inspections = inspectionService.findByInspectionDateAfter(date);
+        return ResponseEntity.ok(inspections);
+    }
+
+    @GetMapping("/find-next-overdue")
+    public ResponseEntity<List<InspectionResponseDTO>> findOverdueByNextDueDateBefore(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        List<InspectionResponseDTO> inspections = inspectionService.findOverdueByNextDueDateBefore(date);
+        return ResponseEntity.ok(inspections);
+    }
 }
 
 

@@ -56,20 +56,3 @@ public class ToolController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
-
-/*
-@RestController
-public class ToolController {
-    @PostMapping("/tools/{toolId}/inspection")
-    public ToolEntity addInspection(@PathVariable Long toolId, @RequestBody InspectionRequestDTO dto) {
-        ToolEntity tool = toolRepo.findById(toolId).orElseThrow();
-
-        InspectionEntity inspection = new InspectionEntity();
-        // set inspection fields from DTO...
-
-        tool.setInspection(inspection);  // Magic happens here! ✨
-
-        return toolRepo.save(tool);  // Saves BOTH entities
-    }
-}*/

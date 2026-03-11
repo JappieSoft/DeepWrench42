@@ -4,11 +4,16 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import nl.novi.deepwrench42.entities.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.postgresql.util.PSQLException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -151,5 +156,13 @@ public class GlobalExceptionHandler {
         response.put("message", "Invalid JSON syntax");
         response.put("error", ex.getMessage());
         return response;
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleIllegalState(IllegalStateException ex) {
+        return Map.of(
+                "error", ex.getMessage()
+        );
     }
 }
