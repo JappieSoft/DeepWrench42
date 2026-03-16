@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
                 return ("Inspection for this tool kit ID already exists");
             }
             if (msg.contains("violates foreign key constraint")) {
-                String detail = parseFkDetail(msg);
+                String detail = parseDetails(msg);
                 if (msg.contains("is not present")) {
                     return "Invalid reference: " + detail;
                 } else if (msg.contains("still referenced")) {
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
         return "Data integrity violation";
     }
 
-    private String parseFkDetail(String msg) {
+    private String parseDetails(String msg) {
         var matcher = java.util.regex.Pattern.compile("Key \\(([^)]+)\\)=\\((\\d+)\\)").matcher(msg);
         if (matcher.find()) {
             String field = matcher.group(1);

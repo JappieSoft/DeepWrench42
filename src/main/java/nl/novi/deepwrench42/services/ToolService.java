@@ -56,22 +56,6 @@ public class ToolService {
         toolEntity.setItemId(model.getItemId());
         toolEntity.setName(model.getName());
         toolEntity.setPicture(model.getPicture());
-       /* if (model.getStorageLocation() != null) {
-            Long storageLocationId = model.getStorageLocation();
-
-            if (toolRepository.existsByStorageLocationId(storageLocationId)) {
-                throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool");
-            }
-            if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
-                throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
-            }
-
-            StorageLocationEntity storageLocation = storageLocationRepository
-                    .findById(storageLocationId)
-                    .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
-            toolEntity.setStorageLocation(storageLocation);
-        }*/
-
         if (model.getStatus() != null) {
             toolEntity.setStatus(EquipmentStatus.valueOf(model.getStatus().toUpperCase()));
         }
@@ -104,19 +88,42 @@ public class ToolService {
             throw new RecordNotFoundException("No Engine Types found: " + engineTypeIds);
         }
         toolEntity.setApplicableEngineTypes(new HashSet<>(engineTypesList));
+
         toolEntity.setIsCalibrated(model.getIsCalibrated());
-/*        if (model.getInspectionId() != null) {
+        if (model.getInspectionId() != null) {
             InspectionEntity inspection = inspectionRepository
                     .findById(model.getInspectionId())
                     .orElseThrow(() -> new RecordNotFoundException("Inspection not found"));
             toolEntity.setInspection(inspection);
         }
+        if (model.getToolKitId() == null) {
+            if (model.getStorageLocation() == null) {throw new IllegalArgumentException("Storage Location required");
+            }  else {
+                Long storageLocationId = model.getStorageLocation();
+
+                if (toolRepository.existsByStorageLocationId(storageLocationId)) {
+                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool");
+                }
+                if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
+                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
+                }
+
+                StorageLocationEntity storageLocation = storageLocationRepository
+                        .findById(storageLocationId)
+                        .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
+                toolEntity.setStorageLocation(storageLocation);
+                toolEntity.setToolKit(null);
+            }
+        }
+
         if (model.getToolKitId() != null) {
             ToolKitEntity toolKit = toolKitRepository
                     .findById(model.getToolKitId())
                     .orElseThrow(() -> new RecordNotFoundException("Tool kit not found"));
             toolEntity.setToolKit(toolKit);
-        }*/
+            toolEntity.setStorageLocation(null);
+            toolEntity.setStatus(EquipmentStatus.valueOf("PART_OF_KIT"));
+        }
 
         toolEntity = toolRepository.save(toolEntity);
         return toolDTOMapper.mapToDto(toolEntity);
@@ -131,24 +138,10 @@ public class ToolService {
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
         existingEntity.setPicture(requestDto.getPicture());
-        if (requestDto.getStorageLocation() != null) {
-            Long storageLocationId = requestDto.getStorageLocation();
-            if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
-                if (toolRepository.existsByStorageLocationId(storageLocationId)) {
-                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " is already assigned to another tool");
-                }
-                if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
-                    throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
-                }
-            }
-
-            StorageLocationEntity storageLocation = storageLocationRepository
-                    .findById(storageLocationId)
-                    .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
-            existingEntity.setStorageLocation(storageLocation);
-        }
-        if (requestDto.getStatus() != null) {
-            existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
+        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+            throw new IllegalArgumentException("Tool " + existingEntity.getItemId() + " status is checked out");
+            } else if (requestDto.getStatus() != null) {
+                existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
         }
         if (requestDto.getCheckedOutBy() != null) {
             UserEntity checkedOutBy = userRepository
@@ -185,11 +178,34 @@ public class ToolService {
                     .orElseThrow(() -> new RecordNotFoundException("Inspection not found"));
             existingEntity.setInspection(inspection);
         }
+        if (requestDto.getToolKitId() == null) {
+            if (requestDto.getStorageLocation() == null) { throw new IllegalArgumentException("Storage Location required");
+            }   else if (requestDto.getStorageLocation() != null) {
+                Long storageLocationId = requestDto.getStorageLocation();
+                if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
+                    if (toolRepository.existsByStorageLocationId(storageLocationId)) {
+                        throw new IllegalArgumentException("Storage location ID " + storageLocationId + " is already assigned to another tool");
+                    }
+                    if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
+                        throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
+                    }
+                }
+
+                StorageLocationEntity storageLocation = storageLocationRepository
+                        .findById(storageLocationId)
+                        .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
+                existingEntity.setStorageLocation(storageLocation);
+            }
+        }
+
+
         if (requestDto.getToolKitId() != null) {
             ToolKitEntity toolKit = toolKitRepository
                     .findById(requestDto.getToolKitId())
                     .orElseThrow(() -> new RecordNotFoundException("Tool kit not found"));
             existingEntity.setToolKit(toolKit);
+            existingEntity.setStorageLocation(null);
+            existingEntity.setStatus(EquipmentStatus.valueOf("PART_OF_KIT"));
         }
 
         existingEntity = toolRepository.save(existingEntity);
@@ -201,47 +217,6 @@ public class ToolService {
         ToolEntity tool = getToolEntity(id);
         toolRepository.delete(tool);
     }
-
-    //Tool to toolKit functions, old function might go away:
-    @Transactional
-    public ToolResponseDTO addToToolKit(Long toolId, String kitItemId) {
-        ToolEntity tool = toolRepository.findById(toolId).orElseThrow();
-        tool.setStorageLocation(null);
-        return toolDTOMapper.mapToDto(toolRepository.save(tool));
-    }
-
-    @Transactional
-    public ToolResponseDTO removeFromToolKit(Long toolId) {
-        ToolEntity tool = toolRepository.findById(toolId).orElseThrow();
-        return toolDTOMapper.mapToDto(toolRepository.save(tool));
-    }
-
-
-    // Service Helpers
-/*
-    private void mapIdsToEntities(ToolEntity entity, ToolRequestDTO requestDto) {
-        if (requestDto.getApplicableAircraftTypeIds() != null && !requestDto.getApplicableAircraftTypeIds().isEmpty()) {
-            entity.setApplicableAircraftTypes(
-                    requestDto.getApplicableAircraftTypeIds().stream()
-                            .map(aircraftTypeRepository::getReferenceById)
-                            .collect(Collectors.toSet())
-            );
-        }
-        if (requestDto.getApplicableEngineTypeIds() != null && !requestDto.getApplicableEngineTypeIds().isEmpty()) {
-            entity.setApplicableEngineTypes(
-                    requestDto.getApplicableEngineTypeIds().stream()
-                            .map(engineTypeRepository::getReferenceById)
-                            .collect(Collectors.toSet())
-            );
-        }
-        if (requestDto.getInspectionId() != null) {
-            entity.setInspection(inspectionRepository.getReferenceById(requestDto.getInspectionId()));
-        }
-        if (requestDto.getToolKitId() != null) {
-            entity.setToolKit(toolKitRepository.getReferenceById(requestDto.getToolKitId()));
-        }
-    }
-*/
 
     private ToolEntity getToolEntity(Long id) {
         return toolRepository.findById(id)

@@ -128,7 +128,8 @@ public class ToolKitService {
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
         existingEntity.setPicture(requestDto.getPicture());
-        if (requestDto.getStorageLocation() != null) {
+        if (requestDto.getStorageLocation() == null) { throw new IllegalArgumentException("Storage Location required");
+        }   else if (requestDto.getStorageLocation() != null) {
             Long storageLocationId = requestDto.getStorageLocation();
             if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
                 if (toolRepository.existsByStorageLocationId(storageLocationId)) {
@@ -144,7 +145,9 @@ public class ToolKitService {
                     .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
             existingEntity.setStorageLocation(storageLocation);
         }
-        if (requestDto.getStatus() != null) {
+        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+            throw new IllegalArgumentException("Tool Kit " + existingEntity.getItemId() + " status is checked out");
+        } else if (requestDto.getStatus() != null) {
             existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
         }
         if (requestDto.getCheckedOutBy() != null) {
@@ -206,34 +209,6 @@ public class ToolKitService {
         ToolKitEntity toolKit = getToolKitEntity(id);
         toolKitRepository.delete(toolKit);
     }
-
-
-/*    private void mapIdsToEntities(ToolKitEntity entity, ToolKitRequestDTO requestDto) {
-        if (requestDto.getApplicableAircraftTypeIds() != null && !requestDto.getApplicableAircraftTypeIds().isEmpty()) {
-            entity.setApplicableAircraftTypes(
-                    requestDto.getApplicableAircraftTypeIds().stream()
-                            .map(aircraftTypeRepository::getReferenceById)
-                            .collect(Collectors.toSet())
-            );
-        }
-        if (requestDto.getApplicableEngineTypeIds() != null && !requestDto.getApplicableEngineTypeIds().isEmpty()) {
-            entity.setApplicableEngineTypes(
-                    requestDto.getApplicableEngineTypeIds().stream()
-                            .map(engineTypeRepository::getReferenceById)
-                            .collect(Collectors.toSet())
-            );
-        }
-        if (requestDto.getInspectionId() != null) {
-            entity.setInspection(inspectionRepository.getReferenceById(requestDto.getInspectionId()));
-        }
-        if (requestDto.getKitContentsIds() != null && !requestDto.getKitContentsIds().isEmpty()) {
-            entity.setKitContents(
-                    requestDto.getKitContentsIds().stream()
-                            .map(toolRepository::getReferenceById)
-                            .collect(Collectors.toSet())
-            );
-        }
-    }*/
 
     private ToolKitEntity getToolKitEntity(Long id) {
         return toolKitRepository.findById(id)
