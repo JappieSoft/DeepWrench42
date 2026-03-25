@@ -4,16 +4,12 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import nl.novi.deepwrench42.entities.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.ErrorResponse;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.postgresql.util.PSQLException;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -176,11 +172,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(IOException ex) {
-        String message = "Problemen met file opslag";
+        String message = "File Storage System Error";
         if (ex.getMessage() != null) {
             return ex.getMessage();
         } else {
             return message;
         }
     }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    @ResponseBody
+    public String handleException(MaxUploadSizeExceededException ex) {
+        String exception = ex.getMessage();
+        return exception + ", info: max upload size = 10MB";
+    }
 }
+

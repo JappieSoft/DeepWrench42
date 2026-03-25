@@ -4,8 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
-import nl.novi.deepwrench42.entities.ToolEntity;
-import nl.novi.deepwrench42.entities.ToolKitEntity;
 import nl.novi.deepwrench42.helpers.FileStorageHelper;
 import nl.novi.deepwrench42.helpers.UrlHelper;
 import nl.novi.deepwrench42.services.ToolKitService;
@@ -19,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/tool-kit")
@@ -65,31 +64,29 @@ public class ToolKitController {
     }
 
     //picture services
-    @PostMapping("/{id}/photo")
+    @PostMapping("/{id}/picture")
     public ResponseEntity<ToolKitResponseDTO> addPictureToTool(@PathVariable("id") Long id, @RequestBody MultipartFile file) throws IOException {
-        String fileName = fileStorageHelper.storeFile(file);
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("No file uploaded");
+        }
+
+        String toolKitItemId = toolKitService.findToolKitById(id).getItemId();
+        String existingFileName = toolKitService.findToolKitById(id).getPictureFileName();
+        String fileName = fileStorageHelper.storeFile(toolKitItemId, existingFileName, file);
         ToolKitResponseDTO tool = toolKitService.assignPictureToTool(fileName, id);
 
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(tool.getId())).body(tool);
     }
 
-    @GetMapping("/{id}/photo")
+    @GetMapping("/{id}/picture")
     public ResponseEntity<Resource> getPictureOfTool(@PathVariable("id") Long id, HttpServletRequest request){
         Resource resource = toolKitService.getPictureFromTool(id);
-
         String mimeType;
 
         try{
             mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException e) {
-            /*
-            "application/octet-steam" is de generieke mime type voor byte data.
-            Het is beter om een specifiekere mimetype te gebruiken, zoals "image/jpeg".
-            Mimetype is nodig om de frontend te laten weten welke soort data het is.
-            Met de juiste MimeType en Content-Disposition, kun je de plaatjes of PDFs die je upload
-            zelfs in de browser weergeven.
-             */
-            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+            mimeType = fileStorageHelper.getMimeType(Objects.requireNonNull(resource.getFilename()));
         }
 
         return ResponseEntity

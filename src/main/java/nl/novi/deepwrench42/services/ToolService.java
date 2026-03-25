@@ -1,6 +1,5 @@
 package nl.novi.deepwrench42.services;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
@@ -10,19 +9,8 @@ import nl.novi.deepwrench42.helpers.FileStorageHelper;
 import nl.novi.deepwrench42.mappers.ToolDTOMapper;
 import nl.novi.deepwrench42.repository.*;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.*;
 
 
@@ -267,19 +255,10 @@ public class ToolService {
 
     @Transactional
     public ToolResponseDTO assignPictureToTool(String fileName, Long id) {
-        Optional<ToolEntity> existingTool = toolRepository.findById(id);
+        ToolEntity tool = getToolEntity(id);
 
-        if (existingTool.isPresent()) {
-            ToolEntity tool = existingTool.get();
-            if (tool.getPictureFileName() != null) {
                 tool.setPictureFileName(fileName);
                 toolRepository.save(tool);
                 return toolDTOMapper.mapToDto(tool);
-            } else {
-                throw new RecordNotFoundException("Picture not found!");
-            }
-        } else {
-            throw new RecordNotFoundException("Tool not found!");
-        }
     }
 }

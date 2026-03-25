@@ -36,7 +36,7 @@ public class EquipmentResponseDTO {
     public void setName(String name) {  this.name = name;   }
 
     public String getPictureFileName() {    return pictureFileName; }
-    public void setPictureFileName(String picture) {    this.pictureFileName = pictureFileName; }
+    public void setPictureFileName(String pictureFileName) {    this.pictureFileName = pictureFileName; }
 
     public StorageLocationResponseDTO getStorageLocation() { return storageLocation; }
     public void setStorageLocation(StorageLocationResponseDTO storageLocation) { this.storageLocation = storageLocation; }

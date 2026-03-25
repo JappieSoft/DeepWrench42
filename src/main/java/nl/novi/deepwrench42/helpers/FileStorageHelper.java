@@ -22,26 +22,41 @@ public class FileStorageHelper {
 
     public FileStorageHelper(@Value("${my.equipment_upload_location}") String fileStorageLocation) throws IOException {
         fileStoragePath = Paths.get(fileStorageLocation).toAbsolutePath().normalize();
-
         Files.createDirectories(fileStoragePath);
     }
 
-    public String storeFile(MultipartFile file) throws IOException{
+    public String storeFile(String itemId, String existingFileName, MultipartFile file) throws IOException{
+        if (itemId.isEmpty()) {
+            throw new IllegalArgumentException("No item Id received for File Storage");
+        }
 
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        Path filePath = Paths.get(fileStoragePath + "\\" + fileName);
+        String OriginalName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        String fileExtension = ".jpg";
+        if (OriginalName.contains(".")) {
+            fileExtension = OriginalName.substring(OriginalName.lastIndexOf("."));
+        } else {
+            throw new IllegalArgumentException("File storage system encountered file name corruption");
+        }
 
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        String newFileName = itemId.trim() + fileExtension;
+        Path newfilePath = fileStoragePath.resolve(newFileName);
+        if (existingFileName != null) {
+            Path oldFilePath = fileStoragePath.resolve(existingFileName);
+            boolean deleted = Files.deleteIfExists(oldFilePath);
+            if  (!deleted) {
+                throw new IOException("Unable to delete original file from Server");
+            }
+        }
 
-        return fileName;
+        Files.copy(file.getInputStream(), newfilePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return newFileName;
     }
 
     public Resource downLoadFile(String fileName) {
-
         Path path = fileStoragePath.resolve(fileName);
 
         Resource resource;
-
         try {
             resource = new UrlResource(path.toUri());
         } catch (MalformedURLException e) {
@@ -55,4 +70,15 @@ public class FileStorageHelper {
         }
     }
 
+    public String getMimeType(String fileName) {
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
+        String mimeType = switch (fileType.toLowerCase()) {
+            case "jpg", "jpeg" -> "IMAGE_JPEG_VALUE";
+            case "png" -> "IMAGE_PNG_VALUE";
+            case "gif" -> "IMAGE_GIF_VALUE";
+            case "pdf" -> "APPLICATION_PDF_VALUE";
+            default -> "IMAGE_JPEG_VALUE";
+        };
+        return mimeType;
+    }
 }

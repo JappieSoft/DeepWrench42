@@ -88,13 +88,6 @@ public class ToolKitService {
         toolKitEntity.setComments(model.getComments());
 
         //Toolkit-specific
-/*        Set<Long> toolIds = model.getKitContentsIds();
-        List<ToolEntity> toolList = toolRepository.findAllById(toolIds);
-        if (toolList.isEmpty()) {
-            throw new RecordNotFoundException("No Tool found: " + toolIds);
-        }
-        toolKitEntity.setKitContents(new HashSet<>(toolList));*/
-
         toolKitEntity.setToolKitType(model.getToolKitType());
         toolKitEntity.setAtaCode(model.getAtaCode());
         toolKitEntity.setPartNumber(model.getPartNumber());
@@ -166,20 +159,6 @@ public class ToolKitService {
         existingEntity.setComments(requestDto.getComments());
 
         //Toolkit-specific
-/*        if (requestDto.getKitContentsIds() != null) {
-            Set<Long> toolIds = requestDto.getKitContentsIds();
-            List<ToolEntity> tools = toolRepository.findAllById(toolIds);
-            if (tools.isEmpty() && !toolIds.isEmpty()) {
-                throw new RecordNotFoundException("No Tools found: " + toolIds);
-            }
-
-            existingEntity.getKitContents().clear();
-            ToolKitEntity updatedExistingEntity = existingEntity;
-            tools.forEach(tool -> {
-                tool.setToolKit(updatedExistingEntity);
-                updatedExistingEntity.getKitContents().add(tool);
-            });
-        }*/
         existingEntity.setToolKitType(requestDto.getToolKitType());
         existingEntity.setAtaCode(requestDto.getAtaCode());
         existingEntity.setPartNumber(requestDto.getPartNumber());
@@ -238,19 +217,10 @@ public class ToolKitService {
 
     @Transactional
     public ToolKitResponseDTO assignPictureToTool(String fileName, Long id) {
-        Optional<ToolKitEntity> existingToolKit = toolKitRepository.findById(id);
+        ToolKitEntity toolKit = getToolKitEntity(id);
 
-        if (existingToolKit.isPresent()) {
-            ToolKitEntity toolKit = existingToolKit.get();
-            if (toolKit.getPictureFileName() != null) {
-                toolKit.setPictureFileName(fileName);
-                toolKitRepository.save(toolKit);
-                return toolKitDTOMapper.mapToDto(toolKit);
-            } else {
-                throw new RecordNotFoundException("Picture not found!");
-            }
-        } else {
-            throw new RecordNotFoundException("Tool Kit not found!");
-        }
+        toolKit.setPictureFileName(fileName);
+        toolKitRepository.save(toolKit);
+        return toolKitDTOMapper.mapToDto(toolKit);
     }
 }
