@@ -30,7 +30,6 @@ public abstract class BaseEntity {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -38,18 +37,12 @@ public abstract class BaseEntity {
     public LocalDateTime getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getEditDate() {
-        return editDate;
-    }
-
-    public void setEditDate(LocalDateTime editDate) {
-        this.editDate = editDate;
-    }
+    public LocalDateTime getEditDate() {    return editDate;    }
+    public void setEditDate(LocalDateTime editDate) {   this.editDate = editDate;   }
 }
 
 

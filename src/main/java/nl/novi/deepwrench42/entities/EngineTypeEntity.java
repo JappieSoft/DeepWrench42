@@ -14,4 +14,14 @@ public class EngineTypeEntity extends BaseEntity{
 
     @Column(name = "sub_type")
     private String subType;
+
+    // Getters en Setters
+    public String getManufacturer() {   return manufacturer;    }
+    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+
+    public String getMainType() {   return mainType;    }
+    public void setMainType(String mainType) {  this.mainType = mainType;   }
+
+    public String getSubType() {    return subType; }
+    public void setSubType(String subType) {    this.subType = subType; }
 }

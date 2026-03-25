@@ -24,44 +24,46 @@ INSERT INTO storage_locations(created_date, edited_date, location, rack, shelf, 
 VALUES (now(), now(), 'G4', 'A' ,'1', NULL),
        (now(), now(), 'G4', 'CHM' ,'3', 'Oil-Racking'),
        (now(), now(), 'D49', 'B12' ,'D01-A01', NULL),
+       (now(), now(), 'G4', 'B' ,'1', NULL),
        (now(), now(), 'G4', 'B' ,'2', NULL),
        (now(), now(), 'G4', 'B' ,'3', NULL),
+       (now(), now(), 'G4', 'B' ,'4', NULL),
        (now(), now(), 'G4', 'C' ,'1', NULL),
-       (now(), now(), 'G4', 'D' ,'4', NULL),
-       (now(), now(), 'G4', 'D' ,'3', NULL);
+       (now(), now(), 'G4', 'C' ,'2', NULL),
+       (now(), now(), 'G4', 'C' ,'3', NULL),
+       (now(), now(), 'G4', 'C' ,'4', NULL),
+       (now(), now(), 'G4', 'D' ,'1', NULL),
+       (now(), now(), 'G4', 'D' ,'2', NULL),
+       (now(), now(), 'G4', 'D' ,'3', NULL),
+       (now(), now(), 'G4', 'D' ,'4', NULL);
 
-
-
-INSERT INTO tools (created_date, edited_date, equipment_type, item_id, name, picture ,storage_location_id, status, checked_out_by_user_id, checked_out_date, inspection, inspection_id, comments, type, ata_code, part_number, serial_number, manufacturer, calibrated, toolkit_id)
-VALUES  (now(), now(), 'TOOL', 'R0232132', 'Precision Torque Wrench 10-100 Nm', NULL,1,'IN_CALIBRATION',4,    now(), TRUE,  NULL,   NULL,           'Torque Wrench',    3212, '50-590013-1', 'TW-123456789', 'Snap-on', TRUE,  NULL),
-        (now(), now(), 'TOOL', 'R0454545', 'Metric Socket Set 6-24mm',          NULL,3,'CHECKED_IN',    NULL, NULL,  FALSE, NULL,   '10mm missing', 'Socket Set',       2811, 'AS28431',     'SS-987654321', 'Proto',   FALSE, NULL),
-        (now(), now(), 'TOOL', 'TL003',    'Feeler Gauge Set 0.05-1.00mm',      NULL,4,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,   NULL,           'Feeler Gauges',    2796, 'P23499',      'FG-456789123', 'Starrett',FALSE, NULL),
-        (now(), now(), 'TOOL', 'SPARK01',  'Spark Plug Socket 16mm',            NULL,2,'CHECKED_OUT',   2,    now(), FALSE, NULL,   NULL,           'Sparkplug Socker', 7325, 'T8438',       'SPS-112233445','Craft',   FALSE, NULL);
+INSERT INTO tools (created_date, edited_date, equipment_type, item_id, name, picture_file_name, storage_location_id, status, checked_out_by_user_id, checked_out_date, inspection, comments, tool_type, ata_code, part_number, serial_number,manufacturer, is_calibrated, tool_kit_id)
+VALUES  (now(), now(), 'TOOL', 'R0232132', 'Precision Torque Wrench 10-100 Nm', NULL, 1, 'IN_CALIBRATION',  4,      now(),  TRUE,   NULL,             'Torque Wrench',    3212, '50-590013-1', 'TW-123456789', 'Snap-on',   TRUE,   NULL),
+        (now(), now(), 'TOOL', 'R0454545', 'Metric Socket Set 6-24mm',          NULL, 3, 'CHECKED_IN',      NULL,   NULL,   FALSE,  '10mm missing',   'Socket Set',       2811, 'AS28431',     'SS-987654321', 'Proto',     FALSE,  NULL),
+        (now(), now(), 'TOOL', 'TL003',    'Feeler Gauge Set 0.05-1.00mm',      NULL, 4, 'CHECKED_IN',      NULL,   NULL,   TRUE,   NULL,             'Feeler Gauges',    2796, 'P23499',      'FG-456789123', 'Starrett',  TRUE,   NULL),
+        (now(), now(), 'TOOL', 'SPARK01',  'Spark Plug Socket 16mm',            NULL, 2, 'CHECKED_OUT',     2,      now(),  FALSE,  NULL,             'Sparkplug Socker', 7325, 'T8438',       'SPS-112233445','Craft',     FALSE,  NULL);
 
 INSERT INTO aircraft_type_tool_compatibility (tool_id, aircraft_type_id) VALUES (1, 1),(2, 2),(3, 3);
 INSERT INTO engine_type_tool_compatibility (tool_id, engine_type_id)     VALUES (1, 1),(2, 2),(3, 3);
 
-
-INSERT INTO inspections (created_date, edited_date, inspection_date, inspection_type, next_due_date, inspection_interval)
-VALUES  (now(), now(), '2025-12-15 09:00:00', 'CALIBRATION', '2026-12-15 09:00:00', 5000),
-        (now(), now(), '2026-01-20 14:30:00', 'VISUAL_INSPECTION', '2026-04-20 14:30:00', 1250),
-        (now(), now(), '2025-08-10 11:00:00', 'UNKNOWN', '2026-02-10 11:00:00', 2500),
-        (now(), now(), '2026-02-01 16:00:00', 'SERVICE_INSPECTION', '2027-02-01 16:00:00', 4000);
-        UPDATE tools SET inspection_id = 1 WHERE id = 1;
-        UPDATE tools SET inspection_id = 2 WHERE id = 3;
-
-INSERT INTO tool_kits (created_date, edited_date, equipment_type, item_id, name, picture ,storage_location_id, status, checked_out_by_user_id, checked_out_date, inspection, inspection_id, comments, type, ata_code, part_number, serial_number, manufacturer, calibrated)
-VALUES  (now(), now(), 'TOOLKIT', 'K03562141', 'A330 NLG Gland Nut kit',        NULL,5,'MISSING',       3,    now(), FALSE, NULL,   'ToolKit Missing','C-Spanner Kit',      2000, 'MAG003451',      'DL00158',          'Magema',           FALSE),
-        (now(), now(), 'TOOLKIT', 'K06892146', 'Fluke 1587 Kit',                NULL,6,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,   NULL,             'MultiMeter Kit',     2400, 'FK1587-kit',     'fk38FSD-345G',     'Fluke',            TRUE),
-        (now(), now(), 'TOOLKIT', 'Boro001',   'GE IQ Mentor 3D Boroscope',     NULL,7,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,   NULL,             'Boroscope Kit',      7200, 'MIQ-3D',         '52-98-88745',      'General Electric', TRUE),
-        (now(), now(), 'TOOLKIT', 'RR57698',   'XWB HMU AGB STUD Extractor Kit',NULL,8,'UNSERVICEABLE', NULL, NULL,  FALSE, NULL,   NULL,             'HeliCoil Repair Kit',7328, 'RR689-95-17-14', '00018684001477',   'Rolls Royce',      FALSE);
+INSERT INTO tool_kits (created_date, edited_date, equipment_type, item_id, name, picture_file_name ,storage_location_id, status, checked_out_by_user_id, checked_out_date, inspection, comments, tool_kit_type, ata_code, part_number, serial_number, manufacturer, is_calibrated)
+VALUES  (now(), now(), 'TOOLKIT', 'K03562141', 'A330 NLG Gland Nut kit',        NULL,5,'MISSING',       3,    now(), FALSE, 'ToolKit Missing','C-Spanner Kit',      2000, 'MAG003451',      'DL00158',          'Magema',           FALSE),
+        (now(), now(), 'TOOLKIT', 'K06892146', 'Fluke 1587 Kit',                NULL,6,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,             'MultiMeter Kit',     2400, 'FK1587-kit',     'fk38FSD-345G',     'Fluke',            TRUE),
+        (now(), now(), 'TOOLKIT', 'Boro001',   'GE IQ Mentor 3D Boroscope',     NULL,7,'CHECKED_IN',    NULL, NULL,  TRUE,  NULL,             'Boroscope Kit',      7200, 'MIQ-3D',         '52-98-88745',      'General Electric', TRUE),
+        (now(), now(), 'TOOLKIT', 'RR57698',   'XWB HMU AGB STUD Extractor Kit',NULL,8,'UNSERVICEABLE', NULL, NULL,  FALSE, NULL,             'HeliCoil Repair Kit',7328, 'RR689-95-17-14', '00018684001477',   'Rolls Royce',      FALSE);
 
 INSERT INTO aircraft_type_kit_compatibility (toolkit_id, aircraft_type_id) VALUES (1, 1),(2, 2),(3, 3);
 INSERT INTO engine_type_kit_compatibility (toolkit_id, engine_type_id)     VALUES (1, 1),(2, 2),(3, 3);
-UPDATE tools SET toolkit_id = 4 WHERE id = 3;
+UPDATE tools SET tool_kit_id = 4 WHERE id = 3;
 
-INSERT INTO tool_log(time_Stamp, action_type, user_id, equipment_id, equipment_type, aircraft_id, comments)
-VALUES (now(), 'CHECK_OUT', 3, 1, 'TOOLKIT', 1, NULL),
-       (now(), 'CHECK_IN', 1, 2, 'TOOLKIT', 2, NULL),
-       (now(), 'CHECK_OUT', 2, 4, 'TOOL', 3, NULL),
-       (now(), 'CHECK_OUT', 4, 1, 'TOOL', NULL, 'calibration');
+INSERT INTO inspections (created_date, edited_date, inspection_date, inspection_type, inspection_passed, comments, next_due_date, inspection_interval, tool_id, tool_kit_id)
+VALUES  (now(), now(), '2025-12-15 09:00:00', 'CALIBRATION',        TRUE, NULL,                 '2026-12-15 09:00:00', 5000, 1, NULL),
+        (now(), now(), '2026-01-20 14:30:00', 'VISUAL_INSPECTION',  TRUE, NULL,                 '2026-04-20 14:30:00', 1250, 3, NULL),
+        (now(), now(), '2025-08-10 11:00:00', 'UNKNOWN',            FALSE,'Certificate Missing','2026-02-10 11:00:00', 2500, NULL, 2),
+        (now(), now(), '2026-02-01 16:00:00', 'SERVICE_INSPECTION', TRUE, NULL,                 '2027-02-01 16:00:00', 4000, NULL, 3);
+
+INSERT INTO tool_log(time_Stamp, action_type, action_result ,action_user, item_number, item_type, item_name, ata_code, part_number, serial_number, manufacturer, aircraft_number ,comments)
+VALUES (now(), 'CHECK_OUT', 'CHECKED_OUT', '516543', 'K03562141',  'TOOLKIT', 'A330 NLG Gland Nut kit',         2000, 'MAG003451',  'DL00158',      'Magema',   '3311', NULL),
+       (now(), 'CHECK_IN',  'CHECKED_IN',  '523043', 'R0454545',   'TOOL',    'Metric Socket Set 6-24mm',       2811, 'AS28431',    'SS-987654321', 'Proto',    '3310', NULL),
+       (now(), 'CHECK_OUT', 'CHECKED_OUT', '516543', 'SPARK01',    'TOOL',    'Spark Plug Socket 16mm',         7325, 'T8438',      'SPS-112233445','Craft',    '8AB',  NULL),
+       (now(), 'CHECK_OUT', 'CHECKED_OUT', '509704', 'RR57698',    'TOOLKIT', 'XWB HMU AGB STUD Extractor Kit', 2796, 'P23499',     'FG-456789123', 'Starrett', '3527', 'calibration');
