@@ -55,7 +55,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Generic ID getter
     private UserEntity getUserEntity(Long id) {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("User " + id +" not found"));
