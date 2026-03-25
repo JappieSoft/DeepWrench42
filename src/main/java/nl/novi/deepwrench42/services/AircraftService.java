@@ -86,6 +86,9 @@ public class AircraftService{
     @Transactional
     public void deleteAircraft(Long id) {
         AircraftEntity aircraft = getAircraftEntity(id);
+
+        aircraft.setAircraftType(null);
+        aircraft.setEngineType(null);
         aircraftRepository.deleteById(id);
     }
 }

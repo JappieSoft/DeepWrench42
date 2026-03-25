@@ -5,12 +5,15 @@ import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
 import nl.novi.deepwrench42.entities.*;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
+import nl.novi.deepwrench42.helpers.FileStorageHelper;
 import nl.novi.deepwrench42.mappers.ToolKitDTOMapper;
 import nl.novi.deepwrench42.repository.*;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -23,8 +26,9 @@ public class ToolKitService {
     private final StorageLocationRepository storageLocationRepository;
     private final UserRepository userRepository;
     private final ToolKitDTOMapper toolKitDTOMapper;
+    private final FileStorageHelper fileStorageHelper;
 
-    public ToolKitService(ToolRepository toolRepository, ToolKitRepository toolKitRepository, AircraftTypeRepository aircraftTypeRepository, EngineTypeRepository engineTypeRepository, InspectionRepository inspectionRepository, StorageLocationRepository storageLocationRepository, UserRepository userRepository, ToolKitDTOMapper toolKitDTOMapper) {
+    public ToolKitService(ToolRepository toolRepository, ToolKitRepository toolKitRepository, AircraftTypeRepository aircraftTypeRepository, EngineTypeRepository engineTypeRepository, InspectionRepository inspectionRepository, StorageLocationRepository storageLocationRepository, UserRepository userRepository, ToolKitDTOMapper toolKitDTOMapper, FileStorageHelper fileStorageHelper) {
         this.toolRepository = toolRepository;
         this.toolKitRepository = toolKitRepository;
         this.aircraftTypeRepository = aircraftTypeRepository;
@@ -33,6 +37,7 @@ public class ToolKitService {
         this.storageLocationRepository = storageLocationRepository;
         this.userRepository = userRepository;
         this.toolKitDTOMapper = toolKitDTOMapper;
+        this.fileStorageHelper = fileStorageHelper;
     }
 
     @Transactional
@@ -53,7 +58,7 @@ public class ToolKitService {
         toolKitEntity.setEquipmentType(model.getEquipmentType());
         toolKitEntity.setItemId(model.getItemId());
         toolKitEntity.setName(model.getName());
-        toolKitEntity.setPicture(model.getPicture());
+        toolKitEntity.setPictureFileName(model.getPictureFileName());
         if (model.getStorageLocation() != null) {
             Long storageLocationId = model.getStorageLocation();
 
@@ -83,12 +88,12 @@ public class ToolKitService {
         toolKitEntity.setComments(model.getComments());
 
         //Toolkit-specific
-        Set<Long> toolIds = model.getKitContentsIds();
+/*        Set<Long> toolIds = model.getKitContentsIds();
         List<ToolEntity> toolList = toolRepository.findAllById(toolIds);
         if (toolList.isEmpty()) {
             throw new RecordNotFoundException("No Tool found: " + toolIds);
         }
-        toolKitEntity.setKitContents(new HashSet<>(toolList));
+        toolKitEntity.setKitContents(new HashSet<>(toolList));*/
 
         toolKitEntity.setToolKitType(model.getToolKitType());
         toolKitEntity.setAtaCode(model.getAtaCode());
@@ -127,7 +132,7 @@ public class ToolKitService {
         existingEntity.setEquipmentType(requestDto.getEquipmentType());
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
-        existingEntity.setPicture(requestDto.getPicture());
+        existingEntity.setPictureFileName(requestDto.getPictureFileName());
         if (requestDto.getStorageLocation() == null) { throw new IllegalArgumentException("Storage Location required");
         }   else if (requestDto.getStorageLocation() != null) {
             Long storageLocationId = requestDto.getStorageLocation();
@@ -161,7 +166,7 @@ public class ToolKitService {
         existingEntity.setComments(requestDto.getComments());
 
         //Toolkit-specific
-        if (requestDto.getKitContentsIds() != null) {
+/*        if (requestDto.getKitContentsIds() != null) {
             Set<Long> toolIds = requestDto.getKitContentsIds();
             List<ToolEntity> tools = toolRepository.findAllById(toolIds);
             if (tools.isEmpty() && !toolIds.isEmpty()) {
@@ -174,7 +179,7 @@ public class ToolKitService {
                 tool.setToolKit(updatedExistingEntity);
                 updatedExistingEntity.getKitContents().add(tool);
             });
-        }
+        }*/
         existingEntity.setToolKitType(requestDto.getToolKitType());
         existingEntity.setAtaCode(requestDto.getAtaCode());
         existingEntity.setPartNumber(requestDto.getPartNumber());
@@ -207,11 +212,45 @@ public class ToolKitService {
     @Transactional
     public void deleteToolKit(Long id) {
         ToolKitEntity toolKit = getToolKitEntity(id);
+        if (toolKit.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+            throw new IllegalArgumentException("Tool Kit " + toolKit.getItemId() + " status is checked out");}
+
+        toolKit.setStorageLocation(null);
         toolKitRepository.delete(toolKit);
     }
 
     private ToolKitEntity getToolKitEntity(Long id) {
         return toolKitRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Tool Kit " + id + " not found"));
+    }
+
+    //picture services
+    @Transactional
+    public Resource getPictureFromTool(Long id){
+        ToolKitEntity toolKit = getToolKitEntity(id);
+        String toolKitItemId = toolKit.getItemId();
+        String fileName = toolKit.getPictureFileName();
+        if(fileName == null){
+            throw new RecordNotFoundException("Tool Kit " + toolKitItemId + " has no picture in database.");
+        }
+        return fileStorageHelper.downLoadFile(fileName);
+    }
+
+    @Transactional
+    public ToolKitResponseDTO assignPictureToTool(String fileName, Long id) {
+        Optional<ToolKitEntity> existingToolKit = toolKitRepository.findById(id);
+
+        if (existingToolKit.isPresent()) {
+            ToolKitEntity toolKit = existingToolKit.get();
+            if (toolKit.getPictureFileName() != null) {
+                toolKit.setPictureFileName(fileName);
+                toolKitRepository.save(toolKit);
+                return toolKitDTOMapper.mapToDto(toolKit);
+            } else {
+                throw new RecordNotFoundException("Picture not found!");
+            }
+        } else {
+            throw new RecordNotFoundException("Tool Kit not found!");
+        }
     }
 }

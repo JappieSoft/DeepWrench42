@@ -13,6 +13,14 @@ public interface ToolRepository extends JpaRepository<ToolEntity, Long> {
     Optional<ToolEntity> findByItemId(String itemId);
     boolean existsByStorageLocationId(Long storageLocationId);
 
+    @Query(value = "SELECT EXISTS(SELECT 1 FROM aircraft_type_tool_compatibility " +
+            "WHERE aircraft_type_id = :aircraftTypeId)", nativeQuery = true)
+    boolean existsByAircraftTypeId(@Param("aircraftTypeId") Long aircraftTypeId);
+
+    @Query(value = "SELECT EXISTS(SELECT 1 FROM engine_type_tool_compatibility " +
+            "WHERE engine_type_id = :engineTypeId)", nativeQuery = true)
+    boolean existsByEngineTypeId(@Param("engineTypeId") Long engineTypeId);
+
     @Query("SELECT CONCAT(s.location, ' / ', s.rack, '-', s.shelf) " +
             "FROM StorageLocationEntity s WHERE s.id = :id")
     String findStorageLocationString(@Param("id") Long id);

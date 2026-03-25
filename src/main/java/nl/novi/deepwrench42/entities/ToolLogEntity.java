@@ -19,6 +19,7 @@ public class ToolLogEntity {
     private ToolLogActionType actionType;
 
     @JoinColumn(name = "action_result", nullable = false)
+    @Enumerated(EnumType.STRING)
     private EquipmentStatus actionResult;
 
     @Column(name = "action_user", nullable = false)

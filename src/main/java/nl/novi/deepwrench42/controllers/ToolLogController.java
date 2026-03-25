@@ -30,9 +30,6 @@ public class ToolLogController {
     @GetMapping("/{id}")
     public ResponseEntity<ToolLogResponseDTO> getToolLogById(@PathVariable Long id) {
         ToolLogResponseDTO toolLog = toolLogService.findToolLogById(id);
-        if (toolLog == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<ToolLogResponseDTO>(toolLog, HttpStatus.OK);
     }
 }

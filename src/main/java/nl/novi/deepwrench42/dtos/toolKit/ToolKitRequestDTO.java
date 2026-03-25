@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class ToolKitRequestDTO extends EquipmentRequestDTO {
 
-    @NotNull(message = "Tool kit must have content")
+/*    @NotNull(message = "Tool kit must have content")
     @Size(min = 1, message = "At least one tool required")
-    private Set<Long> kitContentsIds;
+    private Set<Long> kitContentsIds;*/
 
     @NotBlank(message = "Type cannot be blank")
     @Size(min = 3, max = 20, message = "Type must be between 2 & 20 characters long")
@@ -43,8 +43,8 @@ public class ToolKitRequestDTO extends EquipmentRequestDTO {
     private Long inspectionId;
 
     // Getters en Setters
-    public Set<Long> getKitContentsIds() { return kitContentsIds; }
-    public void setKitContentsIds(Set<Long> kitContentsIds) { this.kitContentsIds = kitContentsIds; }
+/*    public Set<Long> getKitContentsIds() { return kitContentsIds; }
+    public void setKitContentsIds(Set<Long> kitContentsIds) { this.kitContentsIds = kitContentsIds; }*/
 
     public String getToolKitType() {   return toolKitType;    }
     public void setToolKitType(String toolKitType) {  this.toolKitType = toolKitType;   }

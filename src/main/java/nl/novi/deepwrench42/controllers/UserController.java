@@ -36,9 +36,6 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         UserResponseDTO user = userService.findUserById(id);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<UserResponseDTO>(user, HttpStatus.OK);
     }
 

@@ -1,17 +1,29 @@
 package nl.novi.deepwrench42.services;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
 import nl.novi.deepwrench42.entities.*;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
+import nl.novi.deepwrench42.helpers.FileStorageHelper;
 import nl.novi.deepwrench42.mappers.ToolDTOMapper;
 import nl.novi.deepwrench42.repository.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.net.URI;
+import java.util.*;
 
 
 @Service
@@ -24,8 +36,19 @@ public class ToolService {
     private final StorageLocationRepository storageLocationRepository;
     private final UserRepository userRepository;
     private final ToolDTOMapper toolDTOMapper;
+    private final FileStorageHelper fileStorageHelper;
 
-    public ToolService(ToolRepository toolRepository, ToolKitRepository toolKitRepository, AircraftTypeRepository aircraftTypeRepository, EngineTypeRepository engineTypeRepository, InspectionRepository inspectionRepository, StorageLocationRepository storageLocationRepository, UserRepository userRepository, ToolDTOMapper toolDTOMapper) {
+    public ToolService(
+            ToolRepository toolRepository,
+            ToolKitRepository toolKitRepository,
+            AircraftTypeRepository aircraftTypeRepository,
+            EngineTypeRepository engineTypeRepository,
+            InspectionRepository inspectionRepository,
+            StorageLocationRepository storageLocationRepository,
+            UserRepository userRepository,
+            ToolDTOMapper toolDTOMapper,
+            FileStorageHelper fileStorageHelper
+    ) {
         this.toolRepository = toolRepository;
         this.toolKitRepository = toolKitRepository;
         this.aircraftTypeRepository = aircraftTypeRepository;
@@ -34,6 +57,7 @@ public class ToolService {
         this.storageLocationRepository = storageLocationRepository;
         this.userRepository = userRepository;
         this.toolDTOMapper = toolDTOMapper;
+        this.fileStorageHelper = fileStorageHelper;
     }
 
     @Transactional
@@ -55,7 +79,7 @@ public class ToolService {
         toolEntity.setEquipmentType(model.getEquipmentType());
         toolEntity.setItemId(model.getItemId());
         toolEntity.setName(model.getName());
-        toolEntity.setPicture(model.getPicture());
+        toolEntity.setPictureFileName(model.getPictureFileName());
         if (model.getStatus() != null) {
             toolEntity.setStatus(EquipmentStatus.valueOf(model.getStatus().toUpperCase()));
         }
@@ -137,7 +161,7 @@ public class ToolService {
         existingEntity.setEquipmentType(requestDto.getEquipmentType());
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
-        existingEntity.setPicture(requestDto.getPicture());
+        existingEntity.setPictureFileName(requestDto.getPictureFileName());
         if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
             throw new IllegalArgumentException("Tool " + existingEntity.getItemId() + " status is checked out");
             } else if (requestDto.getStatus() != null) {
@@ -215,11 +239,47 @@ public class ToolService {
     @Transactional
     public void deleteTool(Long id) {
         ToolEntity tool = getToolEntity(id);
+        if (tool.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+            throw new IllegalArgumentException("Tool " + tool.getItemId() + " status is checked out");}
+
+        tool.setStorageLocation(null);
+        tool.setToolKit(null);
         toolRepository.delete(tool);
     }
 
     private ToolEntity getToolEntity(Long id) {
         return toolRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Tool " + id + " not found"));
+    }
+
+
+    //picture services
+    @Transactional
+    public Resource getPictureFromTool(Long id){
+        ToolEntity tool = getToolEntity(id);
+        String toolItemId = tool.getItemId();
+        String fileName = tool.getPictureFileName();
+        if(fileName == null){
+            throw new RecordNotFoundException("Tool " + toolItemId + " has no picture in database.");
+        }
+        return fileStorageHelper.downLoadFile(fileName);
+    }
+
+    @Transactional
+    public ToolResponseDTO assignPictureToTool(String fileName, Long id) {
+        Optional<ToolEntity> existingTool = toolRepository.findById(id);
+
+        if (existingTool.isPresent()) {
+            ToolEntity tool = existingTool.get();
+            if (tool.getPictureFileName() != null) {
+                tool.setPictureFileName(fileName);
+                toolRepository.save(tool);
+                return toolDTOMapper.mapToDto(tool);
+            } else {
+                throw new RecordNotFoundException("Picture not found!");
+            }
+        } else {
+            throw new RecordNotFoundException("Tool not found!");
+        }
     }
 }

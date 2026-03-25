@@ -46,7 +46,7 @@ public class ToolKitEntity extends EquipmentEntity{
     @Column(name = "is_calibrated")
     private Boolean isCalibrated;
 
-    @OneToOne(mappedBy = "toolKit", optional = true)
+    @OneToOne(mappedBy = "toolKit", optional = true, cascade = CascadeType.ALL, orphanRemoval = true)
     private InspectionEntity inspection;
 
     // Getters en Setters

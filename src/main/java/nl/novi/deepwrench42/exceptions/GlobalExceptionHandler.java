@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.postgresql.util.PSQLException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
@@ -164,5 +165,22 @@ public class GlobalExceptionHandler {
         return Map.of(
                 "error", ex.getMessage()
         );
+    }
+
+    @ExceptionHandler(ReadFileException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String exception(ReadFileException ex) {
+            return ex.getMessage();
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String exception(IOException ex) {
+        String message = "Problemen met file opslag";
+        if (ex.getMessage() != null) {
+            return ex.getMessage();
+        } else {
+            return message;
+        }
     }
 }

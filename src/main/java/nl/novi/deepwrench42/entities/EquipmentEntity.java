@@ -16,8 +16,8 @@ public abstract class EquipmentEntity extends BaseEntity{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "picture")
-    private String picture;
+    @Column(name = "picture_file_name")
+    private String pictureFileName;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "storage_location_id")
@@ -51,8 +51,8 @@ public abstract class EquipmentEntity extends BaseEntity{
     public String getName() {   return name;    }
     public void setName(String name) {  this.name = name;   }
 
-    public String getPicture() {    return picture; }
-    public void setPicture(String picture) {    this.picture = picture; }
+    public String getPictureFileName() {    return pictureFileName; }
+    public void setPictureFileName(String pictureFileName) {    this.pictureFileName = pictureFileName; }
 
     public StorageLocationEntity getStorageLocation() { return storageLocation; }
     public void setStorageLocation(StorageLocationEntity storageLocation) { this.storageLocation = storageLocation; }

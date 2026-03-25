@@ -118,25 +118,26 @@ public class InspectionService {
             return existingInspectionEntity;
         }
 
-        @Transactional
-        public void deleteInspection (Long id){
-            InspectionEntity inspection = getInspectionEntity(id);
+    @Transactional
+    public void deleteInspection(Long id) {
+        InspectionEntity inspection = getInspectionEntity(id);
 
-            if (inspection.getTool() != null) {
-                ToolEntity tool = toolRepository.getReferenceById(inspection.getTool().getId());
-                tool.setHasInspection(false);
-                tool.setIsCalibrated(false);
-                toolRepository.save(tool);
-            }
-            if (inspection.getToolKit() != null) {
-                ToolKitEntity kit = toolKitRepository.getReferenceById(inspection.getToolKit().getId());
-                kit.setHasInspection(true);
-                kit.setIsCalibrated(true);
-                toolKitRepository.save(kit);
-            }
-
-            inspectionRepository.deleteById(id);
+        if (inspection.getTool() != null) {
+            ToolEntity tool = inspection.getTool();
+            tool.setInspection(null);
+            tool.setHasInspection(false);
+            tool.setIsCalibrated(false);
+            toolRepository.save(tool);
         }
+        if (inspection.getToolKit() != null) {
+            ToolKitEntity kit = inspection.getToolKit();
+            kit.setInspection(null);
+            kit.setHasInspection(false);
+            kit.setIsCalibrated(false);
+            toolKitRepository.save(kit);
+        }
+        inspectionRepository.deleteById(id);
+    }
 
         @Transactional
         public InspectionResponseDTO completeInspection(CompleteInspectionDTO requestDTO) {

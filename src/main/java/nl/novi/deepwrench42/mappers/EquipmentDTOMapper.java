@@ -32,7 +32,7 @@ public class EquipmentDTOMapper{
             result.setEquipmentType(model.getEquipmentType());
             result.setItemId(model.getItemId());
             result.setName(model.getName());
-            result.setPicture(model.getPicture());
+            result.setPictureFileName(model.getPictureFileName());
             result.setStorageLocation(storageLocationDTOMapper.mapToDto(model.getStorageLocation()));
             result.setStatus(model.getStatus());
             result.setCheckedOutBy(userDTOMapper.mapToDto(model.getCheckedOutBy()));
@@ -47,7 +47,7 @@ public class EquipmentDTOMapper{
             entity.setEquipmentType(requestDTO.getEquipmentType());
             entity.setItemId(requestDTO.getItemId());
             entity.setName(requestDTO.getName());
-            entity.setPicture(requestDTO.getPicture());
+            entity.setPictureFileName(requestDTO.getPictureFileName());
             entity.setStatus(EquipmentStatus.valueOf(requestDTO.getStatus().toUpperCase()));
             entity.setCheckedOutDate(requestDTO.getCheckedOutDate());
             entity.setHasInspection(requestDTO.getHasInspection());

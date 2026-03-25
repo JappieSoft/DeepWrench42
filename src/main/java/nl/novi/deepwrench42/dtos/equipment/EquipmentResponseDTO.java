@@ -14,7 +14,7 @@ public class EquipmentResponseDTO {
     private EquipmentType equipmentType;
     private String itemId;
     private String name;
-    private String picture;
+    private String pictureFileName;
     private StorageLocationResponseDTO storageLocation;
     private EquipmentStatus status;
     private UserResponseDTO checkedOutBy;
@@ -35,8 +35,8 @@ public class EquipmentResponseDTO {
     public String getName() {   return name;    }
     public void setName(String name) {  this.name = name;   }
 
-    public String getPicture() {    return picture; }
-    public void setPicture(String picture) {    this.picture = picture; }
+    public String getPictureFileName() {    return pictureFileName; }
+    public void setPictureFileName(String picture) {    this.pictureFileName = pictureFileName; }
 
     public StorageLocationResponseDTO getStorageLocation() { return storageLocation; }
     public void setStorageLocation(StorageLocationResponseDTO storageLocation) { this.storageLocation = storageLocation; }

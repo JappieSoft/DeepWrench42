@@ -34,9 +34,6 @@ public class AircraftController {
     @GetMapping("/{id}")
     public ResponseEntity<AircraftResponseDTO> getAircraftById(@PathVariable Long id) {
         AircraftResponseDTO aircraft = aircraftService.findAircraftById(id);
-        if (aircraft == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<AircraftResponseDTO>(aircraft, HttpStatus.OK);
     }
 

@@ -43,7 +43,7 @@ public class ToolEntity extends EquipmentEntity{
     @Column(name = "is_calibrated")
     private Boolean isCalibrated;
 
-    @OneToOne(mappedBy = "tool", optional = true, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "tool", optional = true, cascade = CascadeType.ALL, orphanRemoval = true)
     private InspectionEntity inspection;
 
     @ManyToOne(fetch = FetchType.LAZY)

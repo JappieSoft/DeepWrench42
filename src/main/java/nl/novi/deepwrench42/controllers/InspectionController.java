@@ -36,9 +36,6 @@ public class InspectionController {
     @GetMapping("/{id}")
     public ResponseEntity<InspectionResponseDTO> getInspectionById(@PathVariable Long id) {
         InspectionResponseDTO inspection = inspectionService.findInspectionById(id);
-        if (inspection == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<InspectionResponseDTO>(inspection, HttpStatus.OK);
     }
 

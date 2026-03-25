@@ -15,7 +15,7 @@ public class EquipmentRequestDTO {
 
     @NotNull(message = "Name is required")
     private String name;
-    private String picture;
+    private String pictureFileName;
     private Long storageLocation;
 
     @NotNull(message = "Equipment status is required")
@@ -35,8 +35,8 @@ public class EquipmentRequestDTO {
     public String getName() {   return name;    }
     public void setName(String name) {  this.name = name;   }
 
-    public String getPicture() {    return picture; }
-    public void setPicture(String picture) {    this.picture = picture; }
+    public String getPictureFileName() {    return pictureFileName; }
+    public void setPictureFileName(String pictureFileName) {    this.pictureFileName = pictureFileName; }
 
     public Long getStorageLocation() { return storageLocation; }
     public void setStorageLocation(Long storageLocation) { this.storageLocation = storageLocation; }
