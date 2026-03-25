@@ -44,12 +44,12 @@ public class AircraftDTOMapper implements DTOMapper<AircraftResponseDTO, Aircraf
     }
 
     @Override
-    public AircraftEntity mapToEntity(AircraftRequestDTO dto) {
-        if (dto == null) return null;
+    public AircraftEntity mapToEntity(AircraftRequestDTO requestDTO) {
+        if (requestDTO == null) return null;
 
         AircraftEntity result = new AircraftEntity();
-        result.setShipNumber(dto.getShipNumber());
-        result.setRegistration(dto.getRegistration());
+        result.setShipNumber(requestDTO.getShipNumber());
+        result.setRegistration(requestDTO.getRegistration());
         return result;
     }
 }

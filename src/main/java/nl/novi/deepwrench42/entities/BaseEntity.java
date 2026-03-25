@@ -41,12 +41,8 @@ public abstract class BaseEntity {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getEditDate() {
-        return editDate;
-    }
-    public void setEditDate(LocalDateTime editDate) {
-        this.editDate = editDate;
-    }
+    public LocalDateTime getEditDate() {    return editDate;    }
+    public void setEditDate(LocalDateTime editDate) {   this.editDate = editDate;   }
 }
 
 

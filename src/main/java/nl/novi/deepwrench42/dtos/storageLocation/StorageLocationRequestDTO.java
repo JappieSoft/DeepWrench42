@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 
 public class StorageLocationRequestDTO {
     @NotBlank(message = "Location cannot be blank")
-    @Size(min = 3, max = 20, message = "Location must be between 3 & 20 characters long")
+    @Size(min = 2, max = 20, message = "Location must be between 2 & 20 characters long")
     private String location;
     @NotBlank(message = "Rack cannot be blank")
     @Size(min = 1, max = 20, message = "Rack must be between 1 & 20 characters long")

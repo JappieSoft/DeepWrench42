@@ -3,7 +3,7 @@ package nl.novi.deepwrench42.mappers;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionEntity;
-import nl.novi.deepwrench42.entities.InspectionType;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,11 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, InspectionRequestDTO, InspectionEntity>{
 
-    private final ToolDTOMapper toolDTOMapper;
-
-    public InspectionDTOMapper(ToolDTOMapper toolDTOMapper) {
-        this.toolDTOMapper = toolDTOMapper;
-    }
+   public InspectionDTOMapper() { }
 
     @Override
     public InspectionResponseDTO mapToDto(InspectionEntity model) {
@@ -26,10 +22,21 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
         var result = new InspectionResponseDTO();
         result.setId(model.getId());
         result.setInspectionDate(model.getInspectionDate());
-        result.setInspectionType(model.getInspectionType().name());
+        result.setInspectionType(model.getInspectionType());
+        result.setInspectionPassed(model.getInspectionPassed());
+        result.setComments(model.getComments());
         result.setNextDueDate(model.getNextDueDate());
         result.setInspectionInterval(model.getInspectionInterval());
-        result.setTool(toolDTOMapper.mapToDto(model.getTool()));
+        result.setToolId(model.getTool() != null ? model.getTool().getId() : null);
+        result.setToolKitId(model.getToolKit() != null ? model.getToolKit().getId() : null);
+
+        if (model.getTool() != null) {
+            result.setEquipmentItemId(model.getTool().getItemId());
+        } else if (model.getToolKit() != null) {
+            result.setEquipmentItemId(model.getToolKit().getItemId());
+        } else {
+            result.setEquipmentItemId(null);
+        }
         return result;
     }
 
@@ -49,7 +56,7 @@ public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, In
 
         var model = new InspectionEntity();
         model.setInspectionDate(requestDTO.getInspectionDate());
-        model.setInspectionType(InspectionType.valueOf(requestDTO.getInspectionType()));
+        model.setInspectionType(requestDTO.getInspectionType());
         model.setNextDueDate(requestDTO.getNextDueDate());
         model.setInspectionInterval(requestDTO.getInspectionInterval());
         return model;
