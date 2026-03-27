@@ -1,12 +1,10 @@
 package nl.novi.deepwrench42.services;
 
-import jakarta.persistence.EntityNotFoundException;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.entities.AircraftEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.repository.AircraftRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -138,7 +136,7 @@ class AircraftServiceTest {
         requestDto.setAircraftTypeId(aircraftTypeId);
         requestDto.setEngineTypeId(1L);
 
-        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
+        RecordNotFoundException ex = assertThrows(RecordNotFoundException.class,
                 () -> aircraftService.updateAircraft(id, requestDto));
         assertEquals("Aircraft Type " + aircraftTypeId + " not found", ex.getMessage());
     }
@@ -154,7 +152,7 @@ class AircraftServiceTest {
         requestDto.setAircraftTypeId(1L);
         requestDto.setEngineTypeId(engineTypeId);
 
-        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
+        RecordNotFoundException ex = assertThrows(RecordNotFoundException.class,
                 () -> aircraftService.updateAircraft(id, requestDto));
         assertEquals("Engine Type " + engineTypeId + " not found", ex.getMessage());
     }

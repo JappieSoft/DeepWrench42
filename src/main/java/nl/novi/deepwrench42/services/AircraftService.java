@@ -14,6 +14,7 @@ import nl.novi.deepwrench42.repository.EngineTypeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AircraftService{
@@ -64,18 +65,27 @@ public class AircraftService{
     @Transactional
     public AircraftResponseDTO updateAircraft(Long id, AircraftRequestDTO requestDto) {
         AircraftEntity existingEntity = getAircraftEntity(id);
-        AircraftTypeEntity aircraftType = aircraftTypeRepository.getReferenceById(requestDto.getAircraftTypeId());
-        EngineTypeEntity engineType = engineTypeRepository.getReferenceById(requestDto.getEngineTypeId());
+        boolean aircraftTypeDifferent = !Objects.equals(existingEntity.getAircraftType().getId(), requestDto.getAircraftTypeId());
+        boolean engineTypeDifferent = !Objects.equals(existingEntity.getEngineType().getId(), requestDto.getEngineTypeId());
 
         existingEntity.setShipNumber(requestDto.getShipNumber());
         existingEntity.setRegistration(requestDto.getRegistration());
-        existingEntity.setAircraftType(aircraftType);
-        existingEntity.setEngineType(engineType);
+
+        if (aircraftTypeDifferent) {
+        AircraftTypeEntity type = aircraftTypeRepository.findById(requestDto.getAircraftTypeId())
+                .orElseThrow(() -> new RecordNotFoundException("Aircraft Type " + requestDto.getAircraftTypeId() + " not found"));
+        existingEntity.setAircraftType(type);
+        }
+
+        if (engineTypeDifferent) {
+            EngineTypeEntity engine = engineTypeRepository.findById(requestDto.getEngineTypeId())
+                    .orElseThrow(() -> new RecordNotFoundException("Engine Type " + requestDto.getEngineTypeId() + " not found"));
+            existingEntity.setEngineType(engine);
+        }
 
         existingEntity = aircraftRepository.save(existingEntity);
         return aircraftDTOMapper.mapToDto(existingEntity);
     }
-
 
     private AircraftEntity getAircraftEntity(Long id) {
         AircraftEntity existingAircraftEntity = aircraftRepository.findById(id)
