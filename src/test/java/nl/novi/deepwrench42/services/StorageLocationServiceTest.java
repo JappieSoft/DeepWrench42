@@ -37,9 +37,6 @@ class StorageLocationServiceTest {
     @Mock
     private StorageLocationDTOMapper storageLocationDTOMapper;
 
-    @Mock
-    private ToolRepository toolRepository;
-
     @InjectMocks
     private StorageLocationService storageLocationService;
 

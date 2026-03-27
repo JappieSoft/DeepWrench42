@@ -1,12 +1,17 @@
 INSERT INTO aircraft_types(created_date, edited_date, manufacturer, main_type, sub_type)
 VALUES (now(), now(), 'Airbus', 'A330', 'A330-300'),
        (now(), now(), 'Airbus', 'A350', 'A350-900'),
-       (now(), now(), 'Boeing', 'B787', 'B787-800');
+       (now(), now(), 'Boeing', 'B787', 'B787-800'),
+       (now(), now(), 'Boeing', 'B737', 'B737-800'),
+       (now(), now(), 'Airbus', 'A320', 'A320-200');
 
 INSERT INTO engine_types(created_date, edited_date, manufacturer, main_type, sub_type)
 VALUES (now(), now(), 'Pratt & Whitney', 'PW4000', 'PW4168'),
        (now(), now(), 'Rolls Royce', 'XWB', 'XWB-84P'),
-       (now(), now(), 'General Electric', 'GenX', 'GenX-1A');
+       (now(), now(), 'General Electric', 'GenX', 'GenX-1A'),
+       (now(), now(), 'CFM', 'CFM56', '-7B26'),
+       (now(), now(), 'CFM', 'CFM56', '-5B4'),
+       (now(), now(), 'IAE', 'V2500', 'V2525-A5');
 
 INSERT INTO aircraft(created_date, edited_date, ship_number, registration, aircraft_type_id, engine_type_id)
 VALUES (now(), now(), '3311', 'N811NW', 1, 1),
@@ -67,3 +72,4 @@ VALUES (now(), 'CHECK_OUT', 'CHECKED_OUT', '516543', 'K03562141',  'TOOLKIT', 'A
        (now(), 'CHECK_IN',  'CHECKED_IN',  '523043', 'R0454545',   'TOOL',    'Metric Socket Set 6-24mm',       2811, 'AS28431',    'SS-987654321', 'Proto',    '3310', NULL),
        (now(), 'CHECK_OUT', 'CHECKED_OUT', '516543', 'SPARK01',    'TOOL',    'Spark Plug Socket 16mm',         7325, 'T8438',      'SPS-112233445','Craft',    '8AB',  NULL),
        (now(), 'CHECK_OUT', 'CHECKED_OUT', '509704', 'RR57698',    'TOOLKIT', 'XWB HMU AGB STUD Extractor Kit', 2796, 'P23499',     'FG-456789123', 'Starrett', '3527', 'calibration');
+
