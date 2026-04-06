@@ -111,33 +111,32 @@ public class InspectionService {
         return inspectionDTOMapper.mapToDto(saved);
     }
 
-
         private InspectionEntity getInspectionEntity (Long id){
             InspectionEntity existingInspectionEntity = inspectionRepository.findById(id)
                     .orElseThrow(() -> new RecordNotFoundException("Inspection " + id + " not found"));
             return existingInspectionEntity;
         }
 
-    @Transactional
-    public void deleteInspection(Long id) {
-        InspectionEntity inspection = getInspectionEntity(id);
+        @Transactional
+        public void deleteInspection(Long id) {
+            InspectionEntity inspection = getInspectionEntity(id);
 
-        if (inspection.getTool() != null) {
-            ToolEntity tool = inspection.getTool();
-            tool.setInspection(null);
-            tool.setHasInspection(false);
-            tool.setIsCalibrated(false);
-            toolRepository.save(tool);
+            if (inspection.getTool() != null) {
+                ToolEntity tool = inspection.getTool();
+                tool.setInspection(null);
+                tool.setHasInspection(false);
+                tool.setIsCalibrated(false);
+                toolRepository.save(tool);
+            }
+            if (inspection.getToolKit() != null) {
+                ToolKitEntity kit = inspection.getToolKit();
+                kit.setInspection(null);
+                kit.setHasInspection(false);
+                kit.setIsCalibrated(false);
+                toolKitRepository.save(kit);
+            }
+            inspectionRepository.deleteById(id);
         }
-        if (inspection.getToolKit() != null) {
-            ToolKitEntity kit = inspection.getToolKit();
-            kit.setInspection(null);
-            kit.setHasInspection(false);
-            kit.setIsCalibrated(false);
-            toolKitRepository.save(kit);
-        }
-        inspectionRepository.deleteById(id);
-    }
 
         @Transactional
         public InspectionResponseDTO completeInspection(CompleteInspectionDTO requestDTO) {
@@ -145,7 +144,8 @@ public class InspectionService {
             Optional<ToolEntity> selectedTool = toolRepository.findByItemId(requestDTO.getEquipmentItemId());
             if (selectedTool.isPresent()) {
                 ToolEntity tool = selectedTool.get();
-                InspectionEntity existingEntity = tool.getInspection();
+                Long inspectionId = tool.getInspection().getId();
+                InspectionEntity existingEntity = getInspectionEntity(inspectionId);
 
                 existingEntity.setInspectionDate(requestDTO.getInspectionDate());
                 existingEntity.setInspectionPassed(requestDTO.getInspectionPassed());
@@ -159,7 +159,8 @@ public class InspectionService {
             Optional<ToolKitEntity> selectedToolKit = toolKitRepository.findByItemId(requestDTO.getEquipmentItemId());
             if (selectedToolKit.isPresent()) {
                 ToolKitEntity toolKit = selectedToolKit.get();
-                InspectionEntity existingEntity = toolKit.getInspection();
+                Long inspectionId = toolKit.getInspection().getId();
+                InspectionEntity existingEntity = getInspectionEntity(inspectionId);
 
                 existingEntity.setInspectionDate(requestDTO.getInspectionDate());
                 existingEntity.setInspectionPassed(requestDTO.getInspectionPassed());
