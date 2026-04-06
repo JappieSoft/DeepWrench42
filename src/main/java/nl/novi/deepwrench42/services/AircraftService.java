@@ -45,9 +45,7 @@ public class AircraftService{
 
     @Transactional
     public AircraftResponseDTO createAircraft(AircraftRequestDTO model) {
-        AircraftEntity aircraftEntity = new AircraftEntity();
-        aircraftEntity.setRegistration(model.getRegistration());
-        aircraftEntity.setShipNumber(model.getShipNumber());
+        AircraftEntity aircraftEntity = aircraftDTOMapper.mapToEntity(model);
 
         AircraftTypeEntity type = aircraftTypeRepository.findById(model.getAircraftTypeId())
                 .orElseThrow(() -> new RecordNotFoundException("Aircraft Type " + model.getAircraftTypeId() + " not found"));

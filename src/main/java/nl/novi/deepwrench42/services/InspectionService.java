@@ -114,7 +114,7 @@ public class InspectionService {
 
         private InspectionEntity getInspectionEntity (Long id){
             InspectionEntity existingInspectionEntity = inspectionRepository.findById(id)
-                    .orElseThrow(() -> new RecordNotFoundException("inspection " + id + " not found"));
+                    .orElseThrow(() -> new RecordNotFoundException("Inspection " + id + " not found"));
             return existingInspectionEntity;
         }
 
