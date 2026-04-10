@@ -65,7 +65,7 @@ public class ToolKitController {
 
     //picture services
     @PostMapping("/{id}/picture")
-    public ResponseEntity<ToolKitResponseDTO> addPictureToTool(@PathVariable("id") Long id, @RequestBody MultipartFile file) throws IOException {
+    public ResponseEntity<ToolKitResponseDTO> addPictureToToolKit(@PathVariable("id") Long id, @RequestBody MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("No file uploaded");
         }
@@ -79,7 +79,7 @@ public class ToolKitController {
     }
 
     @GetMapping("/{id}/picture")
-    public ResponseEntity<Resource> getPictureOfTool(@PathVariable("id") Long id, HttpServletRequest request){
+    public ResponseEntity<Resource> getPictureOfToolKit(@PathVariable("id") Long id, HttpServletRequest request){
         Resource resource = toolKitService.getPictureFromTool(id);
         String mimeType;
 

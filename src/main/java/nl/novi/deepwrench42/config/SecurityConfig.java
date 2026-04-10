@@ -1,4 +1,4 @@
-package nl.novi.vinylshop.config;
+package nl.novi.deepwrench42.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -44,9 +44,23 @@ public class SecurityConfig {
                         ))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/albums/{albumId}/stock").hasRole("ADMIN")
-                        .requestMatchers("/profiles/albums").hasAuthority("ROLE_USER")
-                        .requestMatchers("/profiles").authenticated()
+                        .requestMatchers("/aircraft/{id}", "/aircraft-type/{id}", "/engine-type/{id}").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/inspection/performed",
+                                "/inspection/find-inspection-date-before",
+                                "/inspection/find-inspection-date-after",
+                                "/inspection/find-next-overdue").hasAuthority("ROLE_LEAD")
+                        .requestMatchers("/aircraft").authenticated()
+                        .requestMatchers("/aircraft-type").authenticated()
+                        .requestMatchers("/engine-type").authenticated()
+                        .requestMatchers("/storage-location").authenticated()
+                        .requestMatchers("/inspection").authenticated()
+                        .requestMatchers("/tool").authenticated()
+                        .requestMatchers("/tool-kit").authenticated()
+                        .requestMatchers("/tool-log").authenticated()
+                        .requestMatchers("/user").authenticated()
                         .requestMatchers(HttpMethod.GET, "/albums", "/albums/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/equipment/checkin", "/equipment/checkout").permitAll()
                         .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
@@ -101,9 +115,4 @@ public class SecurityConfig {
         });
         return jwtAuthenticationConverter;
     }
-
-
-
-
-
 }
