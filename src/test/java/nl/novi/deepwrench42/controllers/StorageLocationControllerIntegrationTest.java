@@ -58,7 +58,7 @@ public class StorageLocationControllerIntegrationTest {
         storageLocationTwo.setComments("6 comments");
         storageLocationRepository.save(storageLocationTwo);
 
-       mockMvc.perform(get("/storage-location")
+        mockMvc.perform(get("/storage-location")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -116,7 +116,7 @@ public class StorageLocationControllerIntegrationTest {
         storageLocationResponseDTO.setShelf("20");
         storageLocationResponseDTO.setComments("DTO comments");
 
-       var response = mockMvc.perform(post("/storage-location")
+        var response = mockMvc.perform(post("/storage-location")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(storageLocationRequestDTO)))
                 .andExpect(status().isCreated())
@@ -124,13 +124,13 @@ public class StorageLocationControllerIntegrationTest {
                 .andExpect(jsonPath("$.rack").value("10"))
                 .andExpect(jsonPath("$.shelf").value("20"))
                 .andExpect(jsonPath("$.comments").value("DTO comments"))
-               .andReturn();
+                .andReturn();
 
         StorageLocationResponseDTO storageLocationResult = objectMapper.readValue(response.getResponse().getContentAsString(), StorageLocationResponseDTO.class);
 
         Assertions.assertEquals(storageLocationResponseDTO.getLocation(), storageLocationResult.getLocation());
-        Assertions.assertEquals(storageLocationResponseDTO.getRack(),     storageLocationResult.getRack());
-        Assertions.assertEquals(storageLocationResponseDTO.getShelf(),    storageLocationResult.getShelf());
+        Assertions.assertEquals(storageLocationResponseDTO.getRack(), storageLocationResult.getRack());
+        Assertions.assertEquals(storageLocationResponseDTO.getShelf(), storageLocationResult.getShelf());
         Assertions.assertEquals(storageLocationResponseDTO.getComments(), storageLocationResult.getComments());
     }
 

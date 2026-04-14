@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "storage_locations")
-public class StorageLocationEntity extends BaseEntity{
+public class StorageLocationEntity extends BaseEntity {
 
     @Column(name = "location", nullable = false)
     private String location;
@@ -21,15 +21,35 @@ public class StorageLocationEntity extends BaseEntity{
     private String comments;
 
     // Getters en Setters
-    public String getLocation() {   return location;    }
-    public void setLocation(String location) {  this.location = location;   }
+    public String getLocation() {
+        return location;
+    }
 
-    public String getRack() {   return rack;    }
-    public void setRack(String rack) {  this.rack = rack;   }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public String getShelf() {  return shelf;   }
-    public void setShelf(String shelf) {    this.shelf = shelf; }
+    public String getRack() {
+        return rack;
+    }
 
-    public String getComments() {   return comments;    }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public void setRack(String rack) {
+        this.rack = rack;
+    }
+
+    public String getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(String shelf) {
+        this.shelf = shelf;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }

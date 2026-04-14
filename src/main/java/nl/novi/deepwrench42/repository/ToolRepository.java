@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ToolRepository extends JpaRepository<ToolEntity, Long> {
     Optional<ToolEntity> findByItemId(String itemId);
+
     boolean existsByStorageLocationId(Long storageLocationId);
 
     @Query(value = "SELECT EXISTS(SELECT 1 FROM aircraft_type_tool_compatibility " +

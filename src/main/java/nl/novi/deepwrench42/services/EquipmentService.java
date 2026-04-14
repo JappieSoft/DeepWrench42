@@ -102,7 +102,6 @@ public class EquipmentService {
             toolStatusHelper.validateForCheckIn(kit);
             return checkInHelper.performToolKitCheckIn(kit, user, requestDTO);
         }
-
         throw new IllegalArgumentException("No tool or toolkit found with itemId: " + requestDTO.getEquipmentItemId());
     }
 }

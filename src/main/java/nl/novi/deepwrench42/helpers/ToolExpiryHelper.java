@@ -12,26 +12,26 @@ public class ToolExpiryHelper {
     private final ToolRepository toolRepository;
     private final ToolKitRepository toolKitRepository;
 
-
     public ToolExpiryHelper(ToolRepository toolRepository, ToolKitRepository toolKitRepository) {
         this.toolRepository = toolRepository;
         this.toolKitRepository = toolKitRepository;
     }
-        public void checkDueDateTool (ToolEntity tool) {
-            InspectionEntity inspection = tool.getInspection();
-            if (inspection != null) {
-                if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
-                    if (inspection.getInspectionType().equals(InspectionType.CALIBRATION)) {
-                        tool.setStatus(EquipmentStatus.CALIBRATION_DUE);
-                    } else {
-                        tool.setStatus(EquipmentStatus.MAINTENANCE_DUE);
-                    }
-                    toolRepository.save(tool);
+
+    public void checkDueDateTool(ToolEntity tool) {
+        InspectionEntity inspection = tool.getInspection();
+        if (inspection != null) {
+            if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
+                if (inspection.getInspectionType().equals(InspectionType.CALIBRATION)) {
+                    tool.setStatus(EquipmentStatus.CALIBRATION_DUE);
+                } else {
+                    tool.setStatus(EquipmentStatus.MAINTENANCE_DUE);
                 }
+                toolRepository.save(tool);
             }
         }
+    }
 
-    public void checkDueDateToolKit (ToolKitEntity toolKit){
+    public void checkDueDateToolKit(ToolKitEntity toolKit) {
         InspectionEntity inspection = toolKit.getInspection();
         if (inspection != null) {
             if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
@@ -44,5 +44,4 @@ public class ToolExpiryHelper {
             }
         }
     }
-
 }

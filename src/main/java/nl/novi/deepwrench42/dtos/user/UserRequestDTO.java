@@ -27,28 +27,59 @@ public class UserRequestDTO {
     private UserRole role;
 
     // Getters en Setters
-    public String getEmployeeId() { return employeeId;  }
-    public void setEmployeeId(String employeeId) {  this.employeeId = employeeId;   }
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getKcid() {
         return kcid;
     }
+
     public void setKcid(String kcid) {
         this.kcid = kcid;
     }
 
-    public String getSchipholId() { return schipholId;  }
-    public void setSchipholId(String schipholId) {  this.schipholId = schipholId;   }
+    public String getSchipholId() {
+        return schipholId;
+    }
 
-    public String getEmail() {  return email;   }
-    public void setEmail(String email) {    this.email = email; }
+    public void setSchipholId(String schipholId) {
+        this.schipholId = schipholId;
+    }
 
-    public String getFirstName() {  return firstName;   }
-    public void setFirstName(String firstName) {    this.firstName = firstName; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getLastName() {   return lastName;    }
-    public void setLastName(String lastName) {  this.lastName = lastName;   }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public UserRole getRole() { return role;    }
-    public void setRole(UserRole role) {    this.role = role;   }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

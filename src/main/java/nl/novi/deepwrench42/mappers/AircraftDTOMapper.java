@@ -4,6 +4,7 @@ import nl.novi.deepwrench42.dtos.aircraft.AircraftRequestDTO;
 import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.entities.AircraftEntity;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

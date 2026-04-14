@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class EngineTypeDTOMapper  implements DTOMapper<EngineTypeResponseDTO, EngineTypeRequestDTO, EngineTypeEntity>{
+public class EngineTypeDTOMapper implements DTOMapper<EngineTypeResponseDTO, EngineTypeRequestDTO, EngineTypeEntity> {
 
     @Override
     public EngineTypeResponseDTO mapToDto(EngineTypeEntity model) {

@@ -26,34 +26,84 @@ public class EquipmentRequestDTO {
     private String comments;
 
     // Getters en Setters
-    public EquipmentType getEquipmentType() {   return equipmentType;   }
-    public void setEquipmentType(EquipmentType equipmentType) { this.equipmentType = equipmentType; }
+    public EquipmentType getEquipmentType() {
+        return equipmentType;
+    }
 
-    public String getItemId() { return itemId;  }
-    public void setItemId(String itemId) {  this.itemId = itemId;   }
+    public void setEquipmentType(EquipmentType equipmentType) {
+        this.equipmentType = equipmentType;
+    }
 
-    public String getName() {   return name;    }
-    public void setName(String name) {  this.name = name;   }
+    public String getItemId() {
+        return itemId;
+    }
 
-    public String getPictureFileName() {    return pictureFileName; }
-    public void setPictureFileName(String pictureFileName) {    this.pictureFileName = pictureFileName; }
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
 
-    public Long getStorageLocation() { return storageLocation; }
-    public void setStorageLocation(Long storageLocation) { this.storageLocation = storageLocation; }
+    public String getName() {
+        return name;
+    }
 
-    public String getStatus() {    return status;  }
-    public void setStatus(String status) { this.status = status;   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Long getCheckedOutBy() {   return checkedOutBy;    }
-    public void setCheckedOutBy(Long checkedOutBy) {  this.checkedOutBy = checkedOutBy;   }
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
 
-    public LocalDateTime getCheckedOutDate() {return checkedOutDate;  }
-    public void setCheckedOutDate(LocalDateTime checkedOutDate) {   this.checkedOutDate = checkedOutDate;   }
+    public void setPictureFileName(String pictureFileName) {
+        this.pictureFileName = pictureFileName;
+    }
 
-    public Boolean getHasInspection() {  return hasInspection;   }
-    public void setHasInspection(Boolean hasInspection) {   this.hasInspection = hasInspection; }
+    public Long getStorageLocation() {
+        return storageLocation;
+    }
 
-    public String getComments() {   return comments;    }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public void setStorageLocation(Long storageLocation) {
+        this.storageLocation = storageLocation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getCheckedOutBy() {
+        return checkedOutBy;
+    }
+
+    public void setCheckedOutBy(Long checkedOutBy) {
+        this.checkedOutBy = checkedOutBy;
+    }
+
+    public LocalDateTime getCheckedOutDate() {
+        return checkedOutDate;
+    }
+
+    public void setCheckedOutDate(LocalDateTime checkedOutDate) {
+        this.checkedOutDate = checkedOutDate;
+    }
+
+    public Boolean getHasInspection() {
+        return hasInspection;
+    }
+
+    public void setHasInspection(Boolean hasInspection) {
+        this.hasInspection = hasInspection;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "inspections")
-public class InspectionEntity extends BaseEntity{
+public class InspectionEntity extends BaseEntity {
 
     @Column(name = "inspection_date")
     private LocalDateTime inspectionDate;
@@ -15,7 +15,7 @@ public class InspectionEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private InspectionType inspectionType = InspectionType.UNKNOWN;
 
-    @Column(name =  "inspection_passed")
+    @Column(name = "inspection_passed")
     private Boolean inspectionPassed;
 
     @Column(name = "comments")
@@ -36,27 +36,67 @@ public class InspectionEntity extends BaseEntity{
     private ToolKitEntity toolKit;
 
     // Getters en Setters
-    public LocalDateTime getInspectionDate() {  return inspectionDate;  }
-    public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
+    public LocalDateTime getInspectionDate() {
+        return inspectionDate;
+    }
 
-    public InspectionType getInspectionType() { return inspectionType;  }
-    public void setInspectionType(InspectionType inspectionType) {  this.inspectionType = inspectionType;   }
+    public void setInspectionDate(LocalDateTime inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
 
-    public Boolean getInspectionPassed() {   return inspectionPassed;    }
-    public void setInspectionPassed(Boolean inspectionPassed) { this.inspectionPassed = inspectionPassed;   }
+    public InspectionType getInspectionType() {
+        return inspectionType;
+    }
 
-    public String getComments() {   return comments;    }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public void setInspectionType(InspectionType inspectionType) {
+        this.inspectionType = inspectionType;
+    }
 
-    public LocalDateTime getNextDueDate() { return nextDueDate; }
-    public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }
+    public Boolean getInspectionPassed() {
+        return inspectionPassed;
+    }
 
-    public Integer getInspectionInterval() {    return inspectionInterval;  }
-    public void setInspectionInterval(Integer inspectionInterval) { this.inspectionInterval = inspectionInterval;   }
+    public void setInspectionPassed(Boolean inspectionPassed) {
+        this.inspectionPassed = inspectionPassed;
+    }
 
-    public ToolEntity getTool() {   return tool;    }
-    public void setTool(ToolEntity tool) {  this.tool = tool;   }
+    public String getComments() {
+        return comments;
+    }
 
-    public ToolKitEntity getToolKit() { return toolKit; }
-    public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public LocalDateTime getNextDueDate() {
+        return nextDueDate;
+    }
+
+    public void setNextDueDate(LocalDateTime nextDueDate) {
+        this.nextDueDate = nextDueDate;
+    }
+
+    public Integer getInspectionInterval() {
+        return inspectionInterval;
+    }
+
+    public void setInspectionInterval(Integer inspectionInterval) {
+        this.inspectionInterval = inspectionInterval;
+    }
+
+    public ToolEntity getTool() {
+        return tool;
+    }
+
+    public void setTool(ToolEntity tool) {
+        this.tool = tool;
+    }
+
+    public ToolKitEntity getToolKit() {
+        return toolKit;
+    }
+
+    public void setToolKit(ToolKitEntity toolKit) {
+        this.toolKit = toolKit;
+    }
 }

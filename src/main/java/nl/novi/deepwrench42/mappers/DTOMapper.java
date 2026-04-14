@@ -7,5 +7,5 @@ public interface DTOMapper<RESPONSE, REQUEST, T> {
 
     List<RESPONSE> mapToDto(List<T> models);
 
-    T mapToEntity(REQUEST genreModel);
+    T mapToEntity(REQUEST requestModel);
 }

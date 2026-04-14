@@ -30,10 +30,10 @@ public class UserController {
     public ResponseEntity<List<UserResponseDTO>> getUsers(Authentication authentication) {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        if(authorities.contains("ADMIN")){
+        if (authorities.contains("ADMIN")) {
             List<UserResponseDTO> users = userService.findAllUsers();
             return ResponseEntity.ok(users);
-        } else if (authorities.contains("USER")){
+        } else if (authorities.contains("USER")) {
             UserResponseDTO user = userService.findUserByKcid(authentication);
             return ResponseEntity.ok(List.of(user));
         } else {

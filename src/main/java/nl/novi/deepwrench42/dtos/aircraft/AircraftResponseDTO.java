@@ -11,18 +11,43 @@ public class AircraftResponseDTO {
     private EngineTypeResponseDTO engineType;
 
     // Getters en Setters
-    public Long getId() {   return id;  }
-    public void setId(Long id) {    this.id = id;   }
+    public Long getId() {
+        return id;
+    }
 
-    public String getShipNumber() { return shipNumber;  }
-    public void setShipNumber(String shipNumber) {  this.shipNumber = shipNumber;   }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getRegistration() {   return registration;    }
-    public void setRegistration(String registration) {  this.registration = registration;   }
+    public String getShipNumber() {
+        return shipNumber;
+    }
 
-    public AircraftTypeResponseDTO getAircraftType() {  return aircraftType;    }
-    public void setAircraftType(AircraftTypeResponseDTO aircraftType) { this.aircraftType = aircraftType;   }
+    public void setShipNumber(String shipNumber) {
+        this.shipNumber = shipNumber;
+    }
 
-    public EngineTypeResponseDTO getEngineType() {  return engineType;  }
-    public void setEngineType(EngineTypeResponseDTO engineType) {   this.engineType = engineType;   }
+    public String getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(String registration) {
+        this.registration = registration;
+    }
+
+    public AircraftTypeResponseDTO getAircraftType() {
+        return aircraftType;
+    }
+
+    public void setAircraftType(AircraftTypeResponseDTO aircraftType) {
+        this.aircraftType = aircraftType;
+    }
+
+    public EngineTypeResponseDTO getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(EngineTypeResponseDTO engineType) {
+        this.engineType = engineType;
+    }
 }

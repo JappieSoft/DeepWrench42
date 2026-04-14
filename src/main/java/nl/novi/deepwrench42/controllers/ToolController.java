@@ -72,18 +72,18 @@ public class ToolController {
 
         String toolItemId = toolService.findToolById(id).getItemId();
         String existingFileName = toolService.findToolById(id).getPictureFileName();
-        String fileName = fileStorageHelper.storeFile(toolItemId,existingFileName ,file);
+        String fileName = fileStorageHelper.storeFile(toolItemId, existingFileName, file);
         ToolResponseDTO tool = toolService.assignPictureToTool(fileName, id);
 
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(tool.getId())).body(tool);
     }
 
     @GetMapping("/{id}/picture")
-    public ResponseEntity<Resource> getPictureOfTool(@PathVariable("id") Long id, HttpServletRequest request){
+    public ResponseEntity<Resource> getPictureOfTool(@PathVariable("id") Long id, HttpServletRequest request) {
         Resource resource = toolService.getPictureFromTool(id);
         String mimeType;
 
-        try{
+        try {
             mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException e) {
             mimeType = fileStorageHelper.getMimeType(Objects.requireNonNull(resource.getFilename()));

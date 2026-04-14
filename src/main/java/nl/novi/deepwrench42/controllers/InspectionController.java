@@ -1,7 +1,6 @@
 package nl.novi.deepwrench42.controllers;
 
 import jakarta.validation.Valid;
-import nl.novi.deepwrench42.dtos.equipment.EquipmentResponseDTO;
 import nl.novi.deepwrench42.dtos.inspection.CompleteInspectionDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
@@ -58,7 +57,7 @@ public class InspectionController {
     }
 
     @PostMapping("/performed")
-    public ResponseEntity<InspectionResponseDTO> performedInspection( @Valid @RequestBody CompleteInspectionDTO completedInspection) {
+    public ResponseEntity<InspectionResponseDTO> performedInspection(@Valid @RequestBody CompleteInspectionDTO completedInspection) {
         InspectionResponseDTO result = inspectionService.completeInspection(completedInspection);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }

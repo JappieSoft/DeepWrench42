@@ -26,7 +26,7 @@ public class AircraftController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AircraftResponseDTO>> getAllAircrafts() {
+    public ResponseEntity<List<AircraftResponseDTO>> getAllAircraft() {
         List<AircraftResponseDTO> aircrafts = aircraftService.findAllAircraft();
         return ResponseEntity.ok(aircrafts);
     }

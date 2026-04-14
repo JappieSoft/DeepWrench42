@@ -254,7 +254,7 @@ class AircraftServiceTest {
 
     @Nested
     @DisplayName("3. Update Testing")
-    class UpdateFunctionsTesting{
+    class UpdateFunctionsTesting {
         @Test
         @DisplayName("Update aircraft, Working")
         void updateAircraft_shouldReturnUpdatedAircraft() {
@@ -401,7 +401,7 @@ class AircraftServiceTest {
 
     @Nested
     @DisplayName("4. Delete Testing")
-    class DeleteFunctionsTesting{
+    class DeleteFunctionsTesting {
         @Test
         @DisplayName("Delete aircraft, Working")
         void deleteAircraft_shouldDelete_whenAircraftExists() {

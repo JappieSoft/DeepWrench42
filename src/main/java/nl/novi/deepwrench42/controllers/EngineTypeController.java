@@ -18,16 +18,10 @@ import java.util.List;
 public class EngineTypeController {
 
     private final EngineTypeService engineTypeService;
-    private final AircraftRepository aircraftRepository;
-    private final ToolRepository toolRepository;
-    private final ToolKitRepository toolKitRepository;
     private final UrlHelper urlHelper;
 
-    public EngineTypeController(EngineTypeService engineTypeService, AircraftRepository aircraftRepository, ToolRepository toolRepository, ToolKitRepository toolKitRepository , UrlHelper urlHelper) {
+    public EngineTypeController(EngineTypeService engineTypeService, UrlHelper urlHelper) {
         this.engineTypeService = engineTypeService;
-        this.aircraftRepository = aircraftRepository;
-        this.toolRepository = toolRepository;
-        this.toolKitRepository = toolKitRepository;
         this.urlHelper = urlHelper;
     }
 
@@ -57,15 +51,6 @@ public class EngineTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEngineType(@PathVariable Long id) {
-        if (aircraftRepository.existsByAircraftTypeId(id)) {
-            throw new ForeignKeyViolationException("Engine type is still referenced by an aircraft.");
-        }
-        if (toolRepository.existsByEngineTypeId(id)) {
-            throw new ForeignKeyViolationException("Engine type is still referenced by a tool.");
-        }
-        if (toolKitRepository.existsByEngineTypeId(id)) {
-            throw new ForeignKeyViolationException("Engine type is still referenced by a tool kit.");
-        }
         engineTypeService.deleteEngineType(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

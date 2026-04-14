@@ -2,7 +2,6 @@ package nl.novi.deepwrench42.mappers;
 
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitRequestDTO;
 import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
-import nl.novi.deepwrench42.entities.EquipmentStatus;
 import nl.novi.deepwrench42.entities.ToolKitEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,7 @@ public class ToolKitDTOMapper extends EquipmentDTOMapper implements DTOMapper<To
             @Lazy ToolDTOMapper toolDTOMapper
     ) {
 
-        super(storageLocationDTOMapper, userDTOMapper, aircraftDTOMapper);
+        super(storageLocationDTOMapper, userDTOMapper);
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
         this.inspectionDTOMapper = inspectionDTOMapper;

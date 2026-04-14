@@ -37,33 +37,83 @@ public class ToolRequestDTO extends EquipmentRequestDTO {
     private Long toolKitId;
 
     // Getters en Setters
-       public String getToolType() {   return toolType;    }
-    public void setToolType(String toolType) {  this.toolType = toolType;   }
+    public String getToolType() {
+        return toolType;
+    }
 
-    public Integer getAtaCode() {   return ataCode; }
-    public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
+    public void setToolType(String toolType) {
+        this.toolType = toolType;
+    }
 
-    public String getPartNumber() { return partNumber;  }
-    public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
+    public Integer getAtaCode() {
+        return ataCode;
+    }
 
-    public String getSerialNumber() {   return serialNumber;    }
-    public void setSerialNumber(String serialNumber) {  this.serialNumber = serialNumber;   }
+    public void setAtaCode(Integer ataCode) {
+        this.ataCode = ataCode;
+    }
 
-    public String getManufacturer() {   return manufacturer;    }
-    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+    public String getPartNumber() {
+        return partNumber;
+    }
 
-    public Set<Long> getApplicableAircraftTypeIds() {   return applicableAircraftTypeIds;   }
-    public void setApplicableAircraftTypeIds(Set<Long> applicableAircraftTypeIds) { this.applicableAircraftTypeIds = applicableAircraftTypeIds; }
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
+    }
 
-    public Set<Long> getApplicableEngineTypeIds() { return applicableEngineTypeIds; }
-    public void setApplicableEngineTypeIds(Set<Long> applicableEngineTypeIds) { this.applicableEngineTypeIds = applicableEngineTypeIds; }
+    public String getSerialNumber() {
+        return serialNumber;
+    }
 
-    public Boolean getIsCalibrated() {    return isCalibrated;    }
-    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
-    public Long getInspectionId() {   return inspectionId;  }
-    public void setInspectionId(Long inspectionId) {    this.inspectionId = inspectionId;   }
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-    public Long getToolKitId() {    return toolKitId;   }
-    public void setToolKitId(Long toolKitId) {  this.toolKitId = toolKitId; }
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public Set<Long> getApplicableAircraftTypeIds() {
+        return applicableAircraftTypeIds;
+    }
+
+    public void setApplicableAircraftTypeIds(Set<Long> applicableAircraftTypeIds) {
+        this.applicableAircraftTypeIds = applicableAircraftTypeIds;
+    }
+
+    public Set<Long> getApplicableEngineTypeIds() {
+        return applicableEngineTypeIds;
+    }
+
+    public void setApplicableEngineTypeIds(Set<Long> applicableEngineTypeIds) {
+        this.applicableEngineTypeIds = applicableEngineTypeIds;
+    }
+
+    public Boolean getIsCalibrated() {
+        return isCalibrated;
+    }
+
+    public void setIsCalibrated(Boolean isCalibrated) {
+        this.isCalibrated = isCalibrated;
+    }
+
+    public Long getInspectionId() {
+        return inspectionId;
+    }
+
+    public void setInspectionId(Long inspectionId) {
+        this.inspectionId = inspectionId;
+    }
+
+    public Long getToolKitId() {
+        return toolKitId;
+    }
+
+    public void setToolKitId(Long toolKitId) {
+        this.toolKitId = toolKitId;
+    }
 }

@@ -3,7 +3,6 @@ package nl.novi.deepwrench42.mappers;
 import nl.novi.deepwrench42.dtos.inspection.InspectionRequestDTO;
 import nl.novi.deepwrench42.dtos.inspection.InspectionResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionEntity;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,9 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class InspectionDTOMapper  implements DTOMapper<InspectionResponseDTO, InspectionRequestDTO, InspectionEntity>{
-
-   public InspectionDTOMapper() { }
+public class InspectionDTOMapper implements DTOMapper<InspectionResponseDTO, InspectionRequestDTO, InspectionEntity> {
 
     @Override
     public InspectionResponseDTO mapToDto(InspectionEntity model) {

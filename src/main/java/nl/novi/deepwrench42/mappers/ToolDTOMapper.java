@@ -2,10 +2,7 @@ package nl.novi.deepwrench42.mappers;
 
 import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
 import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
-import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
-import nl.novi.deepwrench42.entities.EquipmentStatus;
 import nl.novi.deepwrench42.entities.ToolEntity;
-import nl.novi.deepwrench42.repository.ToolKitRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 @Component
 public class ToolDTOMapper extends EquipmentDTOMapper implements DTOMapper<ToolResponseDTO, ToolRequestDTO, ToolEntity> {
@@ -31,7 +27,7 @@ public class ToolDTOMapper extends EquipmentDTOMapper implements DTOMapper<ToolR
             @Lazy UserDTOMapper userDTOMapper,
             @Lazy InspectionDTOMapper inspectionDTOMapper
     ) {
-        super(storageLocationDTOMapper, userDTOMapper, aircraftDTOMapper);
+        super(storageLocationDTOMapper, userDTOMapper);
         this.aircraftTypeDTOMapper = aircraftTypeDTOMapper;
         this.engineTypeDTOMapper = engineTypeDTOMapper;
         this.inspectionDTOMapper = inspectionDTOMapper;
@@ -69,7 +65,6 @@ public class ToolDTOMapper extends EquipmentDTOMapper implements DTOMapper<ToolR
         } else {
             result.setToolKitItemId(null);
         }
-
         return result;
     }
 

@@ -29,13 +29,13 @@ public class UserService {
         return userDtoMapper.mapToDto(userRepository.findAll());
     }
 
-    public UserResponseDTO findUserByKcid(Authentication authentication)  {
+    public UserResponseDTO findUserByKcid(Authentication authentication) {
         String kcid = authentication.getName();
         UserEntity userEntity = getKcidUserEntity(kcid);
         return userDtoMapper.mapToDto(userEntity);
     }
 
-    public UserResponseDTO findUserById(Long id)  {
+    public UserResponseDTO findUserById(Long id) {
         UserEntity userEntity = getUserEntity(id);
         return userDtoMapper.mapToDto(userEntity);
     }
@@ -78,7 +78,7 @@ public class UserService {
         return userDtoMapper.mapToDto(userEntity);
     }
 
-    public UserResponseDTO updateUser(UserRequestDTO requestDto, Authentication authentication)  {
+    public UserResponseDTO updateUser(UserRequestDTO requestDto, Authentication authentication) {
         UserEntity existingEntity = getKcidUserEntity(authentication.getName());
 
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
@@ -102,7 +102,7 @@ public class UserService {
         return userDtoMapper.mapToDto(existingEntity);
     }
 
-    public UserResponseDTO patchUser(Long id, UserRequestDTO requestDto)  {
+    public UserResponseDTO patchUser(Long id, UserRequestDTO requestDto) {
         UserEntity existingEntity = getUserEntity(id);
 
         existingEntity.setKcid(requestDto.getKcid());
@@ -122,14 +122,15 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    //Generic FIndById Helper
     private UserEntity getUserEntity(Long id) {
         UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("User " + id +" not found"));
+                .orElseThrow(() -> new RecordNotFoundException("User " + id + " not found"));
         return userEntity;
     }
 
     private UserEntity getKcidUserEntity(String kcid) {
-        if(userRepository.existsByKcid(kcid)) {
+        if (userRepository.existsByKcid(kcid)) {
             return userRepository.findByKcid(kcid);
         } else {
             throw new RecordNotFoundException("User Profile not found, please create User Profile.");

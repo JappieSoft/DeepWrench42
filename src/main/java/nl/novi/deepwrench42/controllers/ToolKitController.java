@@ -79,11 +79,11 @@ public class ToolKitController {
     }
 
     @GetMapping("/{id}/picture")
-    public ResponseEntity<Resource> getPictureOfToolKit(@PathVariable("id") Long id, HttpServletRequest request){
+    public ResponseEntity<Resource> getPictureOfToolKit(@PathVariable("id") Long id, HttpServletRequest request) {
         Resource resource = toolKitService.getPictureFromTool(id);
         String mimeType;
 
-        try{
+        try {
             mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException e) {
             mimeType = fileStorageHelper.getMimeType(Objects.requireNonNull(resource.getFilename()));

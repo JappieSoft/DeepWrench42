@@ -1,9 +1,6 @@
 package nl.novi.deepwrench42.dtos.equipment;
 
-import nl.novi.deepwrench42.dtos.aircraft.AircraftResponseDTO;
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
-import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
-import nl.novi.deepwrench42.dtos.toolKit.ToolKitResponseDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.entities.*;
 
@@ -23,36 +20,91 @@ public class EquipmentResponseDTO {
     private String comments;
 
     // Getters en Setters
-    public Long getId() {   return id;  }
-    public void setId(Long id) {    this.id = id;   }
+    public Long getId() {
+        return id;
+    }
 
-    public EquipmentType getEquipmentType() {   return equipmentType;   }
-    public void setEquipmentType(EquipmentType equipmentType) { this.equipmentType = equipmentType; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getItemId() { return itemId;  }
-    public void setItemId(String itemId) {  this.itemId = itemId;   }
+    public EquipmentType getEquipmentType() {
+        return equipmentType;
+    }
 
-    public String getName() {   return name;    }
-    public void setName(String name) {  this.name = name;   }
+    public void setEquipmentType(EquipmentType equipmentType) {
+        this.equipmentType = equipmentType;
+    }
 
-    public String getPictureFileName() {    return pictureFileName; }
-    public void setPictureFileName(String pictureFileName) {    this.pictureFileName = pictureFileName; }
+    public String getItemId() {
+        return itemId;
+    }
 
-    public StorageLocationResponseDTO getStorageLocation() { return storageLocation; }
-    public void setStorageLocation(StorageLocationResponseDTO storageLocation) { this.storageLocation = storageLocation; }
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
 
-    public EquipmentStatus getStatus() {    return status;  }
-    public void setStatus(EquipmentStatus status) { this.status = status;   }
+    public String getName() {
+        return name;
+    }
 
-    public UserResponseDTO getCheckedOutBy() {   return checkedOutBy;    }
-    public void setCheckedOutBy(UserResponseDTO checkedOutBy) {  this.checkedOutBy = checkedOutBy;   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public LocalDateTime getCheckedOutDate() {return checkedOutDate;  }
-    public void setCheckedOutDate(LocalDateTime checkedOutDate) {   this.checkedOutDate = checkedOutDate;   }
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
 
-    public Boolean getHasInspection() {  return hasInspection;   }
-    public void setHasInspection(Boolean hasInspection) {   this.hasInspection = hasInspection; }
+    public void setPictureFileName(String pictureFileName) {
+        this.pictureFileName = pictureFileName;
+    }
 
-    public String getComments() {   return comments;    }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public StorageLocationResponseDTO getStorageLocation() {
+        return storageLocation;
+    }
+
+    public void setStorageLocation(StorageLocationResponseDTO storageLocation) {
+        this.storageLocation = storageLocation;
+    }
+
+    public EquipmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EquipmentStatus status) {
+        this.status = status;
+    }
+
+    public UserResponseDTO getCheckedOutBy() {
+        return checkedOutBy;
+    }
+
+    public void setCheckedOutBy(UserResponseDTO checkedOutBy) {
+        this.checkedOutBy = checkedOutBy;
+    }
+
+    public LocalDateTime getCheckedOutDate() {
+        return checkedOutDate;
+    }
+
+    public void setCheckedOutDate(LocalDateTime checkedOutDate) {
+        this.checkedOutDate = checkedOutDate;
+    }
+
+    public Boolean getHasInspection() {
+        return hasInspection;
+    }
+
+    public void setHasInspection(Boolean hasInspection) {
+        this.hasInspection = hasInspection;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }

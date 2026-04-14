@@ -1,9 +1,7 @@
 package nl.novi.deepwrench42.dtos.inspection;
 
-import nl.novi.deepwrench42.dtos.equipment.EquipmentResponseDTO;
 import nl.novi.deepwrench42.entities.InspectionType;
-import nl.novi.deepwrench42.entities.ToolEntity;
-import nl.novi.deepwrench42.entities.ToolKitEntity;
+
 
 import java.time.LocalDateTime;
 
@@ -20,33 +18,83 @@ public class InspectionResponseDTO {
     private String equipmentItemId;
 
     // Getters en Setters
-    public Long getId() {   return id;  }
-    public void setId(Long id) {    this.id = id;   }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDateTime getInspectionDate() {  return inspectionDate;  }
-    public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public InspectionType getInspectionType() { return inspectionType;  }
-    public void setInspectionType(InspectionType inspectionType) {  this.inspectionType = inspectionType;   }
+    public LocalDateTime getInspectionDate() {
+        return inspectionDate;
+    }
 
-    public Boolean getInspectionPassed() {  return inspectionPassed;   }
-    public void setInspectionPassed(Boolean inspectionPassed) {   this.inspectionPassed = inspectionPassed; }
+    public void setInspectionDate(LocalDateTime inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
 
-    public String getComments() { return comments;  }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public InspectionType getInspectionType() {
+        return inspectionType;
+    }
 
-    public LocalDateTime getNextDueDate() { return nextDueDate; }
-    public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }
+    public void setInspectionType(InspectionType inspectionType) {
+        this.inspectionType = inspectionType;
+    }
 
-    public Integer getInspectionInterval() {    return inspectionInterval;  }
-    public void setInspectionInterval(Integer inspectionInterval) { this.inspectionInterval = inspectionInterval;   }
+    public Boolean getInspectionPassed() {
+        return inspectionPassed;
+    }
 
-    public Long getToolId() {   return toolId;    }
-    public void setToolId(Long toolId) {  this.toolId = toolId;   }
+    public void setInspectionPassed(Boolean inspectionPassed) {
+        this.inspectionPassed = inspectionPassed;
+    }
 
-    public Long getToolKitId() { return toolKitId; }
-    public void setToolKitId(Long toolKitId) { this.toolKitId = toolKitId; }
+    public String getComments() {
+        return comments;
+    }
 
-    public String getEquipmentItemId() { return equipmentItemId; }
-    public void setEquipmentItemId(String equipmentItemId) { this.equipmentItemId = equipmentItemId; }
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public LocalDateTime getNextDueDate() {
+        return nextDueDate;
+    }
+
+    public void setNextDueDate(LocalDateTime nextDueDate) {
+        this.nextDueDate = nextDueDate;
+    }
+
+    public Integer getInspectionInterval() {
+        return inspectionInterval;
+    }
+
+    public void setInspectionInterval(Integer inspectionInterval) {
+        this.inspectionInterval = inspectionInterval;
+    }
+
+    public Long getToolId() {
+        return toolId;
+    }
+
+    public void setToolId(Long toolId) {
+        this.toolId = toolId;
+    }
+
+    public Long getToolKitId() {
+        return toolKitId;
+    }
+
+    public void setToolKitId(Long toolKitId) {
+        this.toolKitId = toolKitId;
+    }
+
+    public String getEquipmentItemId() {
+        return equipmentItemId;
+    }
+
+    public void setEquipmentItemId(String equipmentItemId) {
+        this.equipmentItemId = equipmentItemId;
+    }
 }
