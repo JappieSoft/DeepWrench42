@@ -53,7 +53,7 @@ public class InspectionService {
             }
 
             if (dto.getToolId() != null) {
-                ToolEntity tool = toolRepository.getReferenceById(dto.getToolId());
+                ToolEntity tool = getToolEntity(dto.getToolId());
                 inspection.setTool(tool);
 
                 tool.setHasInspection(true);
@@ -61,7 +61,7 @@ public class InspectionService {
                 toolRepository.save(tool);
             }
             if (dto.getToolKitId() != null) {
-                ToolKitEntity kit = toolKitRepository.getReferenceById(dto.getToolKitId());
+                ToolKitEntity kit = getToolKitEntity(dto.getToolKitId());
                 inspection.setToolKit(kit);
 
                 kit.setHasInspection(true);
@@ -86,7 +86,7 @@ public class InspectionService {
         existingEntity.setInspectionInterval(requestDto.getInspectionInterval());
 
         if (requestDto.getToolId() != null) {
-            ToolEntity tool = toolRepository.getReferenceById(requestDto.getToolId());
+            ToolEntity tool = getToolEntity(requestDto.getToolId());
             existingEntity.setTool(tool);
 
             tool.setHasInspection(true);
@@ -97,7 +97,7 @@ public class InspectionService {
         }
 
         if (requestDto.getToolKitId() != null) {
-            ToolKitEntity toolKit = toolKitRepository.getReferenceById(requestDto.getToolKitId());
+            ToolKitEntity toolKit = getToolKitEntity(requestDto.getToolKitId());
             existingEntity.setToolKit(toolKit);
 
             toolKit.setHasInspection(true);
@@ -109,6 +109,14 @@ public class InspectionService {
 
         InspectionEntity saved = inspectionRepository.save(existingEntity);
         return inspectionDTOMapper.mapToDto(saved);
+    }
+
+    private ToolEntity getToolEntity(long toolId) {
+        return toolRepository.findById(toolId).orElseThrow(() -> new RecordNotFoundException("Tool " + toolId + " not found"));
+    }
+
+    private ToolKitEntity getToolKitEntity(long toolKitId) {
+        return toolKitRepository.findById(toolKitId).orElseThrow(() -> new RecordNotFoundException("Tool Kit " + toolKitId + " not found"));
     }
 
         private InspectionEntity getInspectionEntity (Long id){

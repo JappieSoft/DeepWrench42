@@ -8,6 +8,7 @@ import nl.novi.deepwrench42.entities.StorageLocationEntity;
 import nl.novi.deepwrench42.repository.StorageLocationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,6 +42,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET all Storage Locations, Working")
     void getAllStorageLocations_shouldReturnListOfStorageLocations() throws Exception {
         StorageLocationEntity storageLocationOne = new StorageLocationEntity();
         storageLocationOne.setLocation("Test");
@@ -73,6 +75,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET Storage Location id 1, Working")
     void getStorageLocationById_shouldReturnStorageLocation_whenStorageLocationExists() throws Exception {
         StorageLocationEntity storageLocationThree = new StorageLocationEntity();
         storageLocationThree.setLocation("Test 3");
@@ -91,6 +94,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET Storage Location id 999, Storage Location Not Found")
     void getStorageLocationById_shouldReturnNotFound_whenStorageLocationDoesNotExist() throws Exception {
         mockMvc.perform(get("/storage-location/{id}", 999L)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -98,6 +102,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("POST Storage Location, Working")
     void createStorageLocation_shouldCreateAndReturnStorageLocation() throws Exception {
         StorageLocationRequestDTO storageLocationRequestDTO = new StorageLocationRequestDTO();
         storageLocationRequestDTO.setLocation("DTO");
@@ -130,6 +135,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("PUT Storage Location, Working")
     void updateStorageLocation_shouldUpdateAndReturnStorageLocation_whenStorageLocationExists() throws Exception {
         StorageLocationEntity storageLocation = new StorageLocationEntity();
         storageLocation.setLocation("Created Entity");
@@ -155,6 +161,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("PUT Storage Location, Storage Location Not Found")
     void updateStorageLocation_shouldReturnNotFound_whenStorageLocationDoesNotExist() throws Exception {
         StorageLocationRequestDTO storageLocationRequestDTO = new StorageLocationRequestDTO();
         storageLocationRequestDTO.setLocation("Update attempt DTO");
@@ -169,6 +176,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("DELETE Storage Location, Working")
     void deleteStorageLocation_shouldDeleteStorageLocation_whenStorageLocationExists() throws Exception {
         StorageLocationEntity storageLocation = new StorageLocationEntity();
         storageLocation.setLocation("To delete DTO");
@@ -187,6 +195,7 @@ public class StorageLocationControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("DELETE Storage Location, Storage Location Not Found")
     void deleteStorageLocation_shouldReturnNotFound_whenStorageLocationDoesNotExist() throws Exception {
         mockMvc.perform(delete("/storage-location/{id}", 999L)
                         .contentType(MediaType.APPLICATION_JSON))

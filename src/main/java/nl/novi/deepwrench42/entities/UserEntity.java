@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
+    @Column(name = "keycloak_id",unique = true, nullable = false)
+    private String kcid;
 
     @Column(name = "employee_id", nullable = false, unique = true, length = 7)
     private String employeeId;
@@ -25,7 +27,13 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.USER;
 
+
     // Getters en Setters
+    public String getKcid() {
+        return kcid;
+    }
+    public void setKcid(String kcid) {  this.kcid = kcid;   }
+
     public String getEmployeeId() { return employeeId;  }
     public void setEmployeeId(String employeeId) {  this.employeeId = employeeId;   }
 

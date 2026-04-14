@@ -5,6 +5,7 @@ import nl.novi.deepwrench42.entities.ToolLogActionType;
 import nl.novi.deepwrench42.entities.ToolLogEntity;
 import nl.novi.deepwrench42.repository.ToolLogRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,6 +39,7 @@ public class ToolLogControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET all Tool-Logs, Working")
     void getAllToolLogs_shouldReturnListOfToolLogs() throws Exception {
         ToolLogEntity toolLogOne = new ToolLogEntity();
         toolLogOne.setTimeStamp(LocalDateTime.parse("2000-01-01T01:02:03"));
@@ -106,6 +108,7 @@ public class ToolLogControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET Tool-Log id 1, Working")
     void getToolLogById_shouldReturnToolLog_whenToolLogExists() throws Exception {
         ToolLogEntity toolLogThree = new ToolLogEntity();
         toolLogThree.setTimeStamp(LocalDateTime.parse("2222-11-22T10:11:12"));
@@ -142,6 +145,7 @@ public class ToolLogControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("GET Tool-Log id 999, Log Not Found")
     void getToolLogById_shouldReturnNotFound_whenToolLogDoesNotExist() throws Exception {
         mockMvc.perform(get("/tool-log/{id}", 999L)
                         .contentType(MediaType.APPLICATION_JSON))

@@ -4,6 +4,7 @@ import nl.novi.deepwrench42.entities.UserRole;
 
 public class UserResponseDTO {
     private Long id;
+    private String kcid;
     private String employeeId;
     private String schipholId;
     private String email;
@@ -11,9 +12,13 @@ public class UserResponseDTO {
     private String lastName;
     private UserRole role;
 
+
     // Getters en Setters
     public Long getId() {   return id;  }
     public void setId(Long id) {    this.id = id;   }
+
+    public String getKcid() {   return kcid;    }
+    public void setKcid(String kcid) {  this.kcid = kcid;   }
 
     public String getEmployeeId() { return employeeId;  }
     public void setEmployeeId(String employeeId) {  this.employeeId = employeeId;   }

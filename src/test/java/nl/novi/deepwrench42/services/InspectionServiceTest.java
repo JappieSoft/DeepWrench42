@@ -295,7 +295,7 @@ class InspectionServiceTest {
             updatedTool1.setInspection(inspectionEntity1);
 
             when(inspectionDTOMapper.mapToEntity(inspectionRequestDTO1)).thenReturn(inspectionEntity1);
-            when(toolRepository.getReferenceById(1L)).thenReturn(tool1);
+            when(toolRepository.findById(1L)).thenReturn(Optional.of(tool1));
             when(toolRepository.save(tool1)).thenReturn(updatedTool1);
             when(inspectionRepository.save(inspectionEntity1)).thenReturn(inspectionEntity1);
             when(inspectionDTOMapper.mapToDto(inspectionEntity1)).thenReturn(inspectionResponseDTO1);
@@ -309,7 +309,7 @@ class InspectionServiceTest {
             assertTrue(tool1.getHasInspection());
             assertTrue(tool1.getIsCalibrated());
             verify(inspectionDTOMapper, times(1)).mapToEntity(inspectionRequestDTO1);
-            verify(toolRepository, times(1)).getReferenceById(1L);
+            verify(toolRepository, times(1)).findById(1L);
             verify(inspectionRepository, times(1)).save(inspectionEntity1);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity1);
         }
@@ -328,7 +328,7 @@ class InspectionServiceTest {
             updatedTool1.setIsCalibrated(false);
 
             when(inspectionDTOMapper.mapToEntity(inspectionRequestDTO)).thenReturn(inspectionEntity1);
-            when(toolRepository.getReferenceById(1L)).thenReturn(tool1);
+            when(toolRepository.findById(1L)).thenReturn(Optional.of(tool1));
             when(toolRepository.save(tool1)).thenReturn(updatedTool1);
             when(inspectionRepository.save(inspectionEntity1)).thenReturn(inspectionEntity1);
             when(inspectionDTOMapper.mapToDto(inspectionEntity1)).thenReturn(inspectionResponseDTO1);
@@ -342,7 +342,7 @@ class InspectionServiceTest {
             assertTrue(tool1.getHasInspection());
             assertFalse(tool1.getIsCalibrated());
             verify(inspectionDTOMapper, times(1)).mapToEntity(inspectionRequestDTO);
-            verify(toolRepository, times(1)).getReferenceById(1L);
+            verify(toolRepository, times(1)).findById(1L);
             verify(inspectionRepository, times(1)).save(inspectionEntity1);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity1);
         }
@@ -359,7 +359,7 @@ class InspectionServiceTest {
             updatedToolKit1.setInspection(inspectionEntity2);
 
             when(inspectionDTOMapper.mapToEntity(inspectionRequestDTO2)).thenReturn(inspectionEntity2);
-            when(toolKitRepository.getReferenceById(1L)).thenReturn(toolKit1);
+            when(toolKitRepository.findById(1L)).thenReturn(Optional.of(toolKit1));
             when(toolKitRepository.save(toolKit1)).thenReturn(updatedToolKit1);
             when(inspectionRepository.save(inspectionEntity2)).thenReturn(inspectionEntity2);
             when(inspectionDTOMapper.mapToDto(inspectionEntity2)).thenReturn(inspectionResponseDTO2);
@@ -373,7 +373,7 @@ class InspectionServiceTest {
             assertTrue(toolKit1.getHasInspection());
             assertTrue(toolKit1.getIsCalibrated());
             verify(inspectionDTOMapper, times(1)).mapToEntity(inspectionRequestDTO2);
-            verify(toolKitRepository, times(1)).getReferenceById(1L);
+            verify(toolKitRepository, times(1)).findById(1L);
             verify(inspectionRepository, times(1)).save(inspectionEntity2);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity2);
         }
@@ -394,7 +394,7 @@ class InspectionServiceTest {
             updatedToolKit1.setInspection(inspectionEntity2);
 
             when(inspectionDTOMapper.mapToEntity(inspectionRequestDTO)).thenReturn(inspectionEntity2);
-            when(toolKitRepository.getReferenceById(1L)).thenReturn(toolKit1);
+            when(toolKitRepository.findById(1L)).thenReturn(Optional.of(toolKit1));
             when(toolKitRepository.save(toolKit1)).thenReturn(updatedToolKit1);
             when(inspectionRepository.save(inspectionEntity2)).thenReturn(inspectionEntity2);
             when(inspectionDTOMapper.mapToDto(inspectionEntity2)).thenReturn(inspectionResponseDTO2);
@@ -408,7 +408,7 @@ class InspectionServiceTest {
             assertTrue(toolKit1.getHasInspection());
             assertFalse(toolKit1.getIsCalibrated());
             verify(inspectionDTOMapper, times(1)).mapToEntity(inspectionRequestDTO);
-            verify(toolKitRepository, times(1)).getReferenceById(1L);
+            verify(toolKitRepository, times(1)).findById(1L);
             verify(inspectionRepository, times(1)).save(inspectionEntity2);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity2);
         }
@@ -468,7 +468,7 @@ class InspectionServiceTest {
             updatedResponseDTO.setEquipmentItemId("TEST001");
 
             when(inspectionRepository.findById(id)).thenReturn(Optional.of(inspectionEntity1));
-            when(toolRepository.getReferenceById(2L)).thenReturn(tool2);
+            when(toolRepository.findById(2L)).thenReturn(Optional.of(tool2));
             when(toolRepository.save(tool2)).thenReturn(updatedTool);
             when(inspectionRepository.save(inspectionEntity1)).thenReturn(inspectionEntity1);
             when(inspectionDTOMapper.mapToDto(inspectionEntity1)).thenReturn(updatedResponseDTO);
@@ -482,7 +482,7 @@ class InspectionServiceTest {
             assertTrue(tool2.getHasInspection());
             assertFalse(tool2.getIsCalibrated());
             verify(inspectionRepository, times(1)).findById(id);
-            verify(toolRepository, times(1)).getReferenceById(2L);
+            verify(toolRepository, times(1)).findById(2L);
             verify(inspectionRepository, times(1)).save(inspectionEntity1);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity1);
         }
@@ -517,7 +517,7 @@ class InspectionServiceTest {
             updatedResponseDTO.setEquipmentItemId("TEST001");
 
             when(inspectionRepository.findById(id)).thenReturn(Optional.of(inspectionEntity1));
-            when(toolRepository.getReferenceById(2L)).thenReturn(tool2);
+            when(toolRepository.findById(2L)).thenReturn(Optional.of(tool2));
             when(toolRepository.save(tool2)).thenReturn(updatedTool);
             when(inspectionRepository.save(inspectionEntity1)).thenReturn(inspectionEntity1);
             when(inspectionDTOMapper.mapToDto(inspectionEntity1)).thenReturn(updatedResponseDTO);
@@ -531,7 +531,7 @@ class InspectionServiceTest {
             assertTrue(tool2.getHasInspection());
             assertTrue(tool2.getIsCalibrated());
             verify(inspectionRepository, times(1)).findById(id);
-            verify(toolRepository, times(1)).getReferenceById(2L);
+            verify(toolRepository, times(1)).findById(2L);
             verify(inspectionRepository, times(1)).save(inspectionEntity1);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity1);
         }
@@ -572,7 +572,7 @@ class InspectionServiceTest {
             updatedResponseDTO.setEquipmentItemId("Kit002");
 
             when(inspectionRepository.findById(id)).thenReturn(Optional.of(inspectionEntity2));
-            when(toolKitRepository.getReferenceById(2L)).thenReturn(toolKit2);
+            when(toolKitRepository.findById(2L)).thenReturn(Optional.of(toolKit2));
             when(toolKitRepository.save(toolKit2)).thenReturn(updatedToolKit);
             when(inspectionRepository.save(inspectionEntity2)).thenReturn(inspectionEntity2);
             when(inspectionDTOMapper.mapToDto(inspectionEntity2)).thenReturn(updatedResponseDTO);
@@ -586,7 +586,7 @@ class InspectionServiceTest {
             assertTrue(toolKit2.getHasInspection());
             assertFalse(toolKit2.getIsCalibrated());
             verify(inspectionRepository, times(1)).findById(id);
-            verify(toolKitRepository, times(1)).getReferenceById(2L);
+            verify(toolKitRepository, times(1)).findById(2L);
             verify(inspectionRepository, times(1)).save(inspectionEntity2);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity2);
         }
@@ -621,7 +621,7 @@ class InspectionServiceTest {
             updatedResponseDTO.setEquipmentItemId("Kit002");
 
             when(inspectionRepository.findById(id)).thenReturn(Optional.of(inspectionEntity2));
-            when(toolKitRepository.getReferenceById(2L)).thenReturn(toolKit2);
+            when(toolKitRepository.findById(2L)).thenReturn(Optional.of(toolKit2));
             when(toolKitRepository.save(toolKit2)).thenReturn(updatedToolKit);
             when(inspectionRepository.save(inspectionEntity2)).thenReturn(inspectionEntity2);
             when(inspectionDTOMapper.mapToDto(inspectionEntity2)).thenReturn(updatedResponseDTO);
@@ -635,7 +635,7 @@ class InspectionServiceTest {
             assertTrue(toolKit2.getHasInspection());
             assertTrue(toolKit2.getIsCalibrated());
             verify(inspectionRepository, times(1)).findById(id);
-            verify(toolKitRepository, times(1)).getReferenceById(2L);
+            verify(toolKitRepository, times(1)).findById(2L);
             verify(inspectionRepository, times(1)).save(inspectionEntity2);
             verify(inspectionDTOMapper, times(1)).mapToDto(inspectionEntity2);
         }
