@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import nl.novi.deepwrench42.dtos.user.UserRequestDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.helpers.UrlHelper;
-import nl.novi.deepwrench42.repository.UserRepository;
 import nl.novi.deepwrench42.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

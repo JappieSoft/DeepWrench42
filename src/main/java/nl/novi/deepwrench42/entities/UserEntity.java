@@ -32,9 +32,7 @@ public class UserEntity extends BaseEntity {
     public String getKcid() {
         return kcid;
     }
-    public void setKcid(String kcid) {
-        this.kcid = kcid;
-    }
+    public void setKcid(String kcid) {  this.kcid = kcid;   }
 
     public String getEmployeeId() { return employeeId;  }
     public void setEmployeeId(String employeeId) {  this.employeeId = employeeId;   }
