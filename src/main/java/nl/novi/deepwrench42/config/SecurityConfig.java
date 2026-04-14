@@ -43,28 +43,50 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                         ))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/albums/{albumId}/stock").hasRole("ADMIN")
-                        .requestMatchers("/aircraft/{id}", "/aircraft-type/{id}", "/engine-type/{id}").hasRole("ADMIN")
-                        .requestMatchers(
-                                "/inspection/performed",
-                                "/inspection/find-inspection-date-before",
-                                "/inspection/find-inspection-date-after",
-                                "/inspection/find-next-overdue").hasAuthority("ROLE_LEAD")
-                        .requestMatchers("/aircraft").authenticated()
-                        .requestMatchers("/aircraft-type").authenticated()
-                        .requestMatchers("/engine-type").authenticated()
-                        .requestMatchers("/storage-location").authenticated()
-                        .requestMatchers("/inspection").authenticated()
-                        .requestMatchers("/tool").authenticated()
-                        .requestMatchers("/tool-kit").authenticated()
-                        .requestMatchers("/tool-log").authenticated()
-                        .requestMatchers("/user").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/albums", "/albums/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/equipment/checkin", "/equipment/checkout").permitAll()
-                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET).authenticated()
+
+                        .requestMatchers("/profiles").permitAll()
+                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,    "/user/{id}").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,    "/inspection",
+                                                            "/inspection/find-inspection-date-before",
+                                                            "/inspection/find-inspection-date-after",
+                                                            "/inspection/find-next-overdue",
+                                                            "/tool-log","/tool-log/{id}",
+                                                            "/user/{id}").hasAnyAuthority("ADMIN", "LEAD")
+                        .requestMatchers(HttpMethod.GET,    "/aircraft", "/aircraft/{id}",
+                                                            "/aircraft-type", "/aircraft-type/{id}",
+                                                            "/engine-type","/engine-type/{id}",
+                                                            "/inspection/{id}",
+                                                            "/storage-location", "/storage-location/{id}",
+                                                            "/tool","/tool/**",
+                                                            "/tool-kit","/tool-kit/**",
+                                                            "/user").authenticated()
+                        .requestMatchers(HttpMethod.POST,   "/aircraft",
+                                                            "/aircraft-type",
+                                                            "/engine-type",
+                                                            "/inspection", "/inspection/performed",
+                                                            "/storage-location",
+                                                            "/tool", "/tool/**",
+                                                            "/tool-kit", "/tool-kit/**").hasAnyAuthority("ADMIN", "LEAD")
+                        .requestMatchers(HttpMethod.POST,   "/user").hasAuthority("USER")
+                        .requestMatchers(HttpMethod.POST,   "/equipment/checkout", "/equipment/checkin").permitAll()
+                        .requestMatchers(HttpMethod.PATCH,  "/user/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,    "/user").hasAuthority("USER")
+                        .requestMatchers(HttpMethod.PUT,    "/aircraft/{id}",
+                                                            "/aircraft-type/{id}",
+                                                            "/engine-type/{id}",
+                                                            "/inspection/{id}",
+                                                            "/storage-location/{id}",
+                                                            "/tool/{id}",
+                                                            "/tool-kit/{id}").hasAnyAuthority("ADMIN", "LEAD")
+                        .requestMatchers(HttpMethod.DELETE, "/aircraft/{id}",
+                                                            "/aircraft-type/{id}",
+                                                            "/engine-type/{id}",
+                                                            "/storage-location/{id}",
+                                                            "/inspection/{id}",
+                                                            "/tool/{id}",
+                                                            "/tool-kit/{id}",
+                                                            "/user/{id}").hasAuthority("ADMIN")
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

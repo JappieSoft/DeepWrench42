@@ -17,6 +17,7 @@ public class UserDTOMapper implements DTOMapper<UserResponseDTO, UserRequestDTO,
 
         var result = new UserResponseDTO();
         result.setId(model.getId());
+        result.setKcid(model.getKcid());
         result.setEmployeeId(model.getEmployeeId());
         result.setSchipholId(model.getSchipholId());
         result.setEmail(model.getEmail());
@@ -41,6 +42,7 @@ public class UserDTOMapper implements DTOMapper<UserResponseDTO, UserRequestDTO,
         if (requestDTO == null) return null;
 
         var model = new UserEntity();
+        model.setKcid(requestDTO.getKcid());
         model.setEmployeeId(requestDTO.getEmployeeId());
         model.setSchipholId(requestDTO.getSchipholId());
         model.setEmail(requestDTO.getEmail());

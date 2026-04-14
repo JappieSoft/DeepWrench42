@@ -8,6 +8,8 @@ public class UserRequestDTO {
     @Size(min = 6, max = 7, message = "Employee ID must be 6 or 7 digits long")
     private String employeeId;
 
+    private String kcid;
+
     @NotNull(message = "Schiphol ID is required")
     @Size(min = 6, max = 10, message = "Schiphol ID must be between 6 & 20 characters long")
     private String schipholId;
@@ -22,12 +24,18 @@ public class UserRequestDTO {
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-    @NotNull(message = "Role is required")
     private UserRole role;
 
     // Getters en Setters
     public String getEmployeeId() { return employeeId;  }
     public void setEmployeeId(String employeeId) {  this.employeeId = employeeId;   }
+
+    public String getKcid() {
+        return kcid;
+    }
+    public void setKcid(String kcid) {
+        this.kcid = kcid;
+    }
 
     public String getSchipholId() { return schipholId;  }
     public void setSchipholId(String schipholId) {  this.schipholId = schipholId;   }
