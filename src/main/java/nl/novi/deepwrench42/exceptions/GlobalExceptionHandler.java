@@ -8,7 +8,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.postgresql.util.PSQLException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.io.IOException;
@@ -19,7 +18,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RecordNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public String handleRecordNotFoundException(RecordNotFoundException ex) { return ex.getMessage();}
+    public String handleRecordNotFoundException(RecordNotFoundException ex) {
+        return ex.getMessage();
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -39,7 +40,9 @@ public class GlobalExceptionHandler {
 
         if (cause instanceof InvalidFormatException exception && exception.getTargetType().isEnum()) {
             return ("Invalid enum value: " + exception.getValue());
-        } else { return "Request not readable";}
+        } else {
+            return "Request not readable";
+        }
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -51,51 +54,33 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String handleIllegalStateException(IllegalStateException ex) {   return ex.getMessage(); }
+    public String handleIllegalStateException(IllegalStateException ex) {
+        return ex.getMessage();
+    }
 
     @ExceptionHandler(ForeignKeyViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
-    public String handleForeignKeyViolationException(ForeignKeyViolationException ex) { return ex.getMessage(); }
+    public String handleForeignKeyViolationException(ForeignKeyViolationException ex) {
+        return ex.getMessage();
+    }
 
     @ExceptionHandler(DuplicateFieldException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
-    public String handleDuplicateFieldException(DuplicateFieldException ex) {   return ex.getMessage(); }
+    public String handleDuplicateFieldException(DuplicateFieldException ex) {
+        return ex.getMessage();
+    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public String handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        var root = ex.getRootCause();
-        if (root instanceof PSQLException psql) {
-            var msg = psql.getMessage();
-            if (msg.contains("users_employee_id_key")) {
-                return ("Employee ID already exists");
-            }
-            if (msg.contains("users_schiphol_id_key")) {
-                return ("Schiphol ID already exists");
-            }
-            if (msg.contains("users_email_key")) {
-                return ("Email already exists");
-            }
-            if (msg.contains("inspections_tool_id_key")) {
-                return ("Inspection for this tool ID already exists");
-            }
-            if (msg.contains("inspections_tool_kit_id_key")) {
-                return ("Inspection for this tool kit ID already exists");
-            }
-            if (msg.contains("violates foreign key constraint")) {
-                if (msg.contains("is not present")) {
-                    return "Item not found / Invalid reference";
-                }
-                if (msg.contains("still referenced")) {
-                    return "Unable to delete: item still in use";
-                }
-                return "Database: Foreign key violation";
-            }
-        }
-        return "Data integrity violation exception";
+        String error = ex.getRootCause().getMessage();
+        if (error == null){
+            return "Data integrity violation";
+        } else {
+        return error;}
     }
 
     @ExceptionHandler(ReadFileException.class)

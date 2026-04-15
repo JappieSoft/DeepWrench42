@@ -3,6 +3,7 @@ Help.md
 target/
 ### check if folder below will be used: ###
 uploads/
+external_application_exports/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
