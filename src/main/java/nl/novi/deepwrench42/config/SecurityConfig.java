@@ -44,8 +44,6 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                         ))
                 .authorizeHttpRequests(authorize -> authorize
-
-                        .requestMatchers("/profiles").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/inspection",

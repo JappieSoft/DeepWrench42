@@ -257,6 +257,12 @@ public class ToolService {
         return toolDTOMapper.mapToDto(tool);
     }
 
+    @Transactional
+    public List<ToolResponseDTO> findToolsPerStatus(String status) {
+        EquipmentStatus equipmentStatus = EquipmentStatus.valueOf(status);
+        return toolDTOMapper.mapToDto(toolRepository.findByStatus(equipmentStatus));
+    }
+
     //Generic FIndById Helper
     private ToolEntity getToolEntity(Long id) {
         return toolRepository.findById(id)

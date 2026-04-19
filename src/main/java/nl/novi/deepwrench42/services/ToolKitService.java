@@ -217,6 +217,12 @@ public class ToolKitService {
         return toolKitDTOMapper.mapToDto(toolKit);
     }
 
+    @Transactional
+    public List<ToolKitResponseDTO> findToolKitsPerStatus(String status) {
+        EquipmentStatus equipmentStatus = EquipmentStatus.valueOf(status);
+        return toolKitDTOMapper.mapToDto(toolKitRepository.findByStatus(equipmentStatus));
+    }
+
     //Generic FIndById Helper
     private ToolKitEntity getToolKitEntity(Long id) {
         return toolKitRepository.findById(id)

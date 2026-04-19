@@ -95,4 +95,10 @@ public class ToolController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
                 .body(resource);
     }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<ToolResponseDTO>> getToolByStatus(@PathVariable String status) {
+        List<ToolResponseDTO> tools = toolService.findToolsPerStatus(status);
+        return ResponseEntity.ok(tools);
+    }
 }
