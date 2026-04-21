@@ -10,15 +10,15 @@ public class UrlHelper {
 
     private final HttpServletRequest request;
 
-    public UrlHelper(HttpServletRequest request){
+    public UrlHelper(HttpServletRequest request) {
         this.request = request;
     }
 
-    public  String getCurrentUrlString() {
+    public String getCurrentUrlString() {
         return request.getRequestURL().toString();
     }
 
-    public String getCurrentUrlString( Long id) {
+    public String getCurrentUrlString(Long id) {
         return request.getRequestURL().toString() + "/" + id.toString();
     }
 
@@ -26,11 +26,11 @@ public class UrlHelper {
         return convertToURI(getCurrentUrlString());
     }
 
-    public URI getCurrentUrlWithId( Long id) {
-        return convertToURI(getCurrentUrlString( id));
+    public URI getCurrentUrlWithId(Long id) {
+        return convertToURI(getCurrentUrlString(id));
     }
 
-    private  URI convertToURI(String uri) {
+    private URI convertToURI(String uri) {
         return URI.create(uri);
     }
 }

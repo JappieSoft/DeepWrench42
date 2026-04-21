@@ -2,6 +2,7 @@ package nl.novi.deepwrench42.services;
 
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationRequestDTO;
 import nl.novi.deepwrench42.dtos.storageLocation.StorageLocationResponseDTO;
+import nl.novi.deepwrench42.entities.InspectionEntity;
 import nl.novi.deepwrench42.entities.StorageLocationEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
 import nl.novi.deepwrench42.mappers.StorageLocationDTOMapper;
@@ -24,11 +25,10 @@ public class StorageLocationService {
         return storageLocationDTOMapper.mapToDto(storageLocationRepository.findAll());
     }
 
-    public StorageLocationResponseDTO findStorageLocationById(Long id)  {
+    public StorageLocationResponseDTO findStorageLocationById(Long id) {
         StorageLocationEntity storageLocationEntity = getStorageLocationEntity(id);
         return storageLocationDTOMapper.mapToDto(storageLocationEntity);
     }
-
 
     public StorageLocationResponseDTO createStorageLocation(StorageLocationRequestDTO model) {
         StorageLocationEntity storageLocationEntity = storageLocationDTOMapper.mapToEntity(model);
@@ -36,7 +36,7 @@ public class StorageLocationService {
         return storageLocationDTOMapper.mapToDto(storageLocationEntity);
     }
 
-    public StorageLocationResponseDTO updateStorageLocation(Long id, StorageLocationRequestDTO requestDto)  {
+    public StorageLocationResponseDTO updateStorageLocation(Long id, StorageLocationRequestDTO requestDto) {
         StorageLocationEntity existingEntity = getStorageLocationEntity(id);
 
         existingEntity.setLocation(requestDto.getLocation());
@@ -53,9 +53,10 @@ public class StorageLocationService {
         storageLocationRepository.deleteById(id);
     }
 
+    //Generic FIndById Helper
     private StorageLocationEntity getStorageLocationEntity(Long id) {
         StorageLocationEntity storageLocationEntity = storageLocationRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Storage location " + id +" not found"));
+                .orElseThrow(() -> new RecordNotFoundException("Storage location " + id + " not found"));
         return storageLocationEntity;
     }
 }

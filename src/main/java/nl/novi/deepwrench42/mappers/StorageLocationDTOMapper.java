@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class StorageLocationDTOMapper implements DTOMapper<StorageLocationResponseDTO, StorageLocationRequestDTO, StorageLocationEntity>{
+public class StorageLocationDTOMapper implements DTOMapper<StorageLocationResponseDTO, StorageLocationRequestDTO, StorageLocationEntity> {
 
     @Override
     public StorageLocationResponseDTO mapToDto(StorageLocationEntity model) {

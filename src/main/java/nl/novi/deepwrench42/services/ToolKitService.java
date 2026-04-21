@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -61,14 +60,12 @@ public class ToolKitService {
         toolKitEntity.setPictureFileName(model.getPictureFileName());
         if (model.getStorageLocation() != null) {
             Long storageLocationId = model.getStorageLocation();
-
             if (toolRepository.existsByStorageLocationId(storageLocationId)) {
                 throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool");
             }
             if (toolKitRepository.existsByStorageLocationId(storageLocationId)) {
                 throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
             }
-
             StorageLocationEntity storageLocation = storageLocationRepository
                     .findById(storageLocationId)
                     .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
@@ -126,8 +123,9 @@ public class ToolKitService {
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
         existingEntity.setPictureFileName(requestDto.getPictureFileName());
-        if (requestDto.getStorageLocation() == null) { throw new IllegalArgumentException("Storage Location required");
-        }   else if (requestDto.getStorageLocation() != null) {
+        if (requestDto.getStorageLocation() == null) {
+            throw new IllegalArgumentException("Storage Location required");
+        } else if (requestDto.getStorageLocation() != null) {
             Long storageLocationId = requestDto.getStorageLocation();
             if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
                 if (toolRepository.existsByStorageLocationId(storageLocationId)) {
@@ -137,13 +135,12 @@ public class ToolKitService {
                     throw new IllegalArgumentException("Storage location ID " + storageLocationId + " already assigned to a tool kit");
                 }
             }
-
             StorageLocationEntity storageLocation = storageLocationRepository
                     .findById(storageLocationId)
                     .orElseThrow(() -> new RecordNotFoundException("Storage location not found"));
             existingEntity.setStorageLocation(storageLocation);
         }
-        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")) {
             throw new IllegalArgumentException("Tool Kit " + existingEntity.getItemId() + " status is checked out");
         } else if (requestDto.getStatus() != null) {
             existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
@@ -191,25 +188,21 @@ public class ToolKitService {
     @Transactional
     public void deleteToolKit(Long id) {
         ToolKitEntity toolKit = getToolKitEntity(id);
-        if (toolKit.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
-            throw new IllegalArgumentException("Tool Kit " + toolKit.getItemId() + " status is checked out");}
+        if (toolKit.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")) {
+            throw new IllegalArgumentException("Tool Kit " + toolKit.getItemId() + " status is checked out");
+        }
 
         toolKit.setStorageLocation(null);
         toolKitRepository.delete(toolKit);
     }
 
-    private ToolKitEntity getToolKitEntity(Long id) {
-        return toolKitRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Tool Kit " + id + " not found"));
-    }
-
     //picture services
     @Transactional
-    public Resource getPictureFromTool(Long id){
+    public Resource getPictureFromTool(Long id) {
         ToolKitEntity toolKit = getToolKitEntity(id);
         String toolKitItemId = toolKit.getItemId();
         String fileName = toolKit.getPictureFileName();
-        if(fileName == null){
+        if (fileName == null) {
             throw new RecordNotFoundException("Tool Kit " + toolKitItemId + " has no picture in database.");
         }
         return fileStorageHelper.downLoadFile(fileName);
@@ -222,5 +215,17 @@ public class ToolKitService {
         toolKit.setPictureFileName(fileName);
         toolKitRepository.save(toolKit);
         return toolKitDTOMapper.mapToDto(toolKit);
+    }
+
+    @Transactional
+    public List<ToolKitResponseDTO> findToolKitsPerStatus(String status) {
+        EquipmentStatus equipmentStatus = EquipmentStatus.valueOf(status);
+        return toolKitDTOMapper.mapToDto(toolKitRepository.findByStatus(equipmentStatus));
+    }
+
+    //Generic FIndById Helper
+    private ToolKitEntity getToolKitEntity(Long id) {
+        return toolKitRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Tool Kit " + id + " not found"));
     }
 }

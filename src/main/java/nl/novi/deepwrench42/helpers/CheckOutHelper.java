@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 @Service
 public class CheckOutHelper {
-
     private final ToolRepository toolRepository;
     private final ToolKitRepository toolKitRepository;
     private final ToolLogRepository toolLogRepository;

@@ -1,6 +1,7 @@
 package nl.novi.deepwrench42.entities;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -21,6 +22,7 @@ public abstract class BaseEntity {
         createDate = LocalDateTime.now();
         editDate = createDate;
     }
+
     @PreUpdate
     protected void onUpdate() {
         editDate = LocalDateTime.now();
@@ -30,6 +32,7 @@ public abstract class BaseEntity {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,12 +40,18 @@ public abstract class BaseEntity {
     public LocalDateTime getCreateDate() {
         return createDate;
     }
+
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getEditDate() {    return editDate;    }
-    public void setEditDate(LocalDateTime editDate) {   this.editDate = editDate;   }
+    public LocalDateTime getEditDate() {
+        return editDate;
+    }
+
+    public void setEditDate(LocalDateTime editDate) {
+        this.editDate = editDate;
+    }
 }
 
 

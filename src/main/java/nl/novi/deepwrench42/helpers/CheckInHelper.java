@@ -2,12 +2,10 @@ package nl.novi.deepwrench42.helpers;
 
 import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckInRequestDTO;
 import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckInResponseDTO;
-import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutRequestDTO;
-import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutResponseDTO;
+
 import static nl.novi.deepwrench42.entities.EquipmentStatus.*;
 
 import nl.novi.deepwrench42.entities.*;
-import nl.novi.deepwrench42.repository.StorageLocationRepository;
 import nl.novi.deepwrench42.repository.ToolKitRepository;
 import nl.novi.deepwrench42.repository.ToolLogRepository;
 import nl.novi.deepwrench42.repository.ToolRepository;
@@ -15,18 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-
-
 @Service
 public class CheckInHelper {
-
     private final ToolRepository toolRepository;
     private final ToolKitRepository toolKitRepository;
     private final ToolLogRepository toolLogRepository;
 
     public CheckInHelper(ToolRepository toolRepository,
-                          ToolKitRepository toolKitRepository,
-                          ToolLogRepository toolLogRepository
+                         ToolKitRepository toolKitRepository,
+                         ToolLogRepository toolLogRepository
     ) {
         this.toolRepository = toolRepository;
         this.toolKitRepository = toolKitRepository;
@@ -34,17 +29,23 @@ public class CheckInHelper {
     }
 
     public EquipmentCheckInResponseDTO performToolCheckIn(ToolEntity tool, UserEntity user, EquipmentCheckInRequestDTO requestDTO) {
-
         InspectionEntity inspection = tool.getInspection();
 
-        if (requestDTO.getMissing() == true){tool.setStatus(MISSING);
-        } else if (requestDTO.getProblem() == true) {tool.setStatus(UNSERVICEABLE);
+        if (requestDTO.getMissing() == true) {
+            tool.setStatus(MISSING);
+        } else if (requestDTO.getProblem() == true) {
+            tool.setStatus(UNSERVICEABLE);
         } else if (inspection != null) {
             if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
                 if (inspection.getInspectionType().equals(InspectionType.CALIBRATION)) {
                     tool.setStatus(EquipmentStatus.CALIBRATION_DUE);
-                } else {tool.setStatus(EquipmentStatus.MAINTENANCE_DUE);}}
-        } else {tool.setStatus(CHECKED_IN);}
+                } else {
+                    tool.setStatus(EquipmentStatus.MAINTENANCE_DUE);
+                }
+            }
+        } else {
+            tool.setStatus(CHECKED_IN);
+        }
 
         tool.setCheckedOutBy(null);
         tool.setCheckedOutDate(null);
@@ -57,17 +58,23 @@ public class CheckInHelper {
     }
 
     public EquipmentCheckInResponseDTO performToolKitCheckIn(ToolKitEntity toolKit, UserEntity user, EquipmentCheckInRequestDTO requestDTO) {
-
         InspectionEntity inspection = toolKit.getInspection();
 
-        if (requestDTO.getMissing() == true){toolKit.setStatus(MISSING);
-        } else if (requestDTO.getProblem() == true) {toolKit.setStatus(UNSERVICEABLE);
+        if (requestDTO.getMissing() == true) {
+            toolKit.setStatus(MISSING);
+        } else if (requestDTO.getProblem() == true) {
+            toolKit.setStatus(UNSERVICEABLE);
         } else if (inspection != null) {
-                if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
-                    if (inspection.getInspectionType().equals(InspectionType.CALIBRATION)) {
-                        toolKit.setStatus(EquipmentStatus.CALIBRATION_DUE);
-                    } else {toolKit.setStatus(EquipmentStatus.MAINTENANCE_DUE);}}
-        } else {toolKit.setStatus(CHECKED_IN);}
+            if (!inspection.getNextDueDate().isAfter(LocalDateTime.now())) {
+                if (inspection.getInspectionType().equals(InspectionType.CALIBRATION)) {
+                    toolKit.setStatus(EquipmentStatus.CALIBRATION_DUE);
+                } else {
+                    toolKit.setStatus(EquipmentStatus.MAINTENANCE_DUE);
+                }
+            }
+        } else {
+            toolKit.setStatus(CHECKED_IN);
+        }
 
         toolKit.setCheckedOutBy(null);
         toolKit.setCheckedOutDate(null);

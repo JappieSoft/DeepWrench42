@@ -3,9 +3,6 @@ package nl.novi.deepwrench42.dtos.equipment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import nl.novi.deepwrench42.entities.*;
-
-import java.time.LocalDateTime;
 
 public class EquipmentCheckOutRequestDTO {
     @NotNull(message = "Equipment item Id is required")
@@ -19,15 +16,35 @@ public class EquipmentCheckOutRequestDTO {
     private String comments;
 
     // Getters en Setters
-    public String getEquipmentItemId() {    return equipmentItemId; }
-    public void setEquipmentItemId(String equipmentItemId) {    this.equipmentItemId = equipmentItemId; }
+    public String getEquipmentItemId() {
+        return equipmentItemId;
+    }
 
-    public String getEmployeeNumber() { return employeeNumber;  }
-    public void setEmployeeNumber(String employeeNumber) {  this.employeeNumber = employeeNumber;   }
+    public void setEquipmentItemId(String equipmentItemId) {
+        this.equipmentItemId = equipmentItemId;
+    }
 
-    public String getAircraft() { return aircraft;  }
-    public void setAircraft(String aircraft) {  this.aircraft = aircraft;   }
+    public String getEmployeeNumber() {
+        return employeeNumber;
+    }
 
-    public String getComments() {   return comments;    }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public void setEmployeeNumber(String employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public String getAircraft() {
+        return aircraft;
+    }
+
+    public void setAircraft(String aircraft) {
+        this.aircraft = aircraft;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }

@@ -262,7 +262,7 @@ class InspectionServiceTest {
             InspectionResponseDTO result = inspectionService.findInspectionById(1L);
 
             // Assert
-            assertEquals(1 , result.getToolId());
+            assertEquals(1, result.getToolId());
             assertEquals(inspectionResponseDTO1, result);
         }
 
@@ -643,7 +643,7 @@ class InspectionServiceTest {
 
     @Nested
     @DisplayName("4. Delete Testing")
-    class DeleteFunctionsTesting{
+    class DeleteFunctionsTesting {
         @Test
         @DisplayName("Delete Tool Inspection, Working")
         void deleteToolInspection_shouldDelete_whenInspectionExists() {

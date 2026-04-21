@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-
 @Service
 public class ToolService {
     private final ToolRepository toolRepository;
@@ -109,8 +108,9 @@ public class ToolService {
             toolEntity.setInspection(inspection);
         }
         if (model.getToolKitId() == null) {
-            if (model.getStorageLocation() == null) {throw new IllegalArgumentException("Storage Location required");
-            }  else {
+            if (model.getStorageLocation() == null) {
+                throw new IllegalArgumentException("Storage Location required");
+            } else {
                 Long storageLocationId = model.getStorageLocation();
 
                 if (toolRepository.existsByStorageLocationId(storageLocationId)) {
@@ -150,10 +150,10 @@ public class ToolService {
         existingEntity.setItemId(requestDto.getItemId());
         existingEntity.setName(requestDto.getName());
         existingEntity.setPictureFileName(requestDto.getPictureFileName());
-        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
+        if (existingEntity.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")) {
             throw new IllegalArgumentException("Tool " + existingEntity.getItemId() + " status is checked out");
-            } else if (requestDto.getStatus() != null) {
-                existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
+        } else if (requestDto.getStatus() != null) {
+            existingEntity.setStatus(EquipmentStatus.valueOf(requestDto.getStatus().toUpperCase()));
         }
         if (requestDto.getCheckedOutBy() != null) {
             UserEntity checkedOutBy = userRepository
@@ -191,8 +191,9 @@ public class ToolService {
             existingEntity.setInspection(inspection);
         }
         if (requestDto.getToolKitId() == null) {
-            if (requestDto.getStorageLocation() == null) { throw new IllegalArgumentException("Storage Location required");
-            }   else if (requestDto.getStorageLocation() != null) {
+            if (requestDto.getStorageLocation() == null) {
+                throw new IllegalArgumentException("Storage Location required");
+            } else if (requestDto.getStorageLocation() != null) {
                 Long storageLocationId = requestDto.getStorageLocation();
                 if (!storageLocationId.equals(existingEntity.getStorageLocation() != null ? existingEntity.getStorageLocation().getId() : null)) {
                     if (toolRepository.existsByStorageLocationId(storageLocationId)) {
@@ -210,7 +211,6 @@ public class ToolService {
             }
         }
 
-
         if (requestDto.getToolKitId() != null) {
             ToolKitEntity toolKit = toolKitRepository
                     .findById(requestDto.getToolKitId())
@@ -227,27 +227,22 @@ public class ToolService {
     @Transactional
     public void deleteTool(Long id) {
         ToolEntity tool = getToolEntity(id);
-        if (tool.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")){
-            throw new IllegalArgumentException("Tool " + tool.getItemId() + " status is checked out");}
+        if (tool.getStatus() == EquipmentStatus.valueOf("CHECKED_OUT")) {
+            throw new IllegalArgumentException("Tool " + tool.getItemId() + " status is checked out");
+        }
 
         tool.setStorageLocation(null);
         tool.setToolKit(null);
         toolRepository.delete(tool);
     }
 
-    private ToolEntity getToolEntity(Long id) {
-        return toolRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Tool " + id + " not found"));
-    }
-
-
     //picture services
     @Transactional
-    public Resource getPictureFromTool(Long id){
+    public Resource getPictureFromTool(Long id) {
         ToolEntity tool = getToolEntity(id);
         String toolItemId = tool.getItemId();
         String fileName = tool.getPictureFileName();
-        if(fileName == null){
+        if (fileName == null) {
             throw new RecordNotFoundException("Tool " + toolItemId + " has no picture in database.");
         }
         return fileStorageHelper.downLoadFile(fileName);
@@ -257,8 +252,20 @@ public class ToolService {
     public ToolResponseDTO assignPictureToTool(String fileName, Long id) {
         ToolEntity tool = getToolEntity(id);
 
-                tool.setPictureFileName(fileName);
-                toolRepository.save(tool);
-                return toolDTOMapper.mapToDto(tool);
+        tool.setPictureFileName(fileName);
+        toolRepository.save(tool);
+        return toolDTOMapper.mapToDto(tool);
+    }
+
+    @Transactional
+    public List<ToolResponseDTO> findToolsPerStatus(String status) {
+        EquipmentStatus equipmentStatus = EquipmentStatus.valueOf(status);
+        return toolDTOMapper.mapToDto(toolRepository.findByStatus(equipmentStatus));
+    }
+
+    //Generic FIndById Helper
+    private ToolEntity getToolEntity(Long id) {
+        return toolRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Tool " + id + " not found"));
     }
 }

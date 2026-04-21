@@ -100,7 +100,7 @@ public class AircraftControllerIntegrationTest {
         aircraftTwo.setEngineType(engineType1);
         aircraftRepository.save(aircraftTwo);
 
-       mockMvc.perform(get("/aircraft")
+        mockMvc.perform(get("/aircraft")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -177,21 +177,21 @@ public class AircraftControllerIntegrationTest {
         aircraftResponseDTO.setEngineType(engineTypeResponseDTO);
 
 
-       var response = mockMvc.perform(post("/aircraft")
+        var response = mockMvc.perform(post("/aircraft")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(aircraftRequestDTO)))
-               .andExpect(status().isCreated())
-               .andExpect(jsonPath("$.shipNumber").value("4561"))
-               .andExpect(jsonPath("$.registration").value("PH-DTO"))
-               .andExpect(jsonPath("$.aircraftType.id").value(aircraftType2.getId()))
-               .andExpect(jsonPath("$.engineType.id").value(engineType2.getId()))
-               .andReturn();
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.shipNumber").value("4561"))
+                .andExpect(jsonPath("$.registration").value("PH-DTO"))
+                .andExpect(jsonPath("$.aircraftType.id").value(aircraftType2.getId()))
+                .andExpect(jsonPath("$.engineType.id").value(engineType2.getId()))
+                .andReturn();
 
         AircraftResponseDTO aircraftResult = objectMapper.readValue(response.getResponse().getContentAsString(), AircraftResponseDTO.class);
 
         assertEquals(aircraftResponseDTO.getShipNumber(), aircraftResult.getShipNumber());
-        assertEquals(aircraftResponseDTO.getRegistration(),aircraftResult.getRegistration());
-        assertEquals(aircraftResponseDTO.getAircraftType().getId(),aircraftResult.getAircraftType().getId());
+        assertEquals(aircraftResponseDTO.getRegistration(), aircraftResult.getRegistration());
+        assertEquals(aircraftResponseDTO.getAircraftType().getId(), aircraftResult.getAircraftType().getId());
         assertEquals(aircraftResponseDTO.getEngineType().getId(), aircraftResult.getEngineType().getId());
     }
 

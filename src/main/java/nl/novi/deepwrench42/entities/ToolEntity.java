@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tools")
-public class ToolEntity extends EquipmentEntity{
+public class ToolEntity extends EquipmentEntity {
 
     @Column(name = "tool_type")
     private String toolType;
@@ -30,7 +30,7 @@ public class ToolEntity extends EquipmentEntity{
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "aircraft_type_id")
     )
-    private Set<AircraftTypeEntity> applicableAircraftTypes  = new HashSet<>();
+    private Set<AircraftTypeEntity> applicableAircraftTypes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -38,7 +38,7 @@ public class ToolEntity extends EquipmentEntity{
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "engine_type_id")
     )
-    private Set<EngineTypeEntity> applicableEngineTypes  = new HashSet<>();
+    private Set<EngineTypeEntity> applicableEngineTypes = new HashSet<>();
 
     @Column(name = "is_calibrated")
     private Boolean isCalibrated;
@@ -51,35 +51,86 @@ public class ToolEntity extends EquipmentEntity{
     private ToolKitEntity toolKit;
 
     // Getters en Setters
-    public String getToolType() {   return toolType;    }
-    public void setToolType(String toolType) {  this.toolType = toolType;   }
+    public String getToolType() {
+        return toolType;
+    }
 
-    public Integer getAtaCode() {   return ataCode; }
-    public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
+    public void setToolType(String toolType) {
+        this.toolType = toolType;
+    }
 
-    public String getPartNumber() { return partNumber;  }
-    public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
+    public Integer getAtaCode() {
+        return ataCode;
+    }
 
-    public String getSerialNumber() {   return serialNumber;    }
-    public void setSerialNumber(String serialNumber) {  this.serialNumber = serialNumber;   }
+    public void setAtaCode(Integer ataCode) {
+        this.ataCode = ataCode;
+    }
 
-    public String getManufacturer() {   return manufacturer;    }
-    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+    public String getPartNumber() {
+        return partNumber;
+    }
 
-    public Set<AircraftTypeEntity> getApplicableAircraftTypes() {    return applicableAircraftTypes;  }
-    public void setApplicableAircraftTypes(Set<AircraftTypeEntity> applicableAircraftTypes) { this.applicableAircraftTypes = applicableAircraftTypes;   }
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
+    }
 
-    public Set<EngineTypeEntity> getApplicableEngineTypes() {    return applicableEngineTypes;    }
-    public void setApplicableEngineTypes(Set<EngineTypeEntity> applicableEngineTypes) {   this.applicableEngineTypes = applicableEngineTypes;   }
+    public String getSerialNumber() {
+        return serialNumber;
+    }
 
-    public Boolean getIsCalibrated() { return isCalibrated;    }
-    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
-    public InspectionEntity getInspection() { return inspection; }
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public Set<AircraftTypeEntity> getApplicableAircraftTypes() {
+        return applicableAircraftTypes;
+    }
+
+    public void setApplicableAircraftTypes(Set<AircraftTypeEntity> applicableAircraftTypes) {
+        this.applicableAircraftTypes = applicableAircraftTypes;
+    }
+
+    public Set<EngineTypeEntity> getApplicableEngineTypes() {
+        return applicableEngineTypes;
+    }
+
+    public void setApplicableEngineTypes(Set<EngineTypeEntity> applicableEngineTypes) {
+        this.applicableEngineTypes = applicableEngineTypes;
+    }
+
+    public Boolean getIsCalibrated() {
+        return isCalibrated;
+    }
+
+    public void setIsCalibrated(Boolean isCalibrated) {
+        this.isCalibrated = isCalibrated;
+    }
+
+    public InspectionEntity getInspection() {
+        return inspection;
+    }
+
     public void setInspection(InspectionEntity inspection) {
         this.inspection = inspection;
-        if (inspection != null) {   inspection.setTool(this);   }}
+        if (inspection != null) {
+            inspection.setTool(this);
+        }
+    }
 
-    public ToolKitEntity getToolKit() { return toolKit; }
-    public void setToolKit(ToolKitEntity toolKit) { this.toolKit = toolKit; }
+    public ToolKitEntity getToolKit() {
+        return toolKit;
+    }
+
+    public void setToolKit(ToolKitEntity toolKit) {
+        this.toolKit = toolKit;
+    }
 }

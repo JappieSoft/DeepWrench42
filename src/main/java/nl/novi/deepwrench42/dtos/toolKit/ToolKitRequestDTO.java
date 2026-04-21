@@ -2,17 +2,10 @@ package nl.novi.deepwrench42.dtos.toolKit;
 
 import jakarta.validation.constraints.*;
 import nl.novi.deepwrench42.dtos.equipment.EquipmentRequestDTO;
-import nl.novi.deepwrench42.entities.EquipmentStatus;
-import nl.novi.deepwrench42.entities.EquipmentType;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ToolKitRequestDTO extends EquipmentRequestDTO {
-
-/*    @NotNull(message = "Tool kit must have content")
-    @Size(min = 1, message = "At least one tool required")
-    private Set<Long> kitContentsIds;*/
 
     @NotBlank(message = "Type cannot be blank")
     @Size(min = 3, max = 20, message = "Type must be between 2 & 20 characters long")
@@ -39,39 +32,80 @@ public class ToolKitRequestDTO extends EquipmentRequestDTO {
 
     @NotNull(message = "Calibration status required")
     private Boolean isCalibrated;
-
     private Long inspectionId;
 
     // Getters en Setters
-/*    public Set<Long> getKitContentsIds() { return kitContentsIds; }
-    public void setKitContentsIds(Set<Long> kitContentsIds) { this.kitContentsIds = kitContentsIds; }*/
+    public String getToolKitType() {
+        return toolKitType;
+    }
 
-    public String getToolKitType() {   return toolKitType;    }
-    public void setToolKitType(String toolKitType) {  this.toolKitType = toolKitType;   }
+    public void setToolKitType(String toolKitType) {
+        this.toolKitType = toolKitType;
+    }
 
-    public Integer getAtaCode() {   return ataCode; }
-    public void setAtaCode(Integer ataCode) {   this.ataCode = ataCode; }
+    public Integer getAtaCode() {
+        return ataCode;
+    }
 
-    public String getPartNumber() { return partNumber;  }
-    public void setPartNumber(String partNumber) {  this.partNumber = partNumber;   }
+    public void setAtaCode(Integer ataCode) {
+        this.ataCode = ataCode;
+    }
 
-    public String getSerialNumber() {   return serialNumber;    }
-    public void setSerialNumber(String serialNumber) {  this.serialNumber = serialNumber;   }
+    public String getPartNumber() {
+        return partNumber;
+    }
 
-    public String getManufacturer() {   return manufacturer;    }
-    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
+    }
 
-    public Set<Long> getApplicableAircraftTypeIds() {   return applicableAircraftTypeIds;   }
-    public void setApplicableAircraftTypeIds(Set<Long> applicableAircraftTypeIds) { this.applicableAircraftTypeIds = applicableAircraftTypeIds; }
+    public String getSerialNumber() {
+        return serialNumber;
+    }
 
-    public Set<Long> getApplicableEngineTypeIds() { return applicableEngineTypeIds; }
-    public void setApplicableEngineTypeIds(Set<Long> applicableEngineTypeIds) { this.applicableEngineTypeIds = applicableEngineTypeIds; }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
-    public Boolean getIsCalibrated() {    return isCalibrated;    }
-    public void setIsCalibrated(Boolean isCalibrated) { this.isCalibrated = isCalibrated;  }
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-    public Long getInspectionId() {   return inspectionId;  }
-    public void setInspectionId(Long inspectionId) {    this.inspectionId = inspectionId;   }
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public Set<Long> getApplicableAircraftTypeIds() {
+        return applicableAircraftTypeIds;
+    }
+
+    public void setApplicableAircraftTypeIds(Set<Long> applicableAircraftTypeIds) {
+        this.applicableAircraftTypeIds = applicableAircraftTypeIds;
+    }
+
+    public Set<Long> getApplicableEngineTypeIds() {
+        return applicableEngineTypeIds;
+    }
+
+    public void setApplicableEngineTypeIds(Set<Long> applicableEngineTypeIds) {
+        this.applicableEngineTypeIds = applicableEngineTypeIds;
+    }
+
+    public Boolean getIsCalibrated() {
+        return isCalibrated;
+    }
+
+    public void setIsCalibrated(Boolean isCalibrated) {
+        this.isCalibrated = isCalibrated;
+    }
+
+    public Long getInspectionId() {
+        return inspectionId;
+    }
+
+    public void setInspectionId(Long inspectionId) {
+        this.inspectionId = inspectionId;
+    }
 }
 
 

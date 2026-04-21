@@ -25,7 +25,7 @@ public class FileStorageHelper {
         Files.createDirectories(fileStoragePath);
     }
 
-    public String storeFile(String itemId, String existingFileName, MultipartFile file) throws IOException{
+    public String storeFile(String itemId, String existingFileName, MultipartFile file) throws IOException {
         if (itemId.isEmpty()) {
             throw new IllegalArgumentException("No item Id received for File Storage");
         }
@@ -43,7 +43,7 @@ public class FileStorageHelper {
         if (existingFileName != null) {
             Path oldFilePath = fileStoragePath.resolve(existingFileName);
             boolean deleted = Files.deleteIfExists(oldFilePath);
-            if  (!deleted) {
+            if (!deleted) {
                 throw new IOException("Unable to delete original file from Server");
             }
         }
@@ -63,7 +63,7 @@ public class FileStorageHelper {
             throw new ReadFileException("Issue in reading the file", e);
         }
 
-        if(resource.exists()&& resource.isReadable()) {
+        if (resource.exists() && resource.isReadable()) {
             return resource;
         } else {
             throw new ReadFileException("the file doesn't exist or not readable");

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class AircraftService{
+public class AircraftService {
 
     private final AircraftRepository aircraftRepository;
     private final AircraftTypeRepository aircraftTypeRepository;
@@ -70,9 +70,9 @@ public class AircraftService{
         existingEntity.setRegistration(requestDto.getRegistration());
 
         if (aircraftTypeDifferent) {
-        AircraftTypeEntity type = aircraftTypeRepository.findById(requestDto.getAircraftTypeId())
-                .orElseThrow(() -> new RecordNotFoundException("Aircraft Type " + requestDto.getAircraftTypeId() + " not found"));
-        existingEntity.setAircraftType(type);
+            AircraftTypeEntity type = aircraftTypeRepository.findById(requestDto.getAircraftTypeId())
+                    .orElseThrow(() -> new RecordNotFoundException("Aircraft Type " + requestDto.getAircraftTypeId() + " not found"));
+            existingEntity.setAircraftType(type);
         }
 
         if (engineTypeDifferent) {
@@ -85,12 +85,6 @@ public class AircraftService{
         return aircraftDTOMapper.mapToDto(existingEntity);
     }
 
-    private AircraftEntity getAircraftEntity(Long id) {
-        AircraftEntity existingAircraftEntity = aircraftRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Aircraft " + id +" not found"));
-        return existingAircraftEntity;
-    }
-
     @Transactional
     public void deleteAircraft(Long id) {
         AircraftEntity aircraft = getAircraftEntity(id);
@@ -98,5 +92,12 @@ public class AircraftService{
         aircraft.setAircraftType(null);
         aircraft.setEngineType(null);
         aircraftRepository.deleteById(id);
+    }
+
+    //Generic FIndById Helper
+    private AircraftEntity getAircraftEntity(Long id) {
+        AircraftEntity existingAircraftEntity = aircraftRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Aircraft " + id + " not found"));
+        return existingAircraftEntity;
     }
 }

@@ -10,7 +10,7 @@
     </parent>
     <groupId>nl.novi</groupId>
     <artifactId>DeepWrench42</artifactId>
-    <version>0.0.1-SNAPSHOT</version> <!-- CHANGE BEFORE SUBMISSION -->
+    <version>1.0.0</version>
     <name>DeepWrench42</name>
     <description>DeepWrench42 is a tool control application for mechanics and leaders</description>
     <url/>
@@ -52,13 +52,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- In memory database for tests -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Security addition -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -72,7 +70,6 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Swagger addition -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

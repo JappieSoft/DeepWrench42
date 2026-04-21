@@ -1,19 +1,15 @@
 package nl.novi.deepwrench42.services;
 
 import jakarta.transaction.Transactional;
-import nl.novi.deepwrench42.dtos.tool.ToolRequestDTO;
-import nl.novi.deepwrench42.dtos.tool.ToolResponseDTO;
 import nl.novi.deepwrench42.dtos.toolLog.ToolLogResponseDTO;
 import nl.novi.deepwrench42.entities.ToolEntity;
 import nl.novi.deepwrench42.entities.ToolLogEntity;
 import nl.novi.deepwrench42.exceptions.RecordNotFoundException;
-import nl.novi.deepwrench42.mappers.ToolDTOMapper;
 import nl.novi.deepwrench42.mappers.ToolLogDTOMapper;
 import nl.novi.deepwrench42.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ToolLogService {
@@ -38,6 +34,7 @@ public class ToolLogService {
         return toolLogDTOMapper.mapToDto(toolLogEntity);
     }
 
+    //Generic FIndById Helper
     private ToolLogEntity getToolLogEntity(Long id) {
         return toolLogRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Tool Log " + id + " not found"));

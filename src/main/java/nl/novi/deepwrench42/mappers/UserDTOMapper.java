@@ -4,12 +4,13 @@ import nl.novi.deepwrench42.dtos.user.UserRequestDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
 import nl.novi.deepwrench42.entities.UserEntity;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class UserDTOMapper implements DTOMapper<UserResponseDTO, UserRequestDTO, UserEntity>{
+public class UserDTOMapper implements DTOMapper<UserResponseDTO, UserRequestDTO, UserEntity> {
 
     @Override
     public UserResponseDTO mapToDto(UserEntity model) {

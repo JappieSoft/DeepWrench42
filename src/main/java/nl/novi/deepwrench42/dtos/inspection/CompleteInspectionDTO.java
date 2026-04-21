@@ -18,18 +18,43 @@ public class CompleteInspectionDTO {
     private LocalDateTime nextDueDate;
 
     // Getters en Setters
-    public String getEquipmentItemId() {    return equipmentItemId; }
-    public void setEquipmentItemId(String equipmentItemId) {    this.equipmentItemId = equipmentItemId; }
+    public String getEquipmentItemId() {
+        return equipmentItemId;
+    }
 
-    public LocalDateTime getInspectionDate() {  return inspectionDate;  }
-    public void setInspectionDate(LocalDateTime inspectionDate) {   this.inspectionDate = inspectionDate;   }
+    public void setEquipmentItemId(String equipmentItemId) {
+        this.equipmentItemId = equipmentItemId;
+    }
 
-    public Boolean getInspectionPassed() {  return inspectionPassed;   }
-    public void setInspectionPassed(Boolean inspectionPassed) {   this.inspectionPassed = inspectionPassed; }
+    public LocalDateTime getInspectionDate() {
+        return inspectionDate;
+    }
 
-    public String getComments() { return comments;  }
-    public void setComments(String comments) {  this.comments = comments;   }
+    public void setInspectionDate(LocalDateTime inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
 
-    public LocalDateTime getNextDueDate() { return nextDueDate; }
-    public void setNextDueDate(LocalDateTime nextDueDate) { this.nextDueDate = nextDueDate; }
+    public Boolean getInspectionPassed() {
+        return inspectionPassed;
+    }
+
+    public void setInspectionPassed(Boolean inspectionPassed) {
+        this.inspectionPassed = inspectionPassed;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public LocalDateTime getNextDueDate() {
+        return nextDueDate;
+    }
+
+    public void setNextDueDate(LocalDateTime nextDueDate) {
+        this.nextDueDate = nextDueDate;
+    }
 }

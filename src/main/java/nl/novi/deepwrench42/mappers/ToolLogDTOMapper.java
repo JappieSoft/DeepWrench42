@@ -1,26 +1,16 @@
 package nl.novi.deepwrench42.mappers;
 
-import nl.novi.deepwrench42.dtos.equipment.EquipmentCheckOutResponseDTO;
 import nl.novi.deepwrench42.dtos.toolLog.ToolLogRequestDTO;
 import nl.novi.deepwrench42.dtos.toolLog.ToolLogResponseDTO;
-import nl.novi.deepwrench42.entities.ToolEntity;
-import nl.novi.deepwrench42.entities.ToolKitEntity;
-import nl.novi.deepwrench42.entities.ToolLogActionType;
 import nl.novi.deepwrench42.entities.ToolLogEntity;
-import nl.novi.deepwrench42.repository.ToolKitRepository;
-import nl.novi.deepwrench42.repository.ToolRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class ToolLogDTOMapper implements DTOMapper<ToolLogResponseDTO, ToolLogRequestDTO, ToolLogEntity>{
+public class ToolLogDTOMapper implements DTOMapper<ToolLogResponseDTO, ToolLogRequestDTO, ToolLogEntity> {
 
     @Override
     public ToolLogResponseDTO mapToDto(ToolLogEntity model) {

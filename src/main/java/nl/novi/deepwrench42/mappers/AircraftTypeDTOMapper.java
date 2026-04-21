@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class AircraftTypeDTOMapper implements DTOMapper<AircraftTypeResponseDTO, AircraftTypeRequestDTO, AircraftTypeEntity>{
+public class AircraftTypeDTOMapper implements DTOMapper<AircraftTypeResponseDTO, AircraftTypeRequestDTO, AircraftTypeEntity> {
 
     @Override
     public AircraftTypeResponseDTO mapToDto(AircraftTypeEntity model) {

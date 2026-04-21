@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "engine_types")
-public class EngineTypeEntity extends BaseEntity{
+public class EngineTypeEntity extends BaseEntity {
 
     @Column(name = "manufacturer")
     private String manufacturer;
@@ -16,12 +16,27 @@ public class EngineTypeEntity extends BaseEntity{
     private String subType;
 
     // Getters en Setters
-    public String getManufacturer() {   return manufacturer;    }
-    public void setManufacturer(String manufacturer) {  this.manufacturer = manufacturer;   }
+    public String getManufacturer() {
+        return manufacturer;
+    }
 
-    public String getMainType() {   return mainType;    }
-    public void setMainType(String mainType) {  this.mainType = mainType;   }
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 
-    public String getSubType() {    return subType; }
-    public void setSubType(String subType) {    this.subType = subType; }
+    public String getMainType() {
+        return mainType;
+    }
+
+    public void setMainType(String mainType) {
+        this.mainType = mainType;
+    }
+
+    public String getSubType() {
+        return subType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
 }
