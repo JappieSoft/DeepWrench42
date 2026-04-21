@@ -44,14 +44,13 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                         ))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api-documentation.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/inspection",
                                 "/inspection/find-inspection-date-before",
                                 "/inspection/find-inspection-date-after",
                                 "/inspection/find-next-overdue",
-                                "/tool-log", "/tool-log/{id}",
-                                "/user/{id}").hasAnyAuthority("ADMIN", "LEAD")
+                                "/tool-log", "/tool-log/{id}").hasAnyAuthority("ADMIN", "LEAD")
                         .requestMatchers(HttpMethod.GET, "/aircraft", "/aircraft/{id}",
                                 "/aircraft-type", "/aircraft-type/{id}",
                                 "/engine-type", "/engine-type/{id}",

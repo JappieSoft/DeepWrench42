@@ -1,0 +1,1734 @@
+{
+  "info": {
+    "_postman_id": "74c6eed8-770b-4d1e-a484-df58fbea42b0",
+    "name": "DeepWrench42",
+    "description": "The DeepWrench42 Postman collections, all to test a great new application!",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42630720"
+  },
+  "item": [
+    {
+      "name": "Aircraft",
+      "item": [
+        {
+          "name": "Get Aircraft",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Aircraft #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Aircraft",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"shipNumber\": \"CRASHED\",\r\n    \"registration\" : \"ZS-BRV\",\r\n    \"aircraftTypeId\" : 4,\r\n    \"engineTypeId\" : 4\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Aircraft",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful PUT request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"id\": 1,\n        \"shipNumber\": \"3001\",\n        \"registration\": \"N80859\",\n        \"aircraftTypeId\": 5,\n        \"engineTypeId\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft",
+                "1"
+              ]
+            },
+            "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Aircraft",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful DELETE request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft",
+                "2"
+              ]
+            },
+            "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Aircraft Type",
+      "item": [
+        {
+          "name": "Get Aircraft Types",
+          "protocolProfileBehavior": {
+            "protocolVersion": "http1"
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft-type",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft-type"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Aircraft Type #1",
+          "protocolProfileBehavior": {
+            "protocolVersion": "http1"
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft-type/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft-type",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Aircraft Type",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"manufacturer\": \"Convair\",\r\n    \"mainType\" : \"CV\",\r\n    \"subType\" : \"340\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft-type",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft-type"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Aircraft Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful PUT request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"manufacturer\": \"Airbus\",\n    \"mainType\" : \"A330\",\n    \"subType\" : \"302\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft-type/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft-type",
+                "1"
+              ]
+            },
+            "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Aircraft Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful DELETE request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/aircraft-type/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "aircraft-type",
+                "1"
+              ]
+            },
+            "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Engine Types",
+      "item": [
+        {
+          "name": "Get Engine Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/engine-type",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "engine-type"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Engine Type #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/engine-type/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "engine-type",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Engine Type",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"manufacturer\": \"Pratt & Whitney\",\r\n    \"mainType\" : \"R2800\",\r\n    \"subType\" : \"CB17\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/engine-type",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "engine-type"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Engine Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful PUT request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\n        \"manufacturer\": \"Rolls Royce\",\n        \"mainType\": \"XWB\",\n        \"subType\": \"XWB-84\"\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/engine-type/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "engine-type",
+                "2"
+              ]
+            },
+            "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Engine Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful DELETE request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/engine-type/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "engine-type",
+                "1"
+              ]
+            },
+            "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Inspections",
+      "item": [
+        {
+          "name": "Get Inspections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Inspection #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Inspection",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"inspectionDate\": \"2025-12-15T09:00:00\",\r\n    \"inspectionType\": \"CALIBRATION\",\r\n    \"inspectionPassed\": true,\r\n    \"comments\": null,\r\n    \"nextDueDate\": \"2026-12-15T09:00:00\",\r\n    \"inspectionInterval\": 5000,\r\n    \"toolId\": 5,\r\n    \"toolKitId\": null\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/inspection",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Inspection",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"inspectionDate\": \"2025-12-15T09:00:00\",\r\n    \"inspectionType\": \"CALIBRATION\",\r\n    \"inspectionPassed\": false,\r\n    \"comments\": \"failed test\",\r\n    \"nextDueDate\": \"2026-12-15T09:00:00\",\r\n    \"inspectionInterval\": 5000,\r\n    \"toolId\": 1,\r\n    \"toolKitId\": null,\r\n    \"inspectionItemId\": \"R0232132\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Inspection",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/3",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Perform/Complete Inspection",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"equipmentItemId\": \"TL001\",\r\n    \"inspectionDate\": \"2026-06-03T09:00:00\",\r\n    \"inspectionPassed\": true,\r\n    \"comments\": \"completed inspection\",\r\n    \"nextDueDate\": \"2031-12-31T09:00:00\"   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/performed",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "performed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "find inspection done before Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/find-inspection-date-before?date=2025-10-06T22:00:00",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "find-inspection-date-before"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2025-10-06T22:00:00"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "find inspection done after Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/find-inspection-date-after?date=2026-01-06T22:00:00",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "find-inspection-date-after"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-01-06T22:00:00"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "find next due by Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/inspection/find-next-overdue?date=2026-03-06T22:00:00",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "inspection",
+                "find-next-overdue"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-03-06T22:00:00"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Storage Locations",
+      "item": [
+        {
+          "name": "Get Storage Locations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/storage-location",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "storage-location"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Storage Location #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/storage-location/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "storage-location",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Storage Location",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"location\": \"D49\",\r\n        \"rack\": \"B12\",\r\n        \"shelf\": \"B01A01\",\r\n        \"comments\": \"lost somewhere\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/storage-location",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "storage-location"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Storage Location",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"location\": \"G4\",\r\n        \"rack\": \"Z\",\r\n        \"shelf\": \"25\",\r\n        \"comments\": null\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/storage-location/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "storage-location",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Storage Location",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/storage-location/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "storage-location",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tools",
+      "item": [
+        {
+          "name": "Get Tools",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Checked Out Tools",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/status/CHECKED_OUT",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "status",
+                "CHECKED_OUT"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Picture Tool #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/1/picture",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "1",
+                "picture"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Picture Tool #1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "a5c7a557-c835-4e55-9d22-83ab3178f4ee",
+                  "src": "postman-cloud:///1f128659-db6b-4200-bfd2-2ddd1bda0ee7"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool/1/picture",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "1",
+                "picture"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tool",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"equipmentType\": \"TOOL\",\r\n  \"itemId\": \"TL001\",\r\n  \"name\": \"Torque Wrench\",\r\n  \"picture\": null,\r\n  \"storageLocation\": 9,\r\n  \"status\": \"UNKNOWN\",\r\n  \"checkedOutBy\": null,\r\n  \"checkedOutDate\": null,\r\n  \"hasInspection\": false,\r\n  \"comments\": null,\r\n  \"toolType\": \"TORQUE_WRENCH\",\r\n  \"ataCode\": 3201,\r\n  \"partNumber\": \"TW-001\",\r\n  \"serialNumber\": \"T00W1\",\r\n  \"manufacturer\": \"Snap-on\",\r\n  \"applicableAircraftTypeIds\": [2, 1], \r\n  \"applicableEngineTypeIds\": [1, 2],\r\n  \"isCalibrated\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Tool",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"equipmentType\": \"TOOL\",\r\n  \"itemId\": \"R0232132\",\r\n  \"name\": \"Precision Torque Wrench 10-100 Nm\",\r\n  \"picture\": null,\r\n  \"storageLocation\": null,\r\n  \"status\": \"CHECKED_IN\",\r\n  \"checkedOutBy\": null,\r\n  \"checkedOutDate\": null,\r\n  \"hasInspection\": true,\r\n  \"comments\": null,\r\n  \"toolType\": \"Torque Wrench\",\r\n  \"ataCode\": 3212,\r\n  \"partNumber\": \"50-590013-1\",\r\n  \"serialNumber\": \"TW-123456789\",\r\n  \"manufacturer\": \"Snap-on\",\r\n  \"applicableAircraftTypeIds\": [1],\r\n  \"applicableEngineTypeIds\": [1],\r\n  \"isCalibrated\": true,\r\n  \"inspectionId\": 1,\r\n  \"toolKitId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Tool",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tool Kits",
+      "item": [
+        {
+          "name": "Get Tool Kits",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Missing ToolKits",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/status/MISSING",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "status",
+                "MISSING"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool Kit #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Picture ToolKit #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/3/picture",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "3",
+                "picture"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post Picture Tool Kit #3",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "a5c7a557-c835-4e55-9d22-83ab3178f4ee",
+                  "src": "postman-cloud:///1f128657-e482-4020-88d4-838ec77a20eb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/3/picture",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "3",
+                "picture"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tool Kit",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"equipmentType\": \"TOOLKIT\",\r\n  \"itemId\": \"KIT001\",\r\n  \"name\": \"Torque Wrench Kit\",\r\n  \"picture\": null,\r\n  \"storageLocation\": 10,\r\n  \"status\": \"UNKNOWN\",\r\n  \"checkedOutBy\": null,\r\n  \"checkedOutDate\": null,\r\n  \"hasInspection\": true,\r\n  \"comments\": \"Kit test\",\r\n  \"toolKitType\": \"TORQUE_WRENCH\",\r\n  \"ataCode\": 2743,\r\n  \"partNumber\": \"TWKIT-001\",\r\n  \"serialNumber\": \"KIT-T00W1\",\r\n  \"manufacturer\": \"Snap-on\",\r\n  \"applicableAircraftTypeIds\": [2, 1],\r\n  \"applicableEngineTypeIds\": [1, 2],\r\n  \"isCalibrated\": true,\r\n  \"inspection\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put Tool Kit",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"equipmentType\": \"TOOLKIT\",\r\n  \"itemId\": \"K03562141\",\r\n  \"name\": \"A330 NLG Gland Nut kit\",\r\n  \"picture\": null,\r\n  \"storageLocation\": 5,\r\n  \"status\": \"MISSING\",\r\n  \"checkedOutBy\": null,\r\n  \"checkedOutDate\": \"2026-02-27T00:59:34.8137\",\r\n  \"hasInspection\": false,\r\n  \"comments\": \"ToolKit Missing\",\r\n  \"toolKitType\": \"C-Spanner Kit\",\r\n  \"ataCode\": 2000,\r\n  \"partNumber\": \"MAG003451\",\r\n  \"serialNumber\": \"DL00158\",\r\n  \"manufacturer\": \"Magema\",\r\n  \"applicableAircraftTypeIds\": [2, 1],\r\n  \"applicableEngineTypeIds\": [1, 2],\r\n  \"isCalibrated\": false,\r\n  \"inspection\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Tool Kit",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/user",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/user/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"employeeId\": \"012346\",\r\n        \"schipholId\": \"123HEXdODE\",\r\n        \"email\": \"some@oone.com\",\r\n        \"firstName\": \"Some\",\r\n        \"lastName\": \"One\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/user",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Put User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful PUT request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\n        \"employeeId\": \"012345\",\n        \"schipholId\": \"124HEXCODE\",\n        \"email\": \"some@one.com\",\n        \"firstName\": \"Some\",\n        \"lastName\": \"One\"\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/user",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            },
+            "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Patch User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful PUT request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\n        \"kcid\": \"123456789\",\n        \"employeeId\": \"012445\",\n        \"schipholId\": \"124HXCODE\",\n        \"email\": \"some@ne.com\",\n        \"firstName\": \"Some\",\n        \"lastName\": \"One\",\n        \"role\": \"LEAD\"\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/user/3",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user",
+                "3"
+              ]
+            },
+            "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful DELETE request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/user/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "user",
+                "1"
+              ]
+            },
+            "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tool Log",
+      "item": [
+        {
+          "name": "Get ToolLog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-log",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-log"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ToolLog #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-log/1",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-log",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CheckOut",
+      "item": [
+        {
+          "name": "CheckOut Tool",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"equipmentItemId\": \"R0454545\",\r\n        \"employeeNumber\": \"516543\",\r\n        \"aircraft\": \"3311\",\r\n        \"comments\": \"test\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/equipment/checkout",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "equipment",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool #2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CheckOut Kit",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"equipmentItemId\": \"Boro001\",\r\n        \"employeeNumber\": \"516543\",\r\n        \"aircraft\": \"3527\",\r\n        \"comments\": \"test\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/equipment/checkout",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "equipment",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool Kit #3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/3",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CheckIn",
+      "item": [
+        {
+          "name": "CheckIn Tool",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"equipmentItemId\": \"SPARK01\",\r\n        \"employeeNumber\": \"516543\",\r\n        \"aircraft\": \"3527\",\r\n        \"problem\": false,\r\n        \"missing\": false,\r\n        \"comments\": \"test\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/equipment/checkin",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "equipment",
+                "checkin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool #2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CheckIn Kit",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n        \"equipmentItemId\": \"Boro001\",\r\n        \"employeeNumber\": \"516543\",\r\n        \"aircraft\": \"3527\",\r\n        \"problem\": true,\r\n        \"missing\": false,\r\n        \"comments\": \"test\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/equipment/checkin",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "equipment",
+                "checkin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tool Kit #1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/tool-kit/2",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "tool-kit",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "KeyCloak / Auth Config",
+      "item": [
+        {
+          "name": "KeyCloak Config Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:9090/realms/DeepWrench42/.well-known/openid-configuration",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "realms",
+                "DeepWrench42",
+                ".well-known",
+                "openid-configuration"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "refreshRequestParams",
+        "value": [],
+        "type": "any"
+      },
+      {
+        "key": "tokenRequestParams",
+        "value": [],
+        "type": "any"
+      },
+      {
+        "key": "authRequestParams",
+        "value": [
+          {
+            "key": "prompt",
+            "value": "login",
+            "enabled": true,
+            "send_as": "request_url"
+          }
+        ],
+        "type": "any"
+      },
+      {
+        "key": "tokenName",
+        "value": "EdHub_Machine_1st_Test_Token",
+        "type": "string"
+      },
+      {
+        "key": "challengeAlgorithm",
+        "value": "S256",
+        "type": "string"
+      },
+      {
+        "key": "useBrowser",
+        "value": true,
+        "type": "boolean"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      },
+      {
+        "key": "clientSecret",
+        "value": "{{client-secret}}",
+        "type": "string"
+      },
+      {
+        "key": "clientId",
+        "value": "{{client-id}}",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "{{auth-url}}",
+        "type": "string"
+      },
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
+      },
+      {
+        "key": "client_authentication",
+        "value": "header",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "{{token-url}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseUrl",
+      "value": ""
+    },
+    {
+      "key": "auth-url",
+      "value": ""
+    },
+    {
+      "key": "token-url",
+      "value": ""
+    },
+    {
+      "key": "client-id",
+      "value": ""
+    },
+    {
+      "key": "client-secret",
+      "value": ""
+    }
+  ]
+}

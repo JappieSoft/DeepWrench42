@@ -1,5 +1,7 @@
 package nl.novi.deepwrench42.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import nl.novi.deepwrench42.dtos.user.UserRequestDTO;
 import nl.novi.deepwrench42.dtos.user.UserResponseDTO;
@@ -16,6 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User Management")
 public class UserController {
 
     private final UserService userService;
@@ -25,7 +28,10 @@ public class UserController {
         this.userService = userService;
         this.urlHelper = urlHelper;
     }
-
+    @Operation(
+                description = "Get all users details if signed in as admin, otherwise get current user details",
+                summary = "Get the details of current user or all users"
+    )
     @GetMapping()
     public ResponseEntity<List<UserResponseDTO>> getUsers(Authentication authentication) {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
@@ -41,30 +47,50 @@ public class UserController {
         }
     }
 
+    @Operation(
+            description = "Get user details of a specific user id, admin only",
+            summary = "Get the details of a specific user id"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         UserResponseDTO user = userService.findUserById(id);
         return new ResponseEntity<UserResponseDTO>(user, HttpStatus.OK);
     }
 
+    @Operation(
+            description = "Post user details of current user",
+            summary = "Post current user details"
+    )
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userInput, Authentication authentication) {
         UserResponseDTO newUser = userService.createUser(userInput, authentication);
         return ResponseEntity.created(urlHelper.getCurrentUrlWithId(newUser.getId())).body(newUser);
     }
 
+    @Operation(
+            description = "Update user details of current user",
+            summary = "Update current user details"
+    )
     @PutMapping
     public ResponseEntity<UserResponseDTO> updateUser(@Valid @RequestBody UserRequestDTO userInput, Authentication authentication) {
         UserResponseDTO updatedUser = userService.updateUser(userInput, authentication);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    @Operation(
+            description = "Patch user details of specific user id, admin only",
+            summary = "Patch user details of specific user id"
+    )
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDTO> patchUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userInput) {
         UserResponseDTO updatedUser = userService.patchUser(id, userInput);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    @Operation(
+            description = "Delete a specific user id, admin only",
+            summary = "Delete a specific user id"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

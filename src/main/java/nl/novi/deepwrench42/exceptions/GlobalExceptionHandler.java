@@ -102,6 +102,18 @@ public class GlobalExceptionHandler {
         }
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String handleFileEmptyException(NullPointerException ex) {
+        if (ex.getMessage().contains("MultipartFile.isEmpty()")) {
+            return "Error: The upload file is empty!";
+        } else {
+            return "There was an error on the server side";
+        }
+    }
+
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
     @ResponseBody
